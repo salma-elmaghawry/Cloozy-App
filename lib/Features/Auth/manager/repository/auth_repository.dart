@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:cloozy/Features/Auth/manager/models/register_model.dart';
 
 class AuthRepository {
+  
   final String baseUrl = "https://cloozy.azurewebsites.net/api";
 
   Future<RegisterResonse> register(RegisterRequest data) async {
