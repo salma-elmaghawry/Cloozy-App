@@ -10,10 +10,10 @@ class GenderDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       value: value,
-      items: ['female','male'].
+      items: ['Female','Male'].
       map((gender)=>DropdownMenuItem(
         value: gender,
-        child: Text(gender.toUpperCase()),
+        child: Text(gender),
       )).toList(), 
       onChanged: onChange,
       decoration: InputDecoration(labelText: "Gender"),
