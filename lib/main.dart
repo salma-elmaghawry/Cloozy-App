@@ -1,5 +1,8 @@
+import 'package:cloozy/Features/Auth/manager/cubits/register/register_cubit.dart';
+import 'package:cloozy/Features/Auth/manager/repository/auth_repository.dart';
 import 'package:cloozy/Features/Auth/views/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +17,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       
       debugShowCheckedModeBanner: false,
-      home: RegisterPage(),
+      home: BlocProvider(
+        create: (context) => RegisterCubit(AuthRepository()),
+        child: RegisterPage(),
+      ),
     );
   }
 }
