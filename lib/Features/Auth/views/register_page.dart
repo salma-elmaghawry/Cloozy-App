@@ -16,6 +16,13 @@ class RegisterPage extends StatelessWidget {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   String _gender = 'Female';
+  int? _selectedRoleId;
+
+  final List<Map<String, dynamic>> _roles = [
+    {'id': 1, 'name': 'Admin'},
+    {'id': 2, 'name': 'Brand'},
+    {'id': 3, 'name': 'Customer'},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +42,9 @@ class RegisterPage extends StatelessWidget {
           }
           if (state is RegisterSuccess) {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(
-                  builder: (_)=>HomePage()),
-                );
+              context,
+              MaterialPageRoute(builder: (_) => HomePage()),
+            );
           }
         },
         child: Padding(
@@ -83,6 +90,21 @@ class RegisterPage extends StatelessWidget {
                   //gender
                   GenderDropdown(
                       value: _gender, onChange: (value) => _gender = value!),
+                  //Select role
+
+                  DropdownButtonFormField<int>(
+                    value: _selectedRoleId,
+                    decoration: const InputDecoration(labelText: 'Select Role'),
+                    items: _roles.map((role) {
+                      return DropdownMenuItem<int>(
+                        value: role['id'],
+                        child: Text(role['name']),
+                      );
+                    }).toList(),
+                    onChanged: (value) => _selectedRoleId = value,
+                    validator: (value) =>
+                        value == null ? 'Please select a role' : null,
+                  ),
                   SizedBox(height: 40),
                   BlocBuilder<RegisterCubit, RegisterState>(
                       builder: (context, state) {
@@ -93,13 +115,15 @@ class RegisterPage extends StatelessWidget {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             final request = RegisterRequest(
-                                name: _nameController.text,
-                                email: _emailController.text,
-                                phone: _phoneController.text,
-                                password: _passwordController.text,
-                                gender: _gender,
-                                passwordConfirmation:
-                                    _confirmPasswordController.text);
+                              name: _nameController.text,
+                              email: _emailController.text,
+                              phone: _phoneController.text,
+                              password: _passwordController.text,
+                              gender: _gender,
+                              passwordConfirmation:
+                                  _confirmPasswordController.text,
+                              roleId: _selectedRoleId!,
+                            );
 
                             context.read<RegisterCubit>().registerUser(request);
                           }

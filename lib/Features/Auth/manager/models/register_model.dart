@@ -13,7 +13,7 @@ class RegisterRequest {
       required this.password,
       required this.gender,
       required this.passwordConfirmation,
-      this.roleId = 2});
+      required this.roleId});
   Map<String, dynamic> toJson() => {
         "name": name,
         "email": email,
@@ -25,13 +25,13 @@ class RegisterRequest {
       };
 }
 
-class RegisterResonse {
+class RegisterResponse {
   final String message;
   final String token;
 
-  RegisterResonse({required this.message, required this.token});
-  factory RegisterResonse.fromJson(Map<String, dynamic> json) {
-    return RegisterResonse(
+  RegisterResponse({required this.message, required this.token});
+  factory RegisterResponse.fromJson(Map<String, dynamic> json) {
+    return RegisterResponse(
       message: json["message"],
       token: json["token"],
     );
