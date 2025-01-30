@@ -15,17 +15,18 @@ class RegisterPage extends StatelessWidget {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  String _gender = 'Female';
+  String _gender = 'female';
   int? _selectedRoleId;
 
   final List<Map<String, dynamic>> _roles = [
-    {'id': 1, 'name': 'Admin'},
     {'id': 2, 'name': 'Brand'},
     {'id': 3, 'name': 'Customer'},
   ];
 
   @override
   Widget build(BuildContext context) {
+    print('[RegisterPage] Initial gender value: $_gender');
+    print('[RegisterPage] Initial role ID: $_selectedRoleId');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -36,11 +37,13 @@ class RegisterPage extends StatelessWidget {
       body: BlocListener<RegisterCubit, RegisterState>(
         listener: (context, state) {
           if (state is RegisterError) {
+            print('[RegisterPage] Error occurred: ${state.message}');
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
             );
           }
           if (state is RegisterSuccess) {
+            print('[RegisterPage] Registration successful');
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (_) => HomePage()),
@@ -58,7 +61,7 @@ class RegisterPage extends StatelessWidget {
                     controller: _nameController,
                     label: "Name",
                     validator: (value) {
-                      value!.isEmpty ? "Required" : null;
+                      return value!.isEmpty ? "Required" : null; // Added return
                     },
                   ),
                   //Email
@@ -97,7 +100,7 @@ class RegisterPage extends StatelessWidget {
                     decoration: const InputDecoration(labelText: 'Select Role'),
                     items: _roles.map((role) {
                       return DropdownMenuItem<int>(
-                        value: role['id'],
+                        value: role['id'] as int, // Explicit cast to int
                         child: Text(role['name']),
                       );
                     }).toList(),
@@ -114,6 +117,9 @@ class RegisterPage extends StatelessWidget {
                     return ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
+                            print('[RegisterPage] Form validated successfully');
+                            print('[RegisterPage] Gender value: $_gender');
+                            print('[RegisterPage] Role ID: $_selectedRoleId');
                             final request = RegisterRequest(
                               name: _nameController.text,
                               email: _emailController.text,
@@ -124,7 +130,8 @@ class RegisterPage extends StatelessWidget {
                                   _confirmPasswordController.text,
                               roleId: _selectedRoleId!,
                             );
-
+                            print(
+                                '[RegisterPage] Sending request: ${request.toJson()}');
                             context.read<RegisterCubit>().registerUser(request);
                           }
                         },

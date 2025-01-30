@@ -32,8 +32,8 @@ class RegisterResponse {
   RegisterResponse({required this.message, required this.token});
   factory RegisterResponse.fromJson(Map<String, dynamic> json) {
     return RegisterResponse(
-      message: json["message"],
-      token: json["token"],
+      message: json['message'] ?? 'No message',
+      token: json['token'] ?? '',
     );
   }
 }
