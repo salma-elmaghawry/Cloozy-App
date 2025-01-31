@@ -23,17 +23,19 @@ class OnboardingPage extends StatelessWidget {
           child: Image.asset(
             imageUrl,
             width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.7,
             fit: BoxFit.cover,
           ),
         ),
-        const SizedBox(height: 20),
 
         // Title
         Text(
           title,
           style: TextStyle(
-              fontSize: 24, color: PrimaryColor, fontWeight: FontWeight.bold),
+              fontSize: 20,
+              color: PrimaryColor,
+              fontWeight: FontWeight.bold,
+              fontFamily: "Poppins"),
         ),
 
         const SizedBox(height: 10),
@@ -43,7 +45,7 @@ class OnboardingPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 40.0),
           child: Text(
             description,
-            style: TextStyle(fontSize: 16, color: grayColor),
+            style: TextStyle(fontSize: 14, color: grayColor),
             textAlign: TextAlign.center,
           ),
         ),

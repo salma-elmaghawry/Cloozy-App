@@ -2,6 +2,7 @@ import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Feature/Auth/views/register_page.dart';
 import 'package:cloozy/Feature/onboarding/onboardingpage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       image: 'assets/images/onboarding3.png',
       title: "Shop Smart, Stay Trendy",
       description:
-          "Find the latest trends and the best of local fashion all in one place!",
+          "Exclusive deals, new arrivals, and the best\n of local fashion—all in one place!",
     ),
   ];
 
@@ -116,16 +117,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         curve: Curves.easeInOut,
                       );
                     },
-                    icon: Icon(
-                      Icons.arrow_forward,
-                      size: 24,
+                    icon: SvgPicture.asset(
+                      "assets/icons/Short Arrow.svg",
                       color: Colors.white,
                     ),
                     style: IconButton.styleFrom(
                       backgroundColor: PrimaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+                      shape: CircleBorder(),
+                      iconSize: 80,
                       padding: const EdgeInsets.all(12),
                     ),
                   )
