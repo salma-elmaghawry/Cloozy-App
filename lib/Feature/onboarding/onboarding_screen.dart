@@ -1,5 +1,6 @@
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Feature/Auth/views/register_page.dart';
+import 'package:cloozy/Feature/onboarding/custom_clippers.dart';
 import 'package:cloozy/Feature/onboarding/onboardingpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,18 +22,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       title: "Support Local Brands",
       description:
           "Shop from your favorite local brands and explore unique styles crafted just for you.",
+      clipper: AsymmetricalCurveClipper(),
     ),
     OnboardingData(
       image: 'assets/images/onboarding2.png',
       title: "Curated Collections for You",
       description:
           "Get personalized fashion recommendations based on your style and preferences.",
+      clipper: WaveCurveClipper(),
     ),
     OnboardingData(
       image: 'assets/images/onboarding3.png',
       title: "Shop Smart, Stay Trendy",
       description:
           "Exclusive deals, new arrivals, and the best\n of local fashion—all in one place!",
+      clipper: AsymmetricalCurveClipper(),
     ),
   ];
 
@@ -56,6 +60,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 title: onboardingPages[index].title,
                 description: onboardingPages[index].description,
                 imageUrl: onboardingPages[index].image,
+                clipper: onboardingPages[index].clipper,
               );
             },
           ),

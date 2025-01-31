@@ -5,12 +5,13 @@ class OnboardingPage extends StatelessWidget {
   final String title;
   final String description;
   final String imageUrl;
-
+final CustomClipper<Path> clipper;
   const OnboardingPage({
     Key? key,
     required this.title,
     required this.description,
     required this.imageUrl,
+    required this.clipper,
   }) : super(key: key);
 
   @override
@@ -19,7 +20,7 @@ class OnboardingPage extends StatelessWidget {
       children: [
         // Curved Image
         ClipPath(
-          clipper: CustomCurveClipper(),
+          clipper: clipper,
           child: Image.asset(
             imageUrl,
             width: double.infinity,
@@ -59,12 +60,16 @@ class CustomCurveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-    path.lineTo(0, size.height * 0.85);
+    path.lineTo(0, size.height * 0.8); // Start at 80% height on the left
 
+    // Adjust the control points for a more balanced curve
     path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height * 0.85);
+        size.width / 2,
+        size.height * 1.0, // Control point at the center
+        size.width,
+        size.height * 0.8); // End at 80% height on the right
 
-    path.lineTo(size.width, 0);
+    path.lineTo(size.width, 0); // Close the path at the top-right corner
     path.close();
     return path;
   }
@@ -78,10 +83,13 @@ class OnboardingData {
   final String image;
   final String title;
   final String description;
+  final CustomClipper<Path> clipper;
+  
 
   OnboardingData({
     required this.image,
     required this.title,
     required this.description,
+    required this.clipper
   });
 }
