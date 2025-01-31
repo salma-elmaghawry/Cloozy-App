@@ -39,6 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: bgColor,
       body: Stack(
         children: [
           // PageView for Onboarding Screens
@@ -70,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 onboardingPages.length,
                 (index) => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
                   height: 8,
                   width: currentPage == index ? 29 : 8,
                   decoration: BoxDecoration(
