@@ -2,119 +2,164 @@ import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Feature/Auth/views/register_page.dart';
 import 'package:cloozy/Feature/onboarding/onboardingpage.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
-  int _currentIndex = 0;
+  int currentPage = 0;
+
+  final List<OnboardingData> onboardingPages = [
+    OnboardingData(
+      image: 'assets/images/onboarding1.png',
+      title: "Support Local Brands",
+      description:
+          "Shop from your favorite local brands and explore unique styles crafted just for you.",
+    ),
+    OnboardingData(
+      image: 'assets/images/onboarding2.png',
+      title: "Curated Collections for You",
+      description:
+          "Get personalized fashion recommendations based on your style and preferences.",
+    ),
+    OnboardingData(
+      image: 'assets/images/onboarding3.png',
+      title: "Shop Smart, Stay Trendy",
+      description:
+          "Find the latest trends and the best of local fashion all in one place!",
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView(
-                controller: _controller,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-                children: const [
-                  OnboardingPage(
-                    title: 'Support Local Brands',
-                    description:
-                        'Shop from your favorite local brands and explore unique styles crafted just for you.',
-                    imageUrl: 'assets/images/onboarding1.png',
+      body: Stack(
+        children: [
+          // PageView for Onboarding Screens
+          PageView.builder(
+            controller: _controller,
+            onPageChanged: (index) {
+              setState(() {
+                currentPage = index;
+              });
+            },
+            itemCount: onboardingPages.length,
+            itemBuilder: (context, index) {
+              return OnboardingPage(
+                title: onboardingPages[index].title,
+                description: onboardingPages[index].description,
+                imageUrl: onboardingPages[index].image,
+              );
+            },
+          ),
+
+          // Custom Indicators
+          Positioned(
+            bottom: 120,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                onboardingPages.length,
+                (index) => AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  height: 8,
+                  width: currentPage == index ? 29 : 8,
+                  decoration: BoxDecoration(
+                    color: currentPage == index ? PrimaryColor : grayColor,
+                    borderRadius: BorderRadius.circular(4),
                   ),
-                  OnboardingPage(
-                    title: 'Curated Collections for You',
-                    description:
-                        ' Get personalized fashion recommendations based on your style and preferences.',
-                    imageUrl: 'assets/images/onboarding2.png',
-                  ),
-                  OnboardingPage(
-                    title: ' Shop Smart, Stay Trendy',
-                    description:
-                        'Exclusive deals, new arrivals, and the best of local fashion—all in one place!',
-                    imageUrl: 'assets/images/onboarding3.png',
-                  ),
-                ],
+                ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(3, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: CustomIndicator(isActive: _currentIndex == index),
-                );
-              }),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      _controller.jumpToPage(2);
-                    },
-                    child: Text(
-                      "Skip",
-                      style: TextStyle(fontSize: 14, color: grayColor),
+          ),
+
+          // Skip and Next/Get Started Buttons
+          Positioned(
+            bottom: 40,
+            left: 24,
+            right: 24,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Skip Button
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
+                  },
+                  child: Text(
+                    "Skip",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: grayColor,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  TextButton(
+                ),
+
+                // Next (Forward Icon) or Get Started Button
+                if (currentPage < onboardingPages.length - 1)
+                  IconButton(
                     onPressed: () {
-                      if (_currentIndex < 2) {
-                        _controller.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeIn,
-                        );
-                      } else {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage()),
-                        );
-                      }
+                      _controller.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                     },
-                    child: Text(_currentIndex == 2 ? "Get Started" : "Next",),
+                    icon: Icon(
+                      Icons.arrow_forward,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                    style: IconButton.styleFrom(
+                      backgroundColor: PrimaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      padding: const EdgeInsets.all(12),
+                    ),
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: PrimaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 12,
+                      ),
+                    ),
+                    child: const Text(
+                      "Get Started",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ],
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomIndicator extends StatelessWidget {
-  final bool isActive;
-
-  const CustomIndicator({Key? key, required this.isActive}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      height: 10,
-      width: isActive ? 30 : 10,
-      decoration: BoxDecoration(
-        color: isActive ? PrimaryColor : grayColor,
-        borderRadius: BorderRadius.circular(5),
+          ),
+        ],
       ),
     );
   }
