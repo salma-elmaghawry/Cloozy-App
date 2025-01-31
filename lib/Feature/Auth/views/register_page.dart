@@ -1,14 +1,13 @@
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
 import 'package:cloozy/Core/common/cutom_button.dart';
 import 'package:cloozy/Core/common/gender_drop_down.dart';
-import 'package:cloozy/Features/Auth/manager/cubits/register/register_cubit.dart';
-import 'package:cloozy/Features/Auth/manager/models/register_model.dart';
-import 'package:cloozy/Features/Auth/views/widgets/password_confirm_field.dart';
-import 'package:cloozy/Features/home/home_page.dart';
+import 'package:cloozy/Feature/Auth/manager/cubits/register/register_cubit.dart';
+import 'package:cloozy/Feature/Auth/manager/models/register_model.dart';
+import 'package:cloozy/Feature/Auth/views/widgets/password_confirm_field.dart';
+import 'package:cloozy/Feature/home/home_page.dart';
 import 'package:cloozy/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 class RegisterPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -39,7 +38,7 @@ class RegisterPage extends StatelessWidget {
           }
           if (state is RegisterSuccess) {
             print('[RegisterPage] Registration successful');
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => HomePage()),
             );

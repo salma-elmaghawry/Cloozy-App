@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:cloozy/Features/Auth/manager/models/register_model.dart';
+import 'package:cloozy/Feature/Auth/manager/models/register_model.dart';
 
 class AuthRepository {
   final Dio _dio = Dio(BaseOptions(
@@ -17,24 +17,21 @@ class AuthRepository {
         '/users/register',
         data: data.toJson(),
         options: Options(
-          validateStatus: (status) => true, 
+          validateStatus: (status) => true,
           headers: {
             'Accept': 'application/json',
             // Add your token here
           },
         ),
       );
-
+//status code and response data
       print('✅ Received response: ${response.statusCode}');
       print('📥 Response Data: ${response.data}');
-      
-
       // Handle redirects
       if (response.statusCode == 302 || response.statusCode == 301) {
         print('⚠️ Redirect detected');
         throw Exception('Server redirected - Check API endpoint configuration');
       }
-
       // Handle HTML responses
       if (response.data is String &&
           response.data.contains('<!DOCTYPE html>')) {
