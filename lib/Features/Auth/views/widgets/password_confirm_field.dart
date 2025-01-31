@@ -15,6 +15,7 @@ class PasswordConfirmField extends StatelessWidget {
     return CustomTextformfield(
       controller: confirmPasswordController,
       label: "Confirm Password",
+      suffixIcon: Icon(Icons.password),
       obscureText: true,
       validator: (value) {
         value != passwordController.text ? 'Passwords do not match' : null;

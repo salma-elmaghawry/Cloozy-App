@@ -1,4 +1,5 @@
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
+import 'package:cloozy/Core/common/cutom_button.dart';
 import 'package:cloozy/Core/common/gender_drop_down.dart';
 import 'package:cloozy/Features/Auth/manager/cubits/register/register_cubit.dart';
 import 'package:cloozy/Features/Auth/manager/models/register_model.dart';
@@ -28,12 +29,6 @@ class RegisterPage extends StatelessWidget {
     print('[RegisterPage] Initial gender value: $_gender');
     print('[RegisterPage] Initial role ID: $_selectedRoleId');
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Register Page",
-        ),
-        centerTitle: true,
-      ),
       body: BlocListener<RegisterCubit, RegisterState>(
         listener: (context, state) {
           if (state is RegisterError) {
@@ -56,36 +51,53 @@ class RegisterPage extends StatelessWidget {
               key: _formKey,
               child: ListView(
                 children: [
+                  const SizedBox(height: 10),
+                  Image.asset("assets/icons/Cloozy.png"),
+                  const Text(
+                    'Sign Up',
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                  const Text('Create anew account',
+                      style: TextStyle(color: Colors.grey, fontSize: 20)),
+                  const SizedBox(height: 20),
                   //Name
                   CustomTextformfield(
                     controller: _nameController,
                     label: "Name",
+                    suffixIcon: Icon(Icons.person),
                     validator: (value) {
                       return value!.isEmpty ? "Required" : null; // Added return
                     },
                   ),
+                  const SizedBox(height: 20),
                   //Email
                   CustomTextformfield(
                       controller: _emailController,
                       label: "Email",
+                      suffixIcon: Icon(Icons.email_outlined),
                       validator: (value) =>
                           value!.contains('@') ? null : "Invalid email"),
+                  const SizedBox(height: 20),
                   //Phone
                   CustomTextformfield(
                     controller: _phoneController,
                     label: "Phone",
+                    suffixIcon: Icon(Icons.tag),
                     KeyboardType: TextInputType.phone,
                     validator: (value) =>
                         value!.length < 10 ? "Invalid phone number" : null,
                   ),
+                  const SizedBox(height: 20),
                   //Password
                   CustomTextformfield(
                     controller: _passwordController,
                     label: "Password",
+                    suffixIcon: Icon(Icons.password_sharp),
                     obscureText: true,
                     validator: (value) =>
                         value!.length < 6 ? "Too short" : null,
                   ),
+                  const SizedBox(height: 20),
                   //confirm Password
                   PasswordConfirmField(
                       passwordController: _passwordController,
@@ -114,12 +126,9 @@ class RegisterPage extends StatelessWidget {
                     if (state is RegisterLoading) {
                       return Center(child: CircularProgressIndicator());
                     }
-                    return ElevatedButton(
+                    return CustomButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            print('[RegisterPage] Form validated successfully');
-                            print('[RegisterPage] Gender value: $_gender');
-                            print('[RegisterPage] Role ID: $_selectedRoleId');
                             final request = RegisterRequest(
                               name: _nameController.text,
                               email: _emailController.text,
@@ -135,7 +144,7 @@ class RegisterPage extends StatelessWidget {
                             context.read<RegisterCubit>().registerUser(request);
                           }
                         },
-                        child: Text("Register"));
+                        text: "Create New Account");
                   })
                 ],
               )),
