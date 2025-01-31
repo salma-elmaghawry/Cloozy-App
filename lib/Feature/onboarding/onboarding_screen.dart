@@ -36,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       title: "Shop Smart, Stay Trendy",
       description:
           "Exclusive deals, new arrivals, and the best\n of local fashion—all in one place!",
-      clipper: AsymmetricalCurveClipper(),
+      clipper: SymmetricalCurveClipper(),
     ),
   ];
 

@@ -42,7 +42,13 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: "^0.13.1"
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/Cloozy.png"
+  adaptive_icon_background: "#FFFFFF" # Optional: Background color for adaptive icons (Android)
+  adaptive_icon_foreground: "assets/images/Cloozy.png" # Optional: Foreground for adaptive icons (Android)
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
