@@ -1,0 +1,71 @@
+import 'package:cloozy/Core/common/constant.dart';
+import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
+import 'package:cloozy/Feature/Auth/manager/cubits/login/login_cubit.dart';
+import 'package:cloozy/Feature/home/home_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class LoginPage extends StatelessWidget {
+   LoginPage({super.key});
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: bgColor,
+      body: BlocListener<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          }
+          if (state is LoginSuccess) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => HomePage()),
+            );
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              CustomTextformfield(
+                controller: _emailController,
+                label: "Email",
+                validator: (value) =>
+                    value!.contains('@') ? null : 'Invalid email',
+              ),
+              CustomTextformfield(
+                controller: _passwordController,
+                label: "Password",
+                obscureText: true,
+              ),
+              BlocBuilder<LoginCubit, LoginState>(
+                builder: (context, state) {
+                  if (state is LoginLoading) {
+                    return  CircularProgressIndicator(color: PrimaryColor);
+                  }
+                  return ElevatedButton(
+                    onPressed: () {
+                      if (_emailController.text.isNotEmpty &&
+                          _passwordController.text.isNotEmpty) {
+                        context.read<LoginCubit>().loginUser(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
+                      }
+                    },
+                    child: const Text('Login'),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
