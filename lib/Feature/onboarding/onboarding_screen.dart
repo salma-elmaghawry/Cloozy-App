@@ -1,7 +1,7 @@
 import 'package:cloozy/Core/common/constant.dart';
-import 'package:cloozy/Feature/Auth/manager/cubits/register/register_cubit.dart';
-import 'package:cloozy/Feature/Auth/manager/repository/auth_repository.dart';
-import 'package:cloozy/Feature/Auth/views/register_page.dart';
+import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
+import 'package:cloozy/Feature/Auth/data/repository/auth_repository.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/register_page.dart';
 import 'package:cloozy/Feature/onboarding/custom_clippers.dart';
 import 'package:cloozy/Feature/onboarding/onboardingpage.dart';
 import 'package:flutter/material.dart';

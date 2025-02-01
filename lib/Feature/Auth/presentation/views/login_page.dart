@@ -1,8 +1,8 @@
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
 import 'package:cloozy/Core/common/cutom_button.dart';
-import 'package:cloozy/Feature/Auth/manager/cubits/login/login_cubit.dart';
-import 'package:cloozy/Feature/home/home_page.dart';
+import 'package:cloozy/Feature/Auth/data/cubits/login/login_cubit.dart';
+import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
