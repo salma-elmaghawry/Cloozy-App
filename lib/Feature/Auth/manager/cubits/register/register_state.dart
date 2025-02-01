@@ -8,9 +8,8 @@ final class RegisterInitial extends RegisterState {}
 final class RegisterLoading extends RegisterState {}
 
 final class RegisterSuccess extends RegisterState {
-  
-  final RegisterResponse response;
-  RegisterSuccess(this.response);
+  final String message;
+  RegisterSuccess(this.message);
 }
 
 final class RegisterError extends RegisterState {

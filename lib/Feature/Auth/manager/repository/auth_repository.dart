@@ -24,46 +24,13 @@ class AuthRepository {
           },
         ),
       );
-//status code and response data
       print('✅ Received response: ${response.statusCode}');
       print('📥 Response Data: ${response.data}');
-      // Handle redirects
-      if (response.statusCode == 302 || response.statusCode == 301) {
-        print('⚠️ Redirect detected');
-        throw Exception('Server redirected - Check API endpoint configuration');
-      }
-      // Handle HTML responses
-      if (response.data is String &&
-          response.data.contains('<!DOCTYPE html>')) {
-        print('⚠️ HTML response detected');
-        throw Exception('Received HTML response instead of JSON');
-      }
-
-      // Handle successful response
-      if (response.statusCode == 200) {
-        print('🎉 Registration successful');
+      if (response.data['message'] == 'User registered successfully.') {
         return RegisterResponse.fromJson(response.data);
+      } else {
+        throw parseErrorResponse(response.data);
       }
-
-      // Handle validation errors (422)
-      if (response.statusCode == 422) {
-        final errors = response.data['errors'] as Map<String, dynamic>?;
-        final errorMessage =
-            StringBuffer(response.data['message'] ?? 'Validation failed');
-
-        errors?.forEach((field, messages) {
-          errorMessage.write('\n• $field: ${(messages as List).join(', ')}');
-        });
-
-        print('❌ Validation errors: $errorMessage');
-        throw Exception(errorMessage.toString());
-      }
-
-      // Handle other error status codes
-      final errorMessage = response.data['message'] ??
-          'Registration failed with status ${response.statusCode}';
-      print('❌ Server error: $errorMessage');
-      throw Exception(errorMessage);
     } on DioException catch (e) {
       print('🚨 Dio Error Occurred');
       print('📡 Error Type: ${e.type}');
@@ -80,10 +47,25 @@ class AuthRepository {
       if (e.response?.data is Map<String, dynamic>) {
         errorMessage = e.response?.data['message'] ?? errorMessage;
       }
-      throw Exception(errorMessage);
+      throw errorMessage;
     } catch (e) {
       print('❌ Unexpected Error: $e');
-      throw Exception('An unexpected error occurred');
+      throw ('$e');
     }
+  }
+
+  String parseErrorResponse(dynamic responseData) {
+    if (responseData == null) return 'Registration failed';
+
+    // Handle multiple errors
+    if (responseData['errors'] is Map) {
+      final errors = responseData['errors'] as Map;
+      return errors.values
+          .expand((errorList) => errorList is List ? errorList : [])
+          .join('\n');
+    }
+
+    // Handle single message
+    return responseData['message']?.toString() ?? 'Registration failed';
   }
 }

@@ -1,4 +1,6 @@
+import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
+import 'package:cloozy/Core/common/custom_snakbar.dart';
 import 'package:cloozy/Core/common/cutom_button.dart';
 import 'package:cloozy/Core/common/gender_drop_down.dart';
 import 'package:cloozy/Feature/Auth/manager/cubits/register/register_cubit.dart';
@@ -29,20 +31,25 @@ class RegisterPage extends StatelessWidget {
     print('[RegisterPage] Initial gender value: $_gender');
     print('[RegisterPage] Initial role ID: $_selectedRoleId');
     return Scaffold(
+      backgroundColor: bgColor,
       body: BlocListener<RegisterCubit, RegisterState>(
         listener: (context, state) {
           if (state is RegisterError) {
             print('[RegisterPage] Error occurred: ${state.message}');
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            showCustomSnackBar(context, state.message, true);
           }
           if (state is RegisterSuccess) {
-            print('[RegisterPage] Registration successful');
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => HomePage()),
-            );
+            if (state.message == 'User registered successfully.') {
+              showCustomSnackBar(context, state.message, false);
+              Future.delayed(const Duration(seconds: 1), () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => HomePage()),
+                );
+              });
+            } else {
+              showCustomSnackBar(context, state.message, true);
+            }
           }
         },
         child: Padding(
@@ -95,7 +102,7 @@ class RegisterPage extends StatelessWidget {
                     suffixIcon: Icon(Icons.password_sharp),
                     obscureText: true,
                     validator: (value) =>
-                        value!.length < 6 ? "Too short" : null,
+                        value!.length < 8 ? "Too short" : null,
                   ),
                   const SizedBox(height: 20),
                   //confirm Password
@@ -124,7 +131,7 @@ class RegisterPage extends StatelessWidget {
                   BlocBuilder<RegisterCubit, RegisterState>(
                       builder: (context, state) {
                     if (state is RegisterLoading) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(child: CircularProgressIndicator(color: PrimaryColor,));
                     }
                     return CustomButton(
                         onPressed: () {

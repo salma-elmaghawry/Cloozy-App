@@ -21,8 +21,11 @@ class CustomTextformfield extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      cursorColor: PrimaryColor,
       //decoration
       decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
           labelText: label,
           labelStyle: TextStyle(color: Colors.grey),
           suffixIcon: suffixIcon,
