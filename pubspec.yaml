@@ -46,9 +46,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/Cloozy.png"
+  image_path: "assets/images/logo.png"
   adaptive_icon_background: "#FFFFFF" # Optional: Background color for adaptive icons (Android)
-  adaptive_icon_foreground: "assets/images/Cloozy.png" # Optional: Foreground for adaptive icons (Android)
+  adaptive_icon_foreground: "assets/images/logo.png" # Optional: Foreground for adaptive icons (Android)
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

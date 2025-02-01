@@ -13,14 +13,12 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      
-      debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (context) => RegisterCubit(AuthRepository()),
-        child: OnboardingScreen(),
+    return BlocProvider(
+      create: (context) => RegisterCubit(AuthRepository()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: OnboardingScreen(),
       ),
     );
   }
 }
-

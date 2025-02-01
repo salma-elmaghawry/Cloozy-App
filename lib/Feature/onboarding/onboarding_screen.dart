@@ -1,8 +1,11 @@
 import 'package:cloozy/Core/common/constant.dart';
+import 'package:cloozy/Feature/Auth/manager/cubits/register/register_cubit.dart';
+import 'package:cloozy/Feature/Auth/manager/repository/auth_repository.dart';
 import 'package:cloozy/Feature/Auth/views/register_page.dart';
 import 'package:cloozy/Feature/onboarding/custom_clippers.dart';
 import 'package:cloozy/Feature/onboarding/onboardingpage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -88,7 +91,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
 
-          // Skip and Next/Get Started Buttons
           Positioned(
             bottom: 40,
             left: 24,
@@ -101,7 +103,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider.value(
+                          value: BlocProvider.of<RegisterCubit>(context),
+                          child: RegisterPage(),
+                        ),
+                      ),
                     );
                   },
                   child: Text(
@@ -114,7 +121,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
 
-                // Next (Forward Icon) or Get Started Button
                 if (currentPage < onboardingPages.length - 1)
                   IconButton(
                     onPressed: () {
@@ -139,7 +145,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider.value(
+                            value: BlocProvider.of<RegisterCubit>(context),
+                            child: RegisterPage(),
+                          ),
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(

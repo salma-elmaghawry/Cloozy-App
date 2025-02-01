@@ -8,6 +8,7 @@ import 'package:cloozy/Feature/home/home_page.dart';
 import 'package:cloozy/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class RegisterPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
