@@ -1,7 +1,7 @@
 import 'package:cloozy/Core/common/constant.dart';
+import 'package:cloozy/Core/common/skip_text_button.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
-import 'package:cloozy/Feature/Auth/data/repository/auth_repository.dart';
-import 'package:cloozy/Feature/Auth/presentation/views/register_page.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Feature/onboarding/custom_clippers.dart';
 import 'package:cloozy/Feature/onboarding/onboardingpage.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       backgroundColor: bgColor,
       body: Stack(
         children: [
-          // PageView for Onboarding Screens
           PageView.builder(
             controller: _controller,
             onPageChanged: (index) {
@@ -67,30 +66,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               );
             },
           ),
-
-          // Custom Indicators
-          Positioned(
-            bottom: 120,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                onboardingPages.length,
-                (index) => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  height: 8,
-                  width: currentPage == index ? 29 : 8,
-                  decoration: BoxDecoration(
-                    color: currentPage == index ? PrimaryColor : grayColor,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-              ),
-            ),
-          ),
-
+          customIndicators(),
           Positioned(
             bottom: 40,
             left: 24,
@@ -98,29 +74,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Skip Button
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider.value(
-                          value: BlocProvider.of<RegisterCubit>(context),
-                          child: RegisterPage(),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    "Skip",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: grayColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-
+                if (currentPage != 2) skipTextButton(),
+                Spacer(),
                 if (currentPage < onboardingPages.length - 1)
                   IconButton(
                     onPressed: () {
@@ -141,41 +96,69 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   )
                 else
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider.value(
-                            value: BlocProvider.of<RegisterCubit>(context),
-                            child: RegisterPage(),
-                          ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: PrimaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: const Text(
-                      "Get Started",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  routetologin(context),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Positioned customIndicators() {
+    return Positioned(
+      bottom: 120,
+      left: 0,
+      right: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          onboardingPages.length,
+          (index) => AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            margin: const EdgeInsets.symmetric(horizontal: 4),
+            height: 8,
+            width: currentPage == index ? 29 : 8,
+            decoration: BoxDecoration(
+              color: currentPage == index ? PrimaryColor : grayColor,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  ElevatedButton routetologin(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider.value(
+              value: BlocProvider.of<RegisterCubit>(context),
+              child: LoginPage(),
+            ),
+          ),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: PrimaryColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 32,
+          vertical: 12,
+        ),
+      ),
+      child: const Text(
+        "Get Started",
+        style: TextStyle(
+          fontSize: 16,
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }

@@ -27,16 +27,16 @@ class AsymmetricalCurveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-    path.lineTo(0, size.height * 0.7); // Start at 70% height on the left
+    path.lineTo(0, size.height * 0.7); 
 
     // Asymmetrical curve peaking more on the right
     path.quadraticBezierTo(
         size.width * 0.7,
-        size.height * 1.2, // Control point shifted to the right
+        size.height * 1.2, 
         size.width,
-        size.height * 0.8); // End at 80% height on the right
+        size.height * 0.8); 
 
-    path.lineTo(size.width, 0); // Close the path at the top-right corner
+    path.lineTo(size.width, 0); 
     path.close();
     return path;
   }
@@ -53,13 +53,12 @@ class WaveCurveClipper extends CustomClipper<Path> {
 
     // First control point
     path.quadraticBezierTo(
-        size.width * 0.25, size.height * 0.6, // Control point
-        size.width * 0.5, size.height * 0.8); // Midpoint
+        size.width * 0.25, size.height * 0.6, 
+        size.width * 0.5, size.height * 0.8); 
 
-    // Second control point: creates a smooth curve downwards
     path.quadraticBezierTo(
-        size.width * 0.75, size.height * 1.0, // Control point
-        size.width, size.height * 0.8); // End at 80% height on the right
+        size.width * 0.75, size.height * 1.0, 
+        size.width, size.height * 0.8);
 
     path.lineTo(size.width, 0); // Close the path at the top-right corner
     path.close();

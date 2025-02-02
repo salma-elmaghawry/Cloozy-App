@@ -36,13 +36,14 @@ dependencies:
   flutter_secure_storage: ^8.0.0
   flutter_svg: ^2.0.17
   http: ^1.3.0
+  get: ^4.6.5
   smooth_page_indicator: ^1.0.0+2
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.13.1"
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.13.1"
 flutter_launcher_icons:
   android: true
   ios: true
@@ -75,7 +76,7 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-       - asset: assets\fonts\Poppins,Quicksand\Poppins\Poppins-Medium.ttf
+        - asset: assets\fonts\Poppins,Quicksand\Poppins\Poppins-Medium.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
