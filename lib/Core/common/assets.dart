@@ -1,4 +1,4 @@
-const logo = "assets/icons/Cloozy.png";
+const logo = "assets/icons/logo.svg";
 const facebookLogo = "assets/icons/Facebook.svg";
 const googleLogo = "assets/icons/Google.svg";
 const c = "assets/icons/c.svg";

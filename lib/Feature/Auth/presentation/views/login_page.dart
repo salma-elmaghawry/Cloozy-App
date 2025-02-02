@@ -1,3 +1,4 @@
+import 'package:cloozy/Core/common/assets.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
 import 'package:cloozy/Core/common/cutom_button.dart';
@@ -34,7 +35,7 @@ class LoginPage extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(height: 10),
-              Image.asset("assets/icons/Cloozy.png"),
+              Image.asset(logo),
               const Text(
                 'Sign In',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),

@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 2), // Adjust the duration as needed
+      duration: const Duration(seconds: 2),
       vsync: this,
     );
 
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
     });
 //route to onboarding
     _controller.forward().then((_) {
-      Get.offNamed('onboarding'); 
+      Get.offNamed('onboarding');
     });
   }
 
@@ -44,7 +44,6 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,10 +59,13 @@ class _SplashScreenState extends State<SplashScreen>
                 AnimatedCharacter(animation: _animations[5], svgPath: y),
               ],
             ),
-            SizedBox(height: 20),
             ScaleTransition(
               scale: _animations[5],
-              child: SvgPicture.asset(arrow, height: 50),
+              child: SvgPicture.asset(
+                arrow,
+                height: 21,
+                width: 180,
+              ),
             ),
           ],
         ),
