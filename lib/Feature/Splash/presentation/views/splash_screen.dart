@@ -1,5 +1,7 @@
+import 'package:cloozy/Core/common/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart'; // Import Get for navigation
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 2), // Adjust the duration as needed
       vsync: this,
     );
 
@@ -27,8 +29,10 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       );
     });
-
-    _controller.forward();
+//route to onboarding
+    _controller.forward().then((_) {
+      Get.offNamed('onboarding'); 
+    });
   }
 
   @override
@@ -48,24 +52,18 @@ class _SplashScreenState extends State<SplashScreen>
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AnimatedCharacter(
-                    animation: _animations[0], svgPath: 'assets/c.svg'),
-                AnimatedCharacter(
-                    animation: _animations[1], svgPath: 'assets/l.svg'),
-                AnimatedCharacter(
-                    animation: _animations[2], svgPath: 'assets/o.svg'),
-                AnimatedCharacter(
-                    animation: _animations[3], svgPath: 'assets/o.svg'),
-                AnimatedCharacter(
-                    animation: _animations[4], svgPath: 'assets/z.svg'),
-                AnimatedCharacter(
-                    animation: _animations[5], svgPath: 'assets/y.svg'),
+                AnimatedCharacter(animation: _animations[0], svgPath: c),
+                AnimatedCharacter(animation: _animations[1], svgPath: l),
+                AnimatedCharacter(animation: _animations[2], svgPath: o1),
+                AnimatedCharacter(animation: _animations[3], svgPath: o2),
+                AnimatedCharacter(animation: _animations[4], svgPath: z),
+                AnimatedCharacter(animation: _animations[5], svgPath: y),
               ],
             ),
             SizedBox(height: 20),
             ScaleTransition(
               scale: _animations[5],
-              child: SvgPicture.asset('assets/v.svg', height: 50),
+              child: SvgPicture.asset(arrow, height: 50),
             ),
           ],
         ),

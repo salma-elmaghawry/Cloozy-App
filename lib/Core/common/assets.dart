@@ -1,11 +1,10 @@
 const logo = "assets/icons/Cloozy.png";
 const facebookLogo = "assets/icons/Facebook.svg";
 const googleLogo = "assets/icons/Google.svg";
-const c = "assets/icons/c.png";
-const l = "assets/icons/c.png";
-const o1 = "assets/icons/c.png";
-const o2 = "assets/icons/c.png";
-const z = "assets/icons/c.png";
+const c = "assets/icons/c.svg";
+const l = "assets/icons/l.svg";
+const o1 = "assets/icons/o.svg";
+const o2 = "assets/icons/o.svg";
+const z = "assets/icons/z.svg";
+const y = "assets/icons/y.svg";
 const arrow = "assets/icons/v.svg";
-
-
