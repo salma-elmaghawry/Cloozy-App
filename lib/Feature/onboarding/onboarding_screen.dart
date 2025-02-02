@@ -1,6 +1,7 @@
 import 'package:cloozy/Core/common/constant.dart';
-import 'package:cloozy/Core/common/skip_text_button.dart';
+import 'package:cloozy/Core/common/custom_text_button.dart';
 import 'package:cloozy/Core/helper/assets.dart';
+import 'package:cloozy/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Feature/onboarding/custom_clippers.dart';
@@ -75,7 +76,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (currentPage != 2) skipTextButton(),
+                if (currentPage != 2)
+                  CustomTextButton(
+                    title: "Skip",
+                    onPressed: () {
+                      NavigationMethod(context);
+                    },
+                  ),
                 Spacer(),
                 if (currentPage < onboardingPages.length - 1)
                   IconButton(
@@ -102,6 +109,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Future<dynamic> NavigationMethod(BuildContext context) {
+    return Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: BlocProvider.of<LoginCubit>(context),
+          child: LoginPage(),
+        ),
       ),
     );
   }

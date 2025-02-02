@@ -1,6 +1,6 @@
 const logo = "assets/icons/logo.svg";
-const facebookLogo = "assets/icons/Facebook.svg";
-const googleLogo = "assets/icons/Google.svg";
+const facebookLogo = "assets/icons/Facebook.png";
+const googleLogo = "assets/icons/google.png";
 const c = "assets/icons/c.svg";
 const l = "assets/icons/l.svg";
 const o1 = "assets/icons/o.svg";
@@ -9,3 +9,4 @@ const o2 = "assets/icons/o.svg";
 const z = "assets/icons/z.svg";
 const y = "assets/icons/y.svg";
 const arrow = "assets/icons/v.svg";
+const font = "Poppins";

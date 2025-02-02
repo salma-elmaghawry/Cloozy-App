@@ -4,30 +4,28 @@ import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class skipTextButton extends StatelessWidget {
-  const skipTextButton({
+class CustomTextButton extends StatelessWidget {
+  CustomTextButton({
     super.key,
+    required this.title,
+    this.fontSize,
+    required this.onPressed,
+    this.color=grayColor,
   });
+  final String title;
+  double? fontSize;
+  Color ?color;
+  void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BlocProvider.value(
-              value: BlocProvider.of<RegisterCubit>(context),
-              child: LoginPage(),
-            ),
-          ),
-        );
-      },
-      child: const Text(
-        "Skip",
+      onPressed: () {},
+      child: Text(
+        title,
         style: TextStyle(
           fontSize: 16,
-          color: grayColor,
+          color: color,
           fontWeight: FontWeight.w500,
         ),
       ),
