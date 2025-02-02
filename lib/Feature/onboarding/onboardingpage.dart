@@ -65,11 +65,11 @@ class CustomCurveClipper extends CustomClipper<Path> {
     // Adjust the control points for a more balanced curve
     path.quadraticBezierTo(
         size.width / 2,
-        size.height * 1.0, // Control point at the center
+        size.height * 1.0, 
         size.width,
-        size.height * 0.8); // End at 80% height on the right
+        size.height * 0.8); 
 
-    path.lineTo(size.width, 0); // Close the path at the top-right corner
+    path.lineTo(size.width, 0); 
     path.close();
     return path;
   }

@@ -1,9 +1,9 @@
-import 'package:cloozy/Core/common/assets.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
 import 'package:cloozy/Core/common/custom_snakbar.dart';
 import 'package:cloozy/Core/common/cutom_button.dart';
 import 'package:cloozy/Core/common/gender_drop_down.dart';
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/widgets/password_confirm_field.dart';
@@ -11,6 +11,7 @@ import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
 import 'package:cloozy/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RegisterPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -60,7 +61,11 @@ class RegisterPage extends StatelessWidget {
               child: ListView(
                 children: [
                   const SizedBox(height: 10),
-                  Image.asset(logo),
+                  SvgPicture.asset(
+                    logo,
+                    width: 170,
+                    height: 53,
+                  ),
                   const Text(
                     'Sign Up',
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -132,7 +137,10 @@ class RegisterPage extends StatelessWidget {
                   BlocBuilder<RegisterCubit, RegisterState>(
                       builder: (context, state) {
                     if (state is RegisterLoading) {
-                      return Center(child: CircularProgressIndicator(color: PrimaryColor,));
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: PrimaryColor,
+                      ));
                     }
                     return CustomButton(
                         onPressed: () {

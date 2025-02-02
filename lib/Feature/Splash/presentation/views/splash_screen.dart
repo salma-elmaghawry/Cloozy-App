@@ -1,4 +1,4 @@
-import 'package:cloozy/Core/common/assets.dart';
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart'; // Import Get for navigation

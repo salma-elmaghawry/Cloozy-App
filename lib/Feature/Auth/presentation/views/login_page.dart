@@ -1,4 +1,4 @@
-import 'package:cloozy/Core/common/assets.dart';
+import 'package:cloozy/Core/common/add_logo.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
 import 'package:cloozy/Core/common/cutom_button.dart';
@@ -6,6 +6,7 @@ import 'package:cloozy/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -35,7 +36,7 @@ class LoginPage extends StatelessWidget {
           child: ListView(
             children: [
               SizedBox(height: 10),
-              Image.asset(logo),
+              addLogo(),
               const Text(
                 'Sign In',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),

@@ -4,6 +4,7 @@ const googleLogo = "assets/icons/Google.svg";
 const c = "assets/icons/c.svg";
 const l = "assets/icons/l.svg";
 const o1 = "assets/icons/o.svg";
+const shortArrow = "assets/icons/short_arrow.svg";
 const o2 = "assets/icons/o.svg";
 const z = "assets/icons/z.svg";
 const y = "assets/icons/y.svg";

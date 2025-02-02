@@ -1,5 +1,6 @@
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/skip_text_button.dart';
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Feature/onboarding/custom_clippers.dart';
@@ -85,7 +86,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       );
                     },
                     icon: SvgPicture.asset(
-                      "assets/icons/Short Arrow.svg",
+                      shortArrow,
                       color: Colors.white,
                     ),
                     style: IconButton.styleFrom(
