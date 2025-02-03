@@ -1,6 +1,10 @@
+import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
+import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/verify_email.dart';
 import 'package:flutter/material.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Core/common/custom_snakbar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterPage3 extends StatefulWidget {
   final int roleId;
@@ -22,7 +26,9 @@ class RegisterPage3 extends StatefulWidget {
 class _RegisterPage3State extends State<RegisterPage3> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  bool _agreeToTerms = false;
 
   @override
   void dispose() {
@@ -32,11 +38,21 @@ class _RegisterPage3State extends State<RegisterPage3> {
   }
 
   void _validateAndRegister() {
-    if (_formKey.currentState!.validate()) {
-      // Proceed with registration
-      // You can call your API or state management here to complete the registration
-      showCustomSnackBar(context, "Registration Successful", false);
+    if (!_agreeToTerms) {
+      showCustomSnackBar(
+          context, "You must agree to the terms and conditions", true);
+      return;
     }
+    final request = RegisterRequest(
+      name: widget.name,
+      email: widget.email,
+      phone: widget.phone,
+      password: _passwordController.text,
+      gender: widget.gender,
+      passwordConfirmation: _confirmPasswordController.text,
+      roleId: widget.roleId,
+    );
+    context.read<RegisterCubit>().registerUser(request);
   }
 
   @override
@@ -46,27 +62,53 @@ class _RegisterPage3State extends State<RegisterPage3> {
         padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
-          child: ListView(
-            children: [
-              const Text("Set Password", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-              CustomTextformfield(
-                controller: _passwordController,
-                label: "Password",
-                obscureText: true,
-                validator: (value) => value!.length < 8 ? "Password must be at least 8 characters" : null,
-              ),
-              CustomTextformfield(
-                controller: _confirmPasswordController,
-                label: "Confirm Password",
-                obscureText: true,
-                validator: (value) => value != _passwordController.text ? "Passwords do not match" : null,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _validateAndRegister,
-                child: const Text("Register"),
-              ),
-            ],
+          child: BlocListener<RegisterCubit, RegisterState>(
+            listener: (context, state) {
+              if (state is RegisterError) {
+                showCustomSnackBar(context, state.message, true);
+              }
+              if (state is RegisterSuccess) {
+                if (state.message == 'User registered successfully.') {
+                  showCustomSnackBar(context, state.message, false);
+                  Future.delayed(const Duration(seconds: 1), () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => VerifyEmail()),
+                    );
+                  });
+                } else {
+                  showCustomSnackBar(context, state.message, true);
+                }
+              }
+            },
+            child: ListView(
+              children: [
+                const Text("Set Password",
+                    style:
+                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                CustomTextformfield(
+                  controller: _passwordController,
+                  label: "Password",
+                  obscureText: true,
+                  validator: (value) => value!.length < 8
+                      ? "Password must be at least 8 characters"
+                      : null,
+                ),
+                CustomTextformfield(
+                  controller: _confirmPasswordController,
+                  label: "Confirm Password",
+                  obscureText: true,
+                  validator: (value) => value != _passwordController.text
+                      ? "Passwords do not match"
+                      : null,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _validateAndRegister,
+                  child: const Text("Register"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
