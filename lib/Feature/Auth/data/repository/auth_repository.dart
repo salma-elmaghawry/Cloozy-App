@@ -20,30 +20,30 @@ class AuthRepository {
   ));
 
 //roles mothod
- Future<List<Role>> getRoles() async {
-  try {
-    final response = await _dio.get('/users/pre-register');
-    print('✅ Received response: ${response.statusCode}');
-    print('📥 Response Data: ${response.data}');
+  Future<List<Role>> getRoles() async {
+    try {
+      final response = await _dio.get('/users/pre-register');
+      print('✅ Received response: ${response.statusCode}');
+      print('📥 Response Data: ${response.data}');
 
-    if (response.statusCode == 200) {
-      List rolesData = response.data['data']['roles'];
-      return rolesData.map((json) => Role.fromJson(json)).toList(); // Fixed
-    } else {
-      throw Exception("Failed to fetch roles");
+      if (response.statusCode == 200) {
+        List rolesData = response.data['data']['roles'];
+        return rolesData.map((json) => Role.fromJson(json)).toList(); // Fixed
+      } else {
+        throw Exception("Failed to fetch roles");
+      }
+    } catch (e) {
+      print("Error: $e");
+      throw Exception("Error fetching roles");
     }
-  } catch (e) {
-    print("Error: $e");
-    throw Exception("Error fetching roles");
   }
-}
-
 
 //register method
   Future<RegisterResponse> register(RegisterRequest data) async {
     try {
       print('⏳ Starting registration request...');
       print('📤 Request Data: ${data.toJson()}');
+
       final response = await _dio.post(
         '/users/register',
         data: data.toJson(),
@@ -55,8 +55,6 @@ class AuthRepository {
           },
         ),
       );
-      final token = response.data['token'];
-      await saveToken(token);
       print('✅ Received response: ${response.statusCode}');
       print('📥 Response Data: ${response.data}');
       if (response.data['message'] == 'User registered successfully.') {
@@ -65,6 +63,7 @@ class AuthRepository {
         throw parseErrorResponse(response.data);
       }
     } on DioException catch (e) {
+      print('🚨 Dio Error Occurred');
       print('📡 Error Type: ${e.type}');
       print('💬 Error Message: ${e.message}');
 

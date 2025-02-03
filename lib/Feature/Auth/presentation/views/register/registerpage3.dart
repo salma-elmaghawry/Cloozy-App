@@ -28,6 +28,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+   String _selectedGender = 'female';
   bool _agreeToTerms = false;
 
   @override
@@ -106,6 +107,25 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 ElevatedButton(
                   onPressed: _validateAndRegister,
                   child: const Text("Register"),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _agreeToTerms,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _agreeToTerms = value ?? false;
+                        });
+                      },
+                    ),
+                    const Expanded(
+                      child: Text(
+                        "I agree to the terms and conditions",
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

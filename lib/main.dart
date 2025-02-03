@@ -2,6 +2,7 @@ import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Feature/Auth/data/repository/auth_repository.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/forget_password.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage2.dart';
@@ -40,8 +41,9 @@ class MyApp extends StatelessWidget {
           'home': (context) => HomePage(),
           'login': (content) => LoginPage(),
           'Splash': (context) => SplashScreen(),
+          'forget_password':(context)=>ForgetPassword(),
         },
-        initialRoute: 'Splash',
+        initialRoute: 'register',
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:cloozy/Core/common/gender_drop_down.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage3.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  String _selectedGender = 'Male';
+  String _selectedGender = 'female';
 
   @override
   void dispose() {
@@ -51,30 +52,29 @@ class _RegisterPage2State extends State<RegisterPage2> {
           key: _formKey,
           child: ListView(
             children: [
-              const Text("Enter Personal Information", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+              const Text("Enter Personal Information",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: "Name"),
-                validator: (value) => value!.isEmpty ? "Please enter your name" : null,
+                validator: (value) =>
+                    value!.isEmpty ? "Please enter your name" : null,
               ),
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: "Email"),
-                validator: (value) => !value!.contains('@') ? "Invalid Email" : null,
+                validator: (value) =>
+                    !value!.contains('@') ? "Invalid Email" : null,
               ),
               TextFormField(
                 controller: _phoneController,
                 decoration: const InputDecoration(labelText: "Phone Number"),
-                validator: (value) => value!.length < 10 ? "Invalid Phone Number" : null,
+                validator: (value) =>
+                    value!.length < 10 ? "Invalid Phone Number" : null,
               ),
-              DropdownButtonFormField(
-                value: _selectedGender,
-                items: ['Male', 'Female'].map((gender) {
-                  return DropdownMenuItem(value: gender, child: Text(gender));
-                }).toList(),
-                onChanged: (value) => setState(() => _selectedGender = value!),
-                decoration: const InputDecoration(labelText: "Gender"),
-              ),
+              GenderDropdown(
+                  value: _selectedGender,
+                  onChange: (value) => _selectedGender = value!),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _goToNextPage,
