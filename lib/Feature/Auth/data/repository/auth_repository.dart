@@ -1,4 +1,6 @@
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:cloozy/Feature/Auth/data/models/login_model.dart';
+import 'package:cloozy/Feature/Auth/data/models/roles_model.dart';
 import 'package:dio/dio.dart';
 import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -12,10 +14,31 @@ class AuthRepository {
   }
 
   final Dio _dio = Dio(BaseOptions(
-    baseUrl: "https://cloozy.azurewebsites.net/api",
+    baseUrl: baseUrl,
     headers: {'Content-Type': 'application/json'},
     validateStatus: (status) => status! < 500,
   ));
+
+//roles mothod
+ Future<List<Role>> getRoles() async {
+  try {
+    final response = await _dio.get('/users/pre-register');
+    print('✅ Received response: ${response.statusCode}');
+    print('📥 Response Data: ${response.data}');
+
+    if (response.statusCode == 200) {
+      List rolesData = response.data['data']['roles'];
+      return rolesData.map((json) => Role.fromJson(json)).toList(); // Fixed
+    } else {
+      throw Exception("Failed to fetch roles");
+    }
+  } catch (e) {
+    print("Error: $e");
+    throw Exception("Error fetching roles");
+  }
+}
+
+
 //register method
   Future<RegisterResponse> register(RegisterRequest data) async {
     try {
@@ -42,7 +65,6 @@ class AuthRepository {
         throw parseErrorResponse(response.data);
       }
     } on DioException catch (e) {
-     
       print('📡 Error Type: ${e.type}');
       print('💬 Error Message: ${e.message}');
 

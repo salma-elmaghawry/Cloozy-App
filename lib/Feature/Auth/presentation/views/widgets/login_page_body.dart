@@ -7,7 +7,7 @@ import 'package:cloozy/Core/common/custom_text_button.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/widgets/social_media_login.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/forget_password.dart';
-import 'package:cloozy/Feature/Auth/presentation/views/register_page.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/registerpage1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

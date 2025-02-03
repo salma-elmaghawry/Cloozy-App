@@ -10,3 +10,4 @@ const z = "assets/icons/z.svg";
 const y = "assets/icons/y.svg";
 const arrow = "assets/icons/v.svg";
 const font = "Poppins";
+const baseUrl = "https://cloozy.azurewebsites.net/api";
