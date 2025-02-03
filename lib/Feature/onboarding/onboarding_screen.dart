@@ -97,7 +97,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       color: Colors.white,
                     ),
                     style: IconButton.styleFrom(
-                      backgroundColor: PrimaryColor,
+                      backgroundColor: primaryColor,
                       shape: CircleBorder(),
                       iconSize: 80,
                       padding: const EdgeInsets.all(12),
@@ -140,7 +140,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             height: 8,
             width: currentPage == index ? 29 : 8,
             decoration: BoxDecoration(
-              color: currentPage == index ? PrimaryColor : grayColor,
+              color: currentPage == index ? primaryColor : grayColor,
               borderRadius: BorderRadius.circular(4),
             ),
           ),
@@ -163,7 +163,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         );
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: PrimaryColor,
+        backgroundColor: primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),

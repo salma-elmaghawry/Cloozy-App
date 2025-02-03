@@ -1,6 +1,5 @@
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/headline_text_style.dart';
-import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage1.dart';
 import 'package:flutter/material.dart';
 
 class LineWithAction extends StatelessWidget {
@@ -28,7 +27,7 @@ class LineWithAction extends StatelessWidget {
           onTap: onTap,
           child: customText(
             title: actionName,
-            color: PrimaryColor,
+            color: primaryColor,
             fontSize: 12,
             fontWeight: FontWeight.bold,
           ),

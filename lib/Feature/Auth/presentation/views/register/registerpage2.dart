@@ -15,7 +15,7 @@ class RegisterPage2 extends StatefulWidget {
   final String gender;
   final int? selectedRoleId;
 
-   RegisterPage2({
+  RegisterPage2({
     required this.name,
     required this.email,
     required this.phone,
@@ -42,8 +42,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
           key: _formKey,
           child: ListView(
             children: [
-              addLogo(),
-              
+              const AddLogo(),
               const SizedBox(height: 20),
               const Text("Sign Up",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
@@ -53,7 +52,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
               CustomTextformfield(
                 controller: _passwordController,
                 label: "Password",
-                suffixIcon: Icon(Icons.lock),
+                suffixIcon: const Icon(Icons.lock),
                 obscureText: true,
                 validator: (value) => value!.length < 8 ? "Too short" : null,
               ),
@@ -72,8 +71,8 @@ class _RegisterPage2State extends State<RegisterPage2> {
                       });
                     },
                   ),
-                  Text("I agree to the "),
-                  Text(
+                  const Text("I agree to the "),
+                  const Text(
                     "Terms Of Conditions",
                     style: TextStyle(
                         color: Colors.red, fontWeight: FontWeight.bold),
@@ -81,25 +80,28 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 ],
               ),
               const SizedBox(height: 30),
-              CustomButton(text: "Create new account", onPressed: (){
-                if (_formKey.currentState!.validate() && _agreeToTerms) {
-                    // Handle user registration with all collected data
-                    final request = RegisterRequest(
-                      name: widget.name,
-                      email: widget.email,
-                      phone: widget.phone,
-                      password: _passwordController.text,
-                      gender: widget.gender,
-                      passwordConfirmation: _confirmPasswordController.text,
-                      roleId: widget.selectedRoleId!,
-                    );
-                    context.read<RegisterCubit>().registerUser(request);
-                  }
-              }),
-             
+              CustomButton(
+                  text: "Create new account",
+                  onPressed: () {
+                    if (_formKey.currentState!.validate() && _agreeToTerms) {
+                      // Handle user registration with all collected data
+                      final request = RegisterRequest(
+                        name: widget.name,
+                        email: widget.email,
+                        phone: widget.phone,
+                        password: _passwordController.text,
+                        gender: widget.gender,
+                        passwordConfirmation: _confirmPasswordController.text,
+                        roleId: widget.selectedRoleId!,
+                      );
+                      context.read<RegisterCubit>().registerUser(request);
+                    }
+                  }),
               const SizedBox(height: 20),
-              LineWithAction(actionName: "Login", onTap: (){}, title: "Already have an account? ")
-             
+              LineWithAction(
+                  actionName: "Login",
+                  onTap: () {},
+                  title: "Already have an account? ")
             ],
           ),
         ),

@@ -35,8 +35,8 @@ class _LoginPageBodyState extends State<LoginPageBody> {
       padding: const EdgeInsets.all(16.0),
       child: ListView(
         children: [
-          SizedBox(height: 10),
-          addLogo(),
+          const SizedBox(height: 10),
+          const AddLogo(),
           customText(
             title: "Welcome Back!",
             color: Colors.black,
@@ -69,7 +69,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                       value: isChecked,
                       splashRadius: 25,
                       activeColor: grayColor,
-                      checkColor: PrimaryColor,
+                      checkColor: primaryColor,
                       //focusColor: grayColor,
                       onChanged: (value) {
                         setState(() {
@@ -80,30 +80,31 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                     "Remember Me",
                     style: TextStyle(
                       color: isChecked
-                          ? PrimaryColor
+                          ? primaryColor
                           : const Color.fromARGB(255, 192, 192, 192),
                     ),
                   )
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               CustomTextButton(
                   title: "Forgot password?",
-                  color: PrimaryColor,
+                  color: primaryColor,
                   fontSize: 12,
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => ForgetPassword()),
+                      MaterialPageRoute(
+                          builder: (context) => const ForgetPassword()),
                     );
                   }),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
           BlocBuilder<LoginCubit, LoginState>(
             builder: (context, state) {
               if (state is LoginLoading) {
-                return CircularProgressIndicator(color: PrimaryColor);
+                return const CircularProgressIndicator(color: primaryColor);
               }
               return CustomButton(
                 onPressed: () {
@@ -122,13 +123,17 @@ class _LoginPageBodyState extends State<LoginPageBody> {
           const SizedBox(
             height: 10,
           ),
-          LineWithAction(title: "Don't have an account? ",onTap: (){
-             Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return RegisterPage();
-            }));
-          },actionName: "SignUp",),
+          LineWithAction(
+            title: "Don't have an account? ",
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return RegisterPage();
+              }));
+            },
+            actionName: "SignUp",
+          ),
           const SizedBox(height: 30),
-          Row(
+          const Row(
             children: [
               Expanded(child: Divider()),
               Padding(
@@ -139,7 +144,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             ],
           ),
           const SizedBox(height: 30),
-          SocialMediaLogin()
+          const SocialMediaLogin()
         ],
       ),
     );
@@ -168,7 +173,7 @@ class linewithtapword extends StatelessWidget {
           },
           child: customText(
             title: "SignUp",
-            color: PrimaryColor,
+            color: primaryColor,
             fontSize: 12,
             fontWeight: FontWeight.bold,
           ),

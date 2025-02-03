@@ -1,8 +1,5 @@
 import 'package:cloozy/Core/common/constant.dart';
-import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
-import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomTextButton extends StatelessWidget {
   CustomTextButton({

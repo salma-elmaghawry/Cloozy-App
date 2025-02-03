@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
           if (state is LoginSuccess) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (_) => HomePage()),
+              MaterialPageRoute(builder: (_) =>const  HomePage()),
             );
           }
         },

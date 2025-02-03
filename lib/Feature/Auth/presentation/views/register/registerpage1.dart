@@ -1,8 +1,6 @@
 import 'package:cloozy/Core/common/add_logo.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
-import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:cloozy/Core/common/linewithtapword.dart';
-import 'package:cloozy/Core/helper/assets.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +10,6 @@ import 'package:cloozy/Core/common/custom_snakbar.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Feature/Auth/data/models/roles_model.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage2.dart';
-import 'package:flutter_svg/svg.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -80,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
         key: _formKey,
         child: ListView(
           children: [
-            addLogo(),
+            const AddLogo(),
             const Text(
               'Sign Up',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -115,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: _phoneController,
               label: "Phone",
               suffixIcon: const Icon(Icons.phone),
-              KeyboardType: TextInputType.phone,
+              keyboardType: TextInputType.phone,
               validator: (value) =>
                   value!.length < 10 ? "Invalid phone number" : null,
             ),
@@ -175,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: PrimaryColor,
+                backgroundColor: primaryColor,
                 padding: const EdgeInsets.symmetric(
                     horizontal: 20, vertical: 15), // Optional: Add padding
                 shape: RoundedRectangleBorder(

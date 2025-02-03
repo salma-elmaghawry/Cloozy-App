@@ -1,6 +1,5 @@
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SocialMediaLogin extends StatelessWidget {
   const SocialMediaLogin({
@@ -20,13 +19,13 @@ class SocialMediaLogin extends StatelessWidget {
           child: Row(
             children: [
               Image.asset(facebookLogo),
-              Text(" Facebook", style: TextStyle(fontSize: 16)),
+              const Text(" Facebook", style: TextStyle(fontSize: 16)),
             ],
           ),
         ),
         const SizedBox(width: 50),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+          padding:const  EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey.shade300, width: 2),
             borderRadius: BorderRadius.circular(10),
@@ -34,8 +33,8 @@ class SocialMediaLogin extends StatelessWidget {
           child: Row(
             children: [
               Image.asset(googleLogo),
-              SizedBox(width: 10),
-              Text("Google", style: TextStyle(fontSize: 16)),
+              const SizedBox(width: 10),
+              const Text("Google", style: TextStyle(fontSize: 16)),
             ],
           ),
         ),

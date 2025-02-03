@@ -34,7 +34,7 @@ class OnboardingPage extends StatelessWidget {
         // Title
         customText(
           title: title,
-          color: PrimaryColor,
+          color: primaryColor,
           fontSize: 20,
           fontWeight: FontWeight.w500,
         ),
@@ -43,10 +43,10 @@ class OnboardingPage extends StatelessWidget {
 
         // Description
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 40.0),
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
           child: Text(
             description,
-            style: TextStyle(fontSize: 14, color: grayColor),
+            style: const TextStyle(fontSize: 14, color: grayColor),
             textAlign: TextAlign.center,
           ),
         ),

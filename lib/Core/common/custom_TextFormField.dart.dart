@@ -6,7 +6,7 @@ class CustomTextformfield extends StatelessWidget {
   final String label;
   final String? Function(String?)? validator;
   final bool obscureText;
-  final TextInputType? KeyboardType;
+  final TextInputType? keyboardType;
   Widget? suffixIcon;
   CustomTextformfield(
       {super.key,
@@ -15,27 +15,27 @@ class CustomTextformfield extends StatelessWidget {
       this.validator,
       this.suffixIcon,
       this.obscureText = false,
-      this.KeyboardType});
+      this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      cursorColor: PrimaryColor,
+      cursorColor: primaryColor,
       //decoration
       decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
           labelText: label,
-          labelStyle: TextStyle(color: Colors.grey),
+          labelStyle: const TextStyle(color: Colors.grey),
           suffixIcon: suffixIcon,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: PrimaryColor,
+            borderSide: const BorderSide(
+              color: primaryColor,
               width: 2.0,
             ),
           )),
