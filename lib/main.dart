@@ -4,6 +4,7 @@ import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Feature/Auth/data/repository/auth_repository.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage1.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage2.dart';
 import 'package:cloozy/Feature/Splash/presentation/views/splash_screen.dart';
 import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
 import 'package:cloozy/Feature/onboarding/onboarding_screen.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           'onboarding': (context) => OnboardingScreen(),
-          'register': (context) => RegisterPage(),
+          'register': (context) => RegisterPage1(),
           'home': (context) => HomePage(),
           'login': (content) => LoginPage(),
           'Splash': (context) => SplashScreen(),

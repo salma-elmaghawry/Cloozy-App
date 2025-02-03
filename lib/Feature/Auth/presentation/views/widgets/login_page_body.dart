@@ -5,10 +5,11 @@ import 'package:cloozy/Core/common/cutom_button.dart';
 import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:cloozy/Core/common/custom_text_button.dart';
 import 'package:cloozy/Core/common/linewithtapword.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/widgets/social_media_login.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/forget_password.dart';
-import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage1.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -127,7 +128,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             title: "Don't have an account? ",
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return RegisterPage();
+                return RegisterPage1();
               }));
             },
             actionName: "SignUp",
@@ -151,34 +152,3 @@ class _LoginPageBodyState extends State<LoginPageBody> {
   }
 }
 
-class linewithtapword extends StatelessWidget {
-  const linewithtapword({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        customText(
-          title: "Don't have an account? ",
-          color: Colors.black,
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return RegisterPage();
-            }));
-          },
-          child: customText(
-            title: "SignUp",
-            color: primaryColor,
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    );
-  }
-}

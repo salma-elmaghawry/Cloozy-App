@@ -1,29 +1,10 @@
-import 'package:cloozy/Core/common/add_logo.dart';
-import 'package:cloozy/Core/common/custom_TextFormField.dart';
-import 'package:cloozy/Core/common/custom_snakbar.dart';
-import 'package:cloozy/Core/common/cutom_button.dart';
-import 'package:cloozy/Core/common/linewithtapword.dart';
-import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
-import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
-import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage3.dart';
 import 'package:flutter/material.dart';
-import 'package:cloozy/Feature/Auth/presentation/views/widgets/password_confirm_field.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterPage2 extends StatefulWidget {
-  final String name;
-  final String email;
-  final String phone;
-  final String gender;
-  final int selectedRoleId;
+  final int roleId;
 
-  RegisterPage2({
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.gender,
-    required this.selectedRoleId,
-  });
+  const RegisterPage2({Key? key, required this.roleId}) : super(key: key);
 
   @override
   _RegisterPage2State createState() => _RegisterPage2State();
@@ -31,9 +12,35 @@ class RegisterPage2 extends StatefulWidget {
 
 class _RegisterPage2State extends State<RegisterPage2> {
   final _formKey = GlobalKey<FormState>();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  bool _agreeToTerms = false;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  String _selectedGender = 'Male';
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  void _goToNextPage() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RegisterPage3(
+            roleId: widget.roleId,
+            name: _nameController.text,
+            email: _emailController.text,
+            phone: _phoneController.text,
+            gender: _selectedGender,
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,80 +50,36 @@ class _RegisterPage2State extends State<RegisterPage2> {
         child: Form(
           key: _formKey,
           child: ListView(
-            shrinkWrap: true,
             children: [
-              const AddLogo(),
-              const SizedBox(height: 20),
-              const Text("Sign Up",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-              const Text("Create a new account",
-                  style: TextStyle(fontSize: 18, color: Colors.grey)),
-              const SizedBox(height: 20),
-              CustomTextformfield(
-                controller: _passwordController,
-                label: "Password",
-                suffixIcon: const Icon(Icons.lock),
-                obscureText: true,
-                validator: (value) {
-                  if (value!.isEmpty) return "Required";
-                  if (value.length < 8) return "Password must be at least 8 characters";
-                  return null;
-                },
+              const Text("Enter Personal Information", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: "Name"),
+                validator: (value) => value!.isEmpty ? "Please enter your name" : null,
+              ),
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(labelText: "Email"),
+                validator: (value) => !value!.contains('@') ? "Invalid Email" : null,
+              ),
+              TextFormField(
+                controller: _phoneController,
+                decoration: const InputDecoration(labelText: "Phone Number"),
+                validator: (value) => value!.length < 10 ? "Invalid Phone Number" : null,
+              ),
+              DropdownButtonFormField(
+                value: _selectedGender,
+                items: ['Male', 'Female'].map((gender) {
+                  return DropdownMenuItem(value: gender, child: Text(gender));
+                }).toList(),
+                onChanged: (value) => setState(() => _selectedGender = value!),
+                decoration: const InputDecoration(labelText: "Gender"),
               ),
               const SizedBox(height: 20),
-              PasswordConfirmField(
-                passwordController: _passwordController,
-                confirmPasswordController: _confirmPasswordController,
+              ElevatedButton(
+                onPressed: _goToNextPage,
+                child: const Text("Next"),
               ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: _agreeToTerms,
-                    onChanged: (value) {
-                      setState(() {
-                        _agreeToTerms = value!;
-                      });
-                    },
-                  ),
-                  const Text("I agree to the "),
-                  const Text(
-                    "Terms Of Conditions",
-                    style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              CustomButton(
-                  text: "Create new account",
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (!_agreeToTerms) {
-                        showCustomSnackBar(context, "You must agree to the terms and conditions", true);
-                        return;
-                      }
-                      final request = RegisterRequest(
-                        name: widget.name,
-                        email: widget.email,
-                        phone: widget.phone,
-                        password: _passwordController.text,
-                        gender: widget.gender,
-                        passwordConfirmation: _confirmPasswordController.text,
-                        roleId: widget.selectedRoleId,
-                      );
-                      context.read<RegisterCubit>().registerUser(request);
-                    }
-                  }),
-              const SizedBox(height: 20),
-              LineWithAction(
-                  actionName: "Login",
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return LoginPage();
-                    }));
-                  },
-                  title: "Already have an account? ")
             ],
           ),
         ),
