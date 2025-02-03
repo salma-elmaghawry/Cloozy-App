@@ -1,5 +1,5 @@
 import 'package:cloozy/Core/common/add_logo.dart';
-import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
+import 'package:cloozy/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Core/common/linewithtapword.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
@@ -76,6 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Form(
         key: _formKey,
         child: ListView(
+          shrinkWrap: true,
           children: [
             const AddLogo(),
             const Text(
@@ -102,8 +103,14 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: _emailController,
               label: "Email",
               suffixIcon: const Icon(Icons.email_outlined),
-              validator: (value) =>
-                  value!.contains('@') ? null : "Invalid email",
+              validator: (value) {
+                if (value!.isEmpty) return "Required";
+                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
+                  return "Invalid email";
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 20),
 
@@ -113,12 +120,16 @@ class _RegisterPageState extends State<RegisterPage> {
               label: "Phone",
               suffixIcon: const Icon(Icons.phone),
               keyboardType: TextInputType.phone,
-              validator: (value) =>
-                  value!.length < 10 ? "Invalid phone number" : null,
+              validator: (value) {
+                if (value!.isEmpty) return "Required";
+                if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                  return "Invalid phone number";
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 20),
 
-            /// Gender Selection with RadioListTile
             const SizedBox(height: 20),
             const Text("Gender",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
@@ -155,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'Select Role:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            Row(
+            Column(
               children: _roles.map((role) {
                 return RadioListTile<int>(
                   title: Text(role.name),
@@ -173,14 +184,15 @@ class _RegisterPageState extends State<RegisterPage> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20, vertical: 15), // Optional: Add padding
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
+                if (_formKey.currentState!.validate() &&
+                    _selectedRoleId != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -189,10 +201,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         email: _emailController.text,
                         phone: _phoneController.text,
                         gender: _gender,
-                        selectedRoleId: _selectedRoleId,
+                        selectedRoleId: _selectedRoleId!,
                       ),
                     ),
                   );
+                } else {
+                  showCustomSnackBar(context, "Please select a role", true);
                 }
               },
               child: const Row(

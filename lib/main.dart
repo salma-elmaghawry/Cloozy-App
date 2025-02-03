@@ -35,12 +35,12 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           'onboarding': (context) => OnboardingScreen(),
-          'register': (context) =>  RegisterPage(),
-          'home': (context) =>  HomePage(),
+          'register': (context) => RegisterPage(),
+          'home': (context) => HomePage(),
           'login': (content) => LoginPage(),
           'Splash': (context) => SplashScreen(),
         },
-        initialRoute: 'register',
+        initialRoute: 'Splash',
       ),
     );
   }
