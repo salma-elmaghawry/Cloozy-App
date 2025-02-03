@@ -1,15 +1,17 @@
+import 'package:cloozy/Core/common/add_logo.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart.dart';
+import 'package:cloozy/Core/common/headline_text_style.dart';
+import 'package:cloozy/Core/common/linewithtapword.dart';
 import 'package:cloozy/Core/helper/assets.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_snakbar.dart';
-import 'package:cloozy/Core/common/cutom_button.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
-import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Feature/Auth/data/models/roles_model.dart';
-import 'package:cloozy/Feature/Auth/presentation/views/widgets/registerpage2.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/register/registerpage2.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -78,12 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
         key: _formKey,
         child: ListView(
           children: [
-            const SizedBox(height: 10),
-            SvgPicture.asset(
-              logo,
-              width: 170,
-              height: 53,
-            ),
+            addLogo(),
             const Text(
               'Sign Up',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
@@ -98,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
             CustomTextformfield(
               controller: _nameController,
               label: "Name",
-              suffixIcon: Icon(Icons.person),
+              suffixIcon: const Icon(Icons.person),
               validator: (value) => value!.isEmpty ? "Required" : null,
             ),
             const SizedBox(height: 20),
@@ -107,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
             CustomTextformfield(
               controller: _emailController,
               label: "Email",
-              suffixIcon: Icon(Icons.email_outlined),
+              suffixIcon: const Icon(Icons.email_outlined),
               validator: (value) =>
                   value!.contains('@') ? null : "Invalid email",
             ),
@@ -117,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage> {
             CustomTextformfield(
               controller: _phoneController,
               label: "Phone",
-              suffixIcon: Icon(Icons.phone),
+              suffixIcon: const Icon(Icons.phone),
               KeyboardType: TextInputType.phone,
               validator: (value) =>
                   value!.length < 10 ? "Invalid phone number" : null,
@@ -140,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     });
                   },
                 ),
-                Text("Male"),
+                const Text("Male"),
                 Radio<String>(
                   value: "female",
                   groupValue: _gender,
@@ -150,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     });
                   },
                 ),
-                Text("Female"),
+                const Text("Female"),
               ],
             ),
             const SizedBox(height: 30),
@@ -161,7 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
               'Select Role:',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            Column(
+            Row(
               children: _roles.map((role) {
                 return RadioListTile<int>(
                   title: Text(role.name),
@@ -175,10 +172,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 );
               }).toList(),
             ),
+
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 12),
+                backgroundColor: PrimaryColor,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20, vertical: 15), // Optional: Add padding
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
@@ -196,22 +198,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   );
                 }
               },
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Next",
+                  Text("Next ",
                       style: TextStyle(fontSize: 18, color: Colors.white)),
                   Icon(Icons.arrow_right_alt, color: Colors.white),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            Center(
-              child: TextButton(
-                onPressed: () {},
-                child: Text("Already have an account? Login"),
-              ),
-            ),
+            LineWithAction(
+                actionName: "Login",
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return LoginPage();
+                  }));
+                },
+                title: "Already have an account? "),
           ],
         ),
       ),
