@@ -1,9 +1,9 @@
 import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Brand/Core/common/custom_snakbar.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/register/register_cubit.dart';
+import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/verify_email_screen.dart';
-import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
-import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';

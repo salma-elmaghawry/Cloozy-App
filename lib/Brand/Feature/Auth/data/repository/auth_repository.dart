@@ -1,8 +1,8 @@
 import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/login_model.dart';
+import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/roles_model.dart';
 import 'package:cloozy/Core/helper/secure_storage.dart';
-import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
 import 'package:dio/dio.dart';
 
 class AuthRepository {

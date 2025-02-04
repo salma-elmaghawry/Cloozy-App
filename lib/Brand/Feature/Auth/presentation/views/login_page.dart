@@ -2,7 +2,7 @@
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/widgets/login_page_body.dart';
-import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
+import 'package:cloozy/Brand/Feature/home/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

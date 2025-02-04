@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
-import 'package:cloozy/Feature/Auth/data/repository/auth_repository.dart';
+import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
+import 'package:cloozy/Brand/Feature/Auth/data/repository/auth_repository.dart';
+
 import 'package:meta/meta.dart';
 
 part 'register_state.dart';
