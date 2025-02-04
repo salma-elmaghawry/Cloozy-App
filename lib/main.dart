@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => VerifyEmailCubit(AuthRepository()),
-          child: VerifyEmailScreen(email: ,),
+          
         )
       ],
       child: GetMaterialApp(

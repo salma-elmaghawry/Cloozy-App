@@ -1,11 +1,10 @@
+import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Feature/Auth/data/cubits/verify_email/verify_email_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:cloozy/Core/common/custom_snakbar.dart';
 import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
-
-// Add your VerifyEmailCubit import here
 
 class VerifyEmailScreen extends StatefulWidget {
   final String email;
@@ -17,13 +16,12 @@ class VerifyEmailScreen extends StatefulWidget {
 }
 
 class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
-  final OtpFieldController _otpController = OtpFieldController();
   String _otp = '';
 
   @override
   void initState() {
     super.initState();
-    // Send OTP immediately when the screen loads
+    // Send OTP when the screen loads
     context.read<VerifyEmailCubit>().sendOtp(widget.email);
   }
 
@@ -65,20 +63,32 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                 style: TextStyle(fontSize: 18),
               ),
               const SizedBox(height: 20),
-              OtpTextField(
-                numberOfFields: 6,
-                controller: _otpController,
-                onSubmit: (code) {
-                  _otp = code;
+              PinCodeTextField(
+                appContext: context,
+                length: 6,
+                obscureText: false,
+                animationType: AnimationType.fade,
+                keyboardType: TextInputType.number,
+                cursorColor: primaryColor,
+                textStyle: const TextStyle(fontSize: 20),
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(5),
+                  fieldHeight: 50,
+                  fieldWidth: 40,
+                  activeFillColor: Colors.white,
+                  inactiveFillColor: Colors.grey.shade200,
+                  selectedFillColor: Colors.white,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _otp = value;
+                  });
+                },
+                onCompleted: (value) {
+                  _otp = value;
                   _verifyOtp();
                 },
-                keyboardType: TextInputType.number,
-                cursorColor: Colors.blue,
-                textStyle: const TextStyle(fontSize: 20),
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                enabledBorderColor: Colors.grey,
-                focusedBorderColor: Colors.blue,
-                showFieldAsBox: true,
               ),
               const SizedBox(height: 30),
               BlocBuilder<VerifyEmailCubit, VerifyEmailState>(

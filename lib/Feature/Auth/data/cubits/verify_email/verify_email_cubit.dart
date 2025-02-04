@@ -22,7 +22,7 @@ class VerifyEmailCubit extends Cubit<VerifyEmailState> {
   Future<void> verifyOtp(String email, String otp) async {
     emit(VerifyOtpLoading());
     try {
-      final token = await authRepository.verifyEmailOtp(email, otp);
+      final token = await authRepository.verifyEmailOtp(otp);
       emit(VerifyOtpSuccess(token));
     } catch (e) {
       emit(VerifyOtpError(e.toString()));
