@@ -4,8 +4,10 @@ import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
-import 'package:cloozy/Brand/Feature/onboarding/custom_clippers.dart';
-import 'package:cloozy/Brand/Feature/onboarding/onboardingpage.dart';
+import 'package:cloozy/Intro/customer_or_brand.dart';
+import 'package:cloozy/Intro/onboarding/custom_clippers.dart';
+
+import 'package:cloozy/Intro/onboarding/onboardingpage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   )
                 else
-                  routetologin(context),
+                  routetocutomerorbrand(context),
               ],
             ),
           ),
@@ -120,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       MaterialPageRoute(
         builder: (context) => BlocProvider.value(
           value: BlocProvider.of<LoginCubit>(context),
-          child: LoginPage(),
+          child: CustomerOrBrand(),
         ),
       ),
     );
@@ -150,7 +152,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  ElevatedButton routetologin(BuildContext context) {
+  ElevatedButton routetocutomerorbrand(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
         Navigator.pushReplacement(
@@ -158,7 +160,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           MaterialPageRoute(
             builder: (context) => BlocProvider.value(
               value: BlocProvider.of<RegisterCubit>(context),
-              child: LoginPage(),
+              child: CustomerOrBrand(),
             ),
           ),
         );

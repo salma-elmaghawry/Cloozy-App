@@ -7,8 +7,9 @@ import 'package:cloozy/Brand/Feature/Auth/data/repository/auth_repository.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/forget_password.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage1.dart';
-import 'package:cloozy/Brand/Feature/Splash/presentation/views/splash_screen.dart';
-import 'package:cloozy/Brand/Feature/onboarding/onboarding_screen.dart';
+import 'package:cloozy/Intro/Splash/presentation/views/splash_screen.dart';
+import 'package:cloozy/Intro/onboarding/onboarding_screen.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,12 +43,12 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           'onboarding': (context) => OnboardingScreen(),
-          'register': (context) => RegisterPage1(),
-          'login': (content) => LoginPage(),
+          
+          
           'Splash': (context) => SplashScreen(),
           'forget_password': (context) => ForgetPassword(),
         },
-        initialRoute: 'register',
+        initialRoute: 'onboarding',
       ),
     );
   }

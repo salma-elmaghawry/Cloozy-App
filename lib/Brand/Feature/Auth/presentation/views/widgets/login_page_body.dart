@@ -1,4 +1,3 @@
-
 import 'package:cloozy/Brand/Core/common/add_logo.dart';
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
@@ -10,14 +9,18 @@ import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/forget_password.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/widgets/social_media_login.dart';
+import 'package:cloozy/Intro/customer_or_brand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPageBody extends StatefulWidget {
+  final int roleId;
+
   const LoginPageBody({
     super.key,
     required TextEditingController emailController,
     required TextEditingController passwordController,
+    required this.roleId,
   })  : _emailController = emailController,
         _passwordController = passwordController;
 
@@ -30,6 +33,7 @@ class LoginPageBody extends StatefulWidget {
 
 class _LoginPageBodyState extends State<LoginPageBody> {
   bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -128,7 +132,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             title: "Don't have an account? ",
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return RegisterPage1();
+                return RegisterPage1(roleId: widget.roleId);
               }));
             },
             actionName: "SignUp",
@@ -151,4 +155,3 @@ class _LoginPageBodyState extends State<LoginPageBody> {
     );
   }
 }
-
