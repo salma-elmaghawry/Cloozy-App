@@ -1,6 +1,9 @@
 import 'package:cloozy/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Feature/Auth/presentation/views/verify_email.dart';
+import 'package:cloozy/Feature/Auth/presentation/views/verify_email_screen.dart';
+import 'package:cloozy/Feature/home/presentation/views/home_page.dart';
+import 'package:cloozy/Feature/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Core/common/custom_snakbar.dart';
@@ -74,7 +77,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                   Future.delayed(const Duration(seconds: 1), () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => VerifyEmail()),
+                      MaterialPageRoute(builder: (_) => VerifyEmailScreen(email:widget.email)),
                     );
                   });
                 } else {

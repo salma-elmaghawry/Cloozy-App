@@ -1,25 +1,18 @@
 import 'package:cloozy/Core/helper/assets.dart';
+import 'package:cloozy/Core/helper/secure_storage.dart';
 import 'package:cloozy/Feature/Auth/data/models/login_model.dart';
+import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Feature/Auth/data/models/roles_model.dart';
 import 'package:dio/dio.dart';
-import 'package:cloozy/Feature/Auth/data/models/register_model.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthRepository {
-  final storage = const FlutterSecureStorage();
-
-  // Save token to secure storage
-  Future<void> saveToken(String token) async {
-    await storage.write(key: 'auth_token', value: token);
-  }
-
   final Dio _dio = Dio(BaseOptions(
     baseUrl: baseUrl,
     headers: {'Content-Type': 'application/json'},
     validateStatus: (status) => status! < 500,
   ));
 
-//roles mothod
+  // Roles method
   Future<List<Role>> getRoles() async {
     try {
       final response = await _dio.get('/users/pre-register');
@@ -28,7 +21,7 @@ class AuthRepository {
 
       if (response.statusCode == 200) {
         List rolesData = response.data['data']['roles'];
-        return rolesData.map((json) => Role.fromJson(json)).toList(); // Fixed
+        return rolesData.map<Role>((json) => Role.fromJson(json)).toList();
       } else {
         throw Exception("Failed to fetch roles");
       }
@@ -38,7 +31,7 @@ class AuthRepository {
     }
   }
 
-//register method
+  // Registration method
   Future<RegisterResponse> register(RegisterRequest data) async {
     try {
       print('⏳ Starting registration request...');
@@ -48,16 +41,17 @@ class AuthRepository {
         '/users/register',
         data: data.toJson(),
         options: Options(
-          validateStatus: (status) => true,
-          headers: {
-            'Accept': 'application/json',
-            // Add your token here
-          },
+          headers: {'Accept': 'application/json'},
         ),
       );
+
       print('✅ Received response: ${response.statusCode}');
       print('📥 Response Data: ${response.data}');
-      if (response.data['message'] == 'User registered successfully.') {
+
+      if (response.statusCode == 200 && 
+          response.data['message'] == 'User registered successfully.') {
+        final token = response.data['data']['token'] as String;
+        await SecureStorage.saveToken(token);
         return RegisterResponse.fromJson(response.data);
       } else {
         throw parseErrorResponse(response.data);
@@ -70,22 +64,15 @@ class AuthRepository {
       if (e.response != null) {
         print('🔴 Response Status: ${e.response?.statusCode}');
         print('📄 Response Data: ${e.response?.data}');
-      } else {
-        print('🌐 Network Error: ${e.error ?? 'No response from server'}');
       }
-
-      String errorMessage = 'Registration failed';
-      if (e.response?.data is Map<String, dynamic>) {
-        errorMessage = e.response?.data['message'] ?? errorMessage;
-      }
-      throw errorMessage;
+      throw parseErrorResponse(e.response?.data);
     } catch (e) {
       print('❌ Unexpected Error: $e');
-      throw ('$e');
+      throw parseErrorResponse({'message': e.toString()});
     }
   }
 
-//login method
+  // Login method
   Future<LoginResponse> login(LoginRequest request) async {
     try {
       final response = await _dio.post(
@@ -98,38 +85,82 @@ class AuthRepository {
 
       if (response.statusCode == 200) {
         final loginResponse = LoginResponse.fromJson(response.data);
-        await storage.write(key: 'auth_token', value: loginResponse.token);
+        await SecureStorage.saveToken(loginResponse.token);
         return loginResponse;
       } else {
-        throw Exception('Login failed: ${response.statusCode}');
+        throw parseErrorResponse(response.data);
       }
     } on DioException catch (e) {
-      final errorMessage = e.response?.data['message'] ?? 'Login failed';
-      throw Exception(errorMessage);
+      throw parseErrorResponse(e.response?.data);
     }
   }
-}
 
-// Get current token
-// Future<String?> getToken() async {
-//   return await storage.read(key: 'auth_token');
-// }
+  // Email verification
+  Future<void> verifyEmail(String email) async {
+    try {
+      final response = await _dio.post(
+        '/verify-email',
+        data: {'email': email},
+        options: Options(headers: {'Accept': 'application/json'}),
+      );
 
-// // Clear token
-// Future<void> logout() async {
-//    await storage.delete(key: 'auth_token');
-// }
-String parseErrorResponse(dynamic responseData) {
-  if (responseData == null) return 'Registration failed';
+      print('✅ Verify Email Response: ${response.statusCode}');
+      print('📥 Response Data: ${response.data}');
 
-  // Handle multiple errors
-  if (responseData['errors'] is Map) {
-    final errors = responseData['errors'] as Map;
-    return errors.values
-        .expand((errorList) => errorList is List ? errorList : [])
-        .join('\n');
+      if (response.statusCode == 200) {
+        return;
+      }
+      throw parseErrorResponse(response.data);
+    } on DioException catch (e) {
+      throw parseErrorResponse(e.response?.data);
+    }
   }
 
-  // Handle single message
-  return responseData['message']?.toString() ?? 'Registration failed';
+  // OTP verification
+  Future<String> verifyEmailOtp(String otp) async {
+    try {
+      final token = await SecureStorage.getToken();
+      if (token == null) throw Exception('Authentication required');
+
+      final response = await _dio.post(
+        '/verify-email-otp',
+        data: {'otp': otp},
+        options: Options(headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        }),
+      );
+
+      print('✅ Verify OTP Response: ${response.statusCode}');
+      print('📥 Response Data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        final newToken = response.data['token'] as String;
+        await SecureStorage.saveToken(newToken);
+        return newToken;
+      }
+      throw parseErrorResponse(response.data);
+    } on DioException catch (e) {
+      throw parseErrorResponse(e.response?.data);
+    }
+  }
+
+  Future<void> logout() async {
+    await SecureStorage.deleteToken();
+  }
+  // Error parsing
+  String parseErrorResponse(dynamic responseData) {
+    if (responseData == null) return 'Operation failed';
+
+    if (responseData['errors'] is Map) {
+      final errors = responseData['errors'] as Map;
+      return errors.values
+          .expand((errorList) => errorList is List ? errorList : [])
+          .join('\n');
+    }
+
+    return responseData['message']?.toString() ?? 'Operation failed';
+  }
+
+  // Logout
 }
