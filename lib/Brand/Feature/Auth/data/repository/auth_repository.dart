@@ -1,26 +1,28 @@
-import 'package:cloozy/Brand/Core/helper/secure_storage.dart';
+import 'dart:convert';
+import 'package:cloozy/Brand/Feature/Auth/data/services/secure_storage.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/login_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/roles_model.dart';
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 
 class AuthRepository {
-  final Dio _dio = Dio(BaseOptions(
-    baseUrl: baseUrl,
-    headers: {'Content-Type': 'application/json'},
-    validateStatus: (status) => status! < 500,
-  ));
+  static const headers = {'Content-Type': 'application/json'};
 
   // Roles method
   Future<List<Role>> getRoles() async {
     try {
-      final response = await _dio.get('/users/pre-register');
+      final response = await http.get(
+        Uri.parse('$baseUrl/users/pre-register'),
+        headers: headers,
+      );
+
       print('✅ Received response: ${response.statusCode}');
-      print('📥 Response Data: ${response.data}');
+      print('📥 Response Data: ${response.body}');
 
       if (response.statusCode == 200) {
-        List rolesData = response.data['data']['roles'];
+        final responseData = jsonDecode(response.body);
+        List rolesData = responseData['data']['roles'];
         return rolesData.map<Role>((json) => Role.fromJson(json)).toList();
       } else {
         throw Exception("Failed to fetch roles");
@@ -37,37 +39,30 @@ class AuthRepository {
       print('⏳ Starting registration request...');
       print('📤 Request Data: ${data.toJson()}');
 
-      final response = await _dio.post(
-        '/users/register',
-        data: data.toJson(),
-        options: Options(
-          headers: {'Accept': 'application/json'},
-        ),
+      final response = await http.post(
+        Uri.parse('$baseUrl/users/register'),
+        headers: {
+          ...headers,
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(data.toJson()),
       );
 
       print('✅ Received response: ${response.statusCode}');
-      print('📥 Response Data: ${response.data}');
+      print('📥 Response Data: ${response.body}');
+
+      final responseData = jsonDecode(response.body);
 
       if (response.statusCode == 200 &&
-          response.data['message'] == 'User registered successfully.') {
-        final token = response.data['data']['token'] as String;
+          responseData['message'] == 'User registered successfully.') {
+        final token = responseData['data']['token'] as String;
         await SecureStorage.saveToken(token);
-        return RegisterResponse.fromJson(response.data);
+        return RegisterResponse.fromJson(responseData);
       } else {
-        throw parseErrorResponse(response.data);
+        throw parseErrorResponse(responseData);
       }
-    } on DioException catch (e) {
-      print('🚨 Dio Error Occurred');
-      print('📡 Error Type: ${e.type}');
-      print('💬 Error Message: ${e.message}');
-
-      if (e.response != null) {
-        print('🔴 Response Status: ${e.response?.statusCode}');
-        print('📄 Response Data: ${e.response?.data}');
-      }
-      throw parseErrorResponse(e.response?.data);
     } catch (e) {
-      print('❌ Unexpected Error: $e');
+      print('❌ Error: $e');
       throw parseErrorResponse({'message': e.toString()});
     }
   }
@@ -75,44 +70,43 @@ class AuthRepository {
   // Login method
   Future<LoginResponse> login(LoginRequest request) async {
     try {
-      final response = await _dio.post(
-        '/users/login',
-        data: request.toJson(),
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
+      final response = await http.post(
+        Uri.parse('$baseUrl/users/login'),
+        headers: headers,
+        body: jsonEncode(request.toJson()),
       );
 
+      final responseData = jsonDecode(response.body);
+
       if (response.statusCode == 200) {
-        final loginResponse = LoginResponse.fromJson(response.data);
+        final loginResponse = LoginResponse.fromJson(responseData);
         await SecureStorage.saveToken(loginResponse.token);
         return loginResponse;
       } else {
-        throw parseErrorResponse(response.data);
+        throw parseErrorResponse(responseData);
       }
-    } on DioException catch (e) {
-      throw parseErrorResponse(e.response?.data);
+    } catch (e) {
+      throw parseErrorResponse({'message': e.toString()});
     }
   }
 
   // Email verification
   Future<void> verifyEmail(String email) async {
     try {
-      final response = await _dio.post(
-        '/verify-email',
-        data: {'email': email},
-        options: Options(headers: {'Accept': 'application/json'}),
+      final response = await http.post(
+        Uri.parse('$baseUrl/verify-email'),
+        headers: {'Accept': 'application/json'},
+        body: jsonEncode({'email': email}),
       );
 
       print('✅ Verify Email Response: ${response.statusCode}');
-      print('📥 Response Data: ${response.data}');
+      print('📥 Response Data: ${response.body}');
 
-      if (response.statusCode == 200) {
-        return;
+      if (response.statusCode != 200) {
+        throw parseErrorResponse(jsonDecode(response.body));
       }
-      throw parseErrorResponse(response.data);
-    } on DioException catch (e) {
-      throw parseErrorResponse(e.response?.data);
+    } catch (e) {
+      throw parseErrorResponse({'message': e.toString()});
     }
   }
 
@@ -122,26 +116,28 @@ class AuthRepository {
       final token = await SecureStorage.getToken();
       if (token == null) throw Exception('Authentication required');
 
-      final response = await _dio.post(
-        '/verify-email-otp',
-        data: {'otp': otp},
-        options: Options(headers: {
+      final response = await http.post(
+        Uri.parse('$baseUrl/verify-email-otp'),
+        headers: {
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
-        }),
+        },
+        body: jsonEncode({'otp': otp}),
       );
 
       print('✅ Verify OTP Response: ${response.statusCode}');
-      print('📥 Response Data: ${response.data}');
+      print('📥 Response Data: ${response.body}');
+
+      final responseData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        final newToken = response.data['token'] as String;
+        final newToken = responseData['token'] as String;
         await SecureStorage.saveToken(newToken);
         return newToken;
       }
-      throw parseErrorResponse(response.data);
-    } on DioException catch (e) {
-      throw parseErrorResponse(e.response?.data);
+      throw parseErrorResponse(responseData);
+    } catch (e) {
+      throw parseErrorResponse({'message': e.toString()});
     }
   }
 
@@ -162,6 +158,4 @@ class AuthRepository {
 
     return responseData['message']?.toString() ?? 'Operation failed';
   }
-
-  // Logout
 }
