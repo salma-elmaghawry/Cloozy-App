@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           'Splash': (context) => SplashScreen(),
           'forget_password': (context) => ForgetPassword(),
         },
-        initialRoute: 'onboarding',
+        initialRoute: 'Splash',
       ),
     );
   }

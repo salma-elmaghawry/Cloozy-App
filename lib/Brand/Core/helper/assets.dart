@@ -9,6 +9,12 @@ const o2 = "assets/icons/o.svg";
 const z = "assets/icons/z.svg";
 const y = "assets/icons/y.svg";
 const arrow = "assets/icons/v.svg";
+const email = "assets/icons/email.svg";
+const female = "assets/icons/fem.svg";
+const male = "assets/icons/male.svg";
+const name = "assets/icons/name.svg";
+const phone = "assets/icons/phone.svg";
+
 const font = "Poppins";
 const baseUrl = "https://cloozy.azurewebsites.net/api";
 const brandImg = "assets/images/brand.png";

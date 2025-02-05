@@ -5,9 +5,11 @@ import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/gender_drop_down.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
+import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RegisterPage1 extends StatefulWidget {
   final int roleId;
@@ -76,6 +78,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
               CustomTextformfield(
                 controller: _nameController,
                 label: "Name",
+                suffixIcon: SvgPicture.asset(name, width: 16, height: 16),
                 validator: (value) =>
                     value!.isEmpty ? "Please enter your name" : null,
               ),
@@ -83,6 +86,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
               CustomTextformfield(
                 controller: _emailController,
                 label: "Email",
+                suffixIcon: SvgPicture.asset(email, width: 20, height: 20),
                 validator: (value) =>
                     !value!.contains('@') ? "Invalid Email" : null,
               ),
@@ -91,13 +95,30 @@ class _RegisterPage1State extends State<RegisterPage1> {
                 controller: _phoneController,
                 label: "Phone Number",
                 keyboardType: TextInputType.number,
+                suffixIcon: SvgPicture.asset(phone, width: 20, height: 20),
                 validator: (value) =>
                     value!.length < 10 ? "Invalid Phone Number" : null,
               ),
               const SizedBox(height: 30),
-              GenderDropdown(
-                  value: _selectedGender,
-                  onChange: (value) => _selectedGender = value!),
+              //gender
+              const Text("Gender",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _buildGenderOption("male", "Male", male),
+                    const SizedBox(width: 70),
+                    _buildGenderOption("female", "Female", female),
+                  ],
+                ),
+              ),
+
+              // GenderDropdown(
+              //     value: _selectedGender,
+              //     onChange: (value) => _selectedGender = value!),
               const SizedBox(height: 20),
               CustomButton(text: "Next", onPressed: _goToNextPage),
               const SizedBox(height: 10),
@@ -117,6 +138,67 @@ class _RegisterPage1State extends State<RegisterPage1> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildGenderOption(String value, String text, String iconPath) {
+    bool isSelected = _selectedGender == value;
+    Color selectedColor = value == "female" ? secondaryColor : primaryColor;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedGender = value;
+        });
+      },
+      child: Row(
+        children: [
+          Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isSelected ? selectedColor : Colors.grey,
+              ),
+            ),
+            child: isSelected
+                ? Center(
+                    child: Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: selectedColor,
+                      ),
+                    ),
+                  )
+                : null,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          SvgPicture.asset(
+            iconPath,
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(
+              isSelected ? selectedColor : Colors.grey,
+              BlendMode.srcIn,
+            ),
+          ), // Icon with dynamic color
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: isSelected ? selectedColor : Colors.grey,
+            ),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
     );
   }
