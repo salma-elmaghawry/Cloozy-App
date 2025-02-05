@@ -32,67 +32,73 @@ class _CustomerOrBrandState extends State<CustomerOrBrand> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 10),
-          const AddLogo(),
-          customText(
-            title: "Sign Up As",
-            color: Colors.black,
-            fontSize: 24,
-          ),
-          customText(
-            title: "Choose your role to continue",
-            color: grayColor,
-            fontSize: 16,
-          ),
-          const SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RoleCard(
-                  isSelected: isCustomerSelected,
-                  onTap: () {
-                    setState(() {
-                      isCustomerSelected = true;
-                    });
-                  },
-                  title: "Customer",
-                  imagePath: cutomerImg),
-              const SizedBox(width: 20),
-              RoleCard(
-                  isSelected: !isCustomerSelected,
-                  onTap: () {
-                    setState(() {
-                      isCustomerSelected = false;
-                    });
-                  },
-                  title: "Brand",
-                  imagePath: brandImg),
-              const SizedBox(width: 20),
-            ],
-          ),
-          CustomButton(
-              text: "Next",
-              onPressed: () => _navigateToNextPage(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            const SizedBox(height: 30),
+            const AddLogo(),
+            const SizedBox(height: 40),
+            customText(
+              title: "Sign Up As",
+              color: Colors.black,
+              fontSize: 24,
+            ),
+            customText(
+              title: "Choose your role to continue",
+              color: grayColor,
+              fontSize: 16,
+            ),
+            const SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RoleCard(
+                    isSelected: isCustomerSelected,
+                    onTap: () {
+                      setState(() {
+                        isCustomerSelected = true;
+                      });
+                    },
+                    title: "Customer",
+                    imagePath: cutomerImg),
+                const SizedBox(width: 20),
+                RoleCard(
+                    isSelected: !isCustomerSelected,
+                    onTap: () {
+                      setState(() {
+                        isCustomerSelected = false;
+                      });
+                    },
+                    title: "Brand",
+                    imagePath: brandImg),
+                const SizedBox(width: 20),
+              ],
+            ),
+            const SizedBox(height: 30),
+            CustomButton(
+                text: "Next",
+                onPressed: () => _navigateToNextPage(
+                      context,
+                      isCustomerSelected ? 3 : 2,
+                    )),
+            const SizedBox(height: 10),
+            LineWithAction(
+                actionName: "Login",
+                onTap: () {
+                  Navigator.push(
                     context,
-                    isCustomerSelected ? 3 : 2,
-                  )),
-          LineWithAction(
-              actionName: "Login",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        LoginPage(roleId:isCustomerSelected ? 3 : 2 ,),
-                  ),
-                );
-              },
-              title: "Already have an account? "),
-          const SizedBox(height: 10),
-        ],
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(
+                        roleId: isCustomerSelected ? 3 : 2,
+                      ),
+                    ),
+                  );
+                },
+                title: "Already have an account? "),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }

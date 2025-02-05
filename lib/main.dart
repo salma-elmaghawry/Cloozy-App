@@ -5,8 +5,6 @@ import 'package:cloozy/Brand/Feature/Auth/data/cubits/register/register_cubit.da
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/verify_email/verify_email_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/repository/auth_repository.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/forget_password.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Intro/Splash/presentation/views/splash_screen.dart';
 import 'package:cloozy/Intro/onboarding/onboarding_screen.dart';
 

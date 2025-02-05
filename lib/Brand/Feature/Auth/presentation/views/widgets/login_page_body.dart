@@ -40,8 +40,9 @@ class _LoginPageBodyState extends State<LoginPageBody> {
       padding: const EdgeInsets.all(16.0),
       child: ListView(
         children: [
-          const SizedBox(height: 10),
+          const SizedBox(height: 30),
           const AddLogo(),
+          const SizedBox(height: 40),
           customText(
             title: "Welcome Back!",
             color: Colors.black,
@@ -100,7 +101,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ForgetPassword()),
+                          builder: (context) =>  ForgetPassword()),
                     );
                   }),
               const SizedBox(height: 10),

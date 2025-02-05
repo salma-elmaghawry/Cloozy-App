@@ -1,5 +1,6 @@
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RoleCard extends StatelessWidget {
   bool isSelected;
@@ -20,37 +21,60 @@ class RoleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 140,
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          border: Border.all(color: isSelected ? primaryColor : Colors.grey),
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade300,
-              blurRadius: 5,
-              spreadRadius: 2,
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Image.asset(imagePath, height: 80),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+        onTap: onTap,
+        child: Container(
+          width: 146,
+          height: 250,
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            border:
+                isSelected ? Border.all(color: primaryColor, width: 2.0) : null,
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade300,
+                blurRadius: 5,
+                spreadRadius: 2,
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            ],
+          ),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              // Image Container
+              Positioned(
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 30,
+                child: Container(
+                  height: 160, // Fixed height for the image
+                  decoration: BoxDecoration(
+                    // borderRadius:
+                    //    // BorderRadius.vertical(top: Radius.circular(12)),
+                    image: DecorationImage(
+                      image: AssetImage(imagePath),
+                      fit:
+                          BoxFit.cover, // Ensures the image fills the container
+                    ),
+                  ),
+                ),
+              ),
+              // Title Container
+              Positioned(
+                bottom: 1,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }

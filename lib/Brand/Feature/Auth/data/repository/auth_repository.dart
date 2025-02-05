@@ -1,8 +1,8 @@
+import 'package:cloozy/Brand/Core/helper/secure_storage.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/login_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/roles_model.dart';
-import 'package:cloozy/Core/helper/secure_storage.dart';
 import 'package:dio/dio.dart';
 
 class AuthRepository {
@@ -48,7 +48,7 @@ class AuthRepository {
       print('✅ Received response: ${response.statusCode}');
       print('📥 Response Data: ${response.data}');
 
-      if (response.statusCode == 200 && 
+      if (response.statusCode == 200 &&
           response.data['message'] == 'User registered successfully.') {
         final token = response.data['data']['token'] as String;
         await SecureStorage.saveToken(token);
@@ -148,6 +148,7 @@ class AuthRepository {
   Future<void> logout() async {
     await SecureStorage.deleteToken();
   }
+
   // Error parsing
   String parseErrorResponse(dynamic responseData) {
     if (responseData == null) return 'Operation failed';

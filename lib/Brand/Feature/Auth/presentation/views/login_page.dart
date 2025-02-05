@@ -17,7 +17,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is LoginError) {

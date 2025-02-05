@@ -1,5 +1,9 @@
+import 'package:cloozy/Brand/Core/common/add_logo.dart';
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Core/common/custom_snakbar.dart';
+import 'package:cloozy/Brand/Core/common/cutom_button.dart';
+import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
+import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/verify_email/verify_email_cubit.dart';
 import 'package:cloozy/Brand/Feature/home/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';
@@ -55,14 +59,23 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               );
             }
           },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: [
-              const Text(
-                "Enter OTP Sent to Your Email",
-                style: TextStyle(fontSize: 18),
+              const SizedBox(height: 30),
+              const AddLogo(),
+              const SizedBox(height: 30),
+              customText(
+                title: "Verify your Email",
+                color: Colors.black,
+                fontSize: 24,
               ),
-              const SizedBox(height: 20),
+              customText(
+                title:
+                    "We’ve sent a message with an activation code to your email cs*********@**",
+                color: grayColor,
+                fontSize: 16,
+              ),
+              const SizedBox(height: 30),
               PinCodeTextField(
                 appContext: context,
                 length: 6,
@@ -94,22 +107,20 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               BlocBuilder<VerifyEmailCubit, VerifyEmailState>(
                 builder: (context, state) {
                   if (state is VerifyOtpLoading) {
-                    return const CircularProgressIndicator();
+                    return const CircularProgressIndicator(
+                      color: primaryColor,
+                    );
                   }
-                  return ElevatedButton(
-                    onPressed: _verifyOtp,
-                    child: const Text("Verify OTP"),
-                  );
+                  return CustomButton(text: "Verify", onPressed: _verifyOtp);
                 },
               ),
               const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  // Resend OTP
-                  context.read<VerifyEmailCubit>().sendOtp(widget.email);
-                },
-                child: const Text("Resend Code"),
-              ),
+              LineWithAction(
+                  actionName: "Resend code",
+                  onTap: () {
+                    context.read<VerifyEmailCubit>().sendOtp(widget.email);
+                  },
+                  title: "Didn’t receive OTP?")
             ],
           ),
         ),

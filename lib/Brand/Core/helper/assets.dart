@@ -11,5 +11,5 @@ const y = "assets/icons/y.svg";
 const arrow = "assets/icons/v.svg";
 const font = "Poppins";
 const baseUrl = "https://cloozy.azurewebsites.net/api";
-const brandImg = "assets/icons/brand.svg";
-const cutomerImg = "assets/icons/customer.svg";
+const brandImg = "assets/images/brand.png";
+const cutomerImg = "assets/images/customer.png";

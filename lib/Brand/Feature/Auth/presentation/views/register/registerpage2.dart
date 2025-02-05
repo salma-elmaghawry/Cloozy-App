@@ -1,7 +1,13 @@
+import 'package:cloozy/Brand/Core/common/add_logo.dart';
+import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Brand/Core/common/custom_snakbar.dart';
+import 'package:cloozy/Brand/Core/common/cutom_button.dart';
+import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
+import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
+import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/verify_email_screen.dart';
 
 import 'package:flutter/material.dart';
@@ -62,11 +68,16 @@ class _RegisterPage2State extends State<RegisterPage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: BlocListener<RegisterCubit, RegisterState>(
             listener: (context, state) {
+              if (state is RegisterLoading) {
+                CircularProgressIndicator(
+                  color: primaryColor,
+                );
+              }
               if (state is RegisterError) {
                 showCustomSnackBar(context, state.message, true);
               }
@@ -88,9 +99,20 @@ class _RegisterPage2State extends State<RegisterPage2> {
             },
             child: ListView(
               children: [
-                const Text("Set Password",
-                    style:
-                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 30),
+                const AddLogo(),
+                const SizedBox(height: 30),
+                customText(
+                  title: "Sign Up",
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+                customText(
+                  title: "Enter Personal Information",
+                  color: grayColor,
+                  fontSize: 16,
+                ),
+                const SizedBox(height: 30),
                 CustomTextformfield(
                   controller: _passwordController,
                   label: "Password",
@@ -99,6 +121,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                       ? "Password must be at least 8 characters"
                       : null,
                 ),
+                const SizedBox(height: 30),
                 CustomTextformfield(
                   controller: _confirmPasswordController,
                   label: "Confirm Password",
@@ -108,14 +131,12 @@ class _RegisterPage2State extends State<RegisterPage2> {
                       : null,
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _validateAndRegister,
-                  child: const Text("Register"),
-                ),
-                const SizedBox(height: 10),
                 Row(
                   children: [
                     Checkbox(
+                      //checkColor: primaryColor,
+                      //focusColor: primaryColor,
+                      //fillColor: Colors.white,
                       value: _agreeToTerms,
                       onChanged: (bool? value) {
                         setState(() {
@@ -131,6 +152,21 @@ class _RegisterPage2State extends State<RegisterPage2> {
                     ),
                   ],
                 ),
+                CustomButton(text: "Register", onPressed: _validateAndRegister),
+                const SizedBox(height: 10),
+                LineWithAction(
+                    actionName: "Login",
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(
+                            roleId: widget.roleId,
+                          ),
+                        ),
+                      );
+                    },
+                    title: "Already have an account? "),
               ],
             ),
           ),
