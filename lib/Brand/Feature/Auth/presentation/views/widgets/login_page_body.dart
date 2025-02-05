@@ -1,22 +1,24 @@
 import 'package:cloozy/Brand/Core/common/add_logo.dart';
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
+import 'package:cloozy/Brand/Core/common/custom_headline.dart';
 import 'package:cloozy/Brand/Core/common/custom_text_button.dart';
 import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
+import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/forget_password.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/widgets/social_media_login.dart';
-import 'package:cloozy/Intro/customer_or_brand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class LoginPageBody extends StatefulWidget {
   final int roleId;
 
-  const LoginPageBody({
+  LoginPageBody({
     super.key,
     required TextEditingController emailController,
     required TextEditingController passwordController,
@@ -33,6 +35,7 @@ class LoginPageBody extends StatefulWidget {
 
 class _LoginPageBodyState extends State<LoginPageBody> {
   bool isChecked = false;
+  bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +57,36 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             fontSize: 16,
           ),
           const SizedBox(height: 30),
+          CustomHeadline(title: "Email"),
+          const SizedBox(height: 10),
           CustomTextformfield(
             controller: widget._emailController,
             label: "Email",
+            suffixIcon: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SvgPicture.asset(
+                email,
+              ),
+            ),
             validator: (value) => value!.contains('@') ? null : 'Invalid email',
           ),
           const SizedBox(height: 30),
+          CustomHeadline(title: "Password"),
+          const SizedBox(height: 10),
           CustomTextformfield(
             controller: widget._passwordController,
             label: "Password",
-            obscureText: true,
+            suffixIcon: IconButton(
+              icon: Icon(_obscurePassword
+                  ? Icons.visibility_off
+                  : Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  _obscurePassword = !_obscurePassword;
+                });
+              },
+            ),
+            obscureText: _obscurePassword,
           ),
           const SizedBox(height: 10),
           Row(
@@ -74,8 +97,8 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   Checkbox(
                       value: isChecked,
                       splashRadius: 25,
-                      activeColor: grayColor,
-                      checkColor: primaryColor,
+                      activeColor: primaryColor,
+
                       //focusColor: grayColor,
                       onChanged: (value) {
                         setState(() {
@@ -85,9 +108,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   Text(
                     "Remember Me",
                     style: TextStyle(
-                      color: isChecked
-                          ? primaryColor
-                          : const Color.fromARGB(255, 192, 192, 192),
+                      color: isChecked ? primaryColor : grayColor,
                     ),
                   )
                 ],
@@ -100,11 +121,10 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) =>  ForgetPassword()),
+                      MaterialPageRoute(builder: (context) => ForgetPassword()),
                     );
                   }),
-              const SizedBox(height: 10),
+              const SizedBox(height: 30),
             ],
           ),
           BlocBuilder<LoginCubit, LoginState>(
@@ -150,7 +170,10 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             ],
           ),
           const SizedBox(height: 30),
-          const SocialMediaLogin()
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const SocialMediaLogin(),
+          )
         ],
       ),
     );

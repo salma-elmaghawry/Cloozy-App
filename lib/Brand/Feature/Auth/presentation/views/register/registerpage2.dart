@@ -1,6 +1,7 @@
 import 'package:cloozy/Brand/Core/common/add_logo.dart';
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
+import 'package:cloozy/Brand/Core/common/custom_headline.dart';
 import 'package:cloozy/Brand/Core/common/custom_snakbar.dart';
 import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
@@ -38,6 +39,8 @@ class _RegisterPage2State extends State<RegisterPage2> {
       TextEditingController();
   String _selectedGender = 'female';
   bool _agreeToTerms = false;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
@@ -113,19 +116,43 @@ class _RegisterPage2State extends State<RegisterPage2> {
                   fontSize: 16,
                 ),
                 const SizedBox(height: 30),
+                CustomHeadline(title: "Password"),
+                const SizedBox(height: 10),
                 CustomTextformfield(
                   controller: _passwordController,
                   label: "Password",
-                  obscureText: true,
+                  obscureText: _obscurePassword,
+                  suffixIcon: IconButton(
+                    icon: Icon(_obscurePassword
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
+                  ),
                   validator: (value) => value!.length < 8
                       ? "Password must be at least 8 characters"
                       : null,
                 ),
                 const SizedBox(height: 30),
+                CustomHeadline(title: "Confirm Password"),
+                const SizedBox(height: 10),
                 CustomTextformfield(
                   controller: _confirmPasswordController,
-                  label: "Confirm Password",
-                  obscureText: true,
+                  label: "Password",
+                  obscureText: _obscureConfirmPassword,
+                  suffixIcon: IconButton(
+                    icon: Icon(_obscureConfirmPassword
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        _obscureConfirmPassword = !_obscureConfirmPassword;
+                      });
+                    },
+                  ),
                   validator: (value) => value != _passwordController.text
                       ? "Passwords do not match"
                       : null,
@@ -134,20 +161,23 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 Row(
                   children: [
                     Checkbox(
-                      //checkColor: primaryColor,
-                      //focusColor: primaryColor,
-                      //fillColor: Colors.white,
                       value: _agreeToTerms,
+                      activeColor: primaryColor,
                       onChanged: (bool? value) {
                         setState(() {
                           _agreeToTerms = value ?? false;
                         });
                       },
                     ),
-                    const Expanded(
-                      child: Text(
-                        "I agree to the terms and conditions",
-                        style: TextStyle(fontSize: 14),
+                    const Text("I agree to the "),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        "Terms Of Conditions",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline),
                       ),
                     ),
                   ],

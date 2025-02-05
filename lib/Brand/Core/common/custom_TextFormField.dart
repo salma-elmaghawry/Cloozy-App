@@ -30,8 +30,8 @@ class CustomTextformfield extends StatelessWidget {
           labelStyle: const TextStyle(color: Colors.grey),
           suffixIcon: suffixIcon,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(

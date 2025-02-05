@@ -1,6 +1,7 @@
 import 'package:cloozy/Brand/Core/common/add_logo.dart';
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
+import 'package:cloozy/Brand/Core/common/custom_headline.dart';
 import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/gender_drop_down.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
@@ -75,27 +76,48 @@ class _RegisterPage1State extends State<RegisterPage1> {
                 fontSize: 16,
               ),
               const SizedBox(height: 30),
+              CustomHeadline(title: "Name"),
+              const SizedBox(height: 10),
               CustomTextformfield(
                 controller: _nameController,
                 label: "Name",
-                suffixIcon: SvgPicture.asset(name, width: 16, height: 16),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SvgPicture.asset(
+                    name,
+                  ),
+                ),
                 validator: (value) =>
                     value!.isEmpty ? "Please enter your name" : null,
               ),
               const SizedBox(height: 30),
+              CustomHeadline(title: "Email"),
+              const SizedBox(height: 10),
               CustomTextformfield(
                 controller: _emailController,
                 label: "Email",
-                suffixIcon: SvgPicture.asset(email, width: 20, height: 20),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SvgPicture.asset(
+                    email,
+                  ),
+                ),
                 validator: (value) =>
                     !value!.contains('@') ? "Invalid Email" : null,
               ),
               const SizedBox(height: 30),
+              CustomHeadline(title: "Phone"),
+              const SizedBox(height: 10),
               CustomTextformfield(
                 controller: _phoneController,
-                label: "Phone Number",
+                label: "+20",
                 keyboardType: TextInputType.number,
-                suffixIcon: SvgPicture.asset(phone, width: 20, height: 20),
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SvgPicture.asset(
+                    phone,
+                  ),
+                ),
                 validator: (value) =>
                     value!.length < 10 ? "Invalid Phone Number" : null,
               ),
