@@ -8,6 +8,7 @@ import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/widgets/role_card.dart';
+import 'package:cloozy/Customer/Feature/Home/home.dart';
 import 'package:flutter/material.dart';
 
 class CustomerOrBrand extends StatefulWidget {
@@ -19,13 +20,21 @@ class CustomerOrBrand extends StatefulWidget {
 
 class _CustomerOrBrandState extends State<CustomerOrBrand> {
   void _navigateToNextPage(BuildContext context, int id) {
-    // Pass the selected id (2 for Brand or 3 for Customer) to the next screen
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RegisterPage1(roleId: id),
-      ),
-    );
+    if (id == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RegisterPage1(roleId: id),
+        ),
+      );
+    } else if (id == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CustomerHome(), // Replace with the actual page
+        ),
+      );
+    }
   }
 
   bool isCustomerSelected = true;
@@ -40,7 +49,7 @@ class _CustomerOrBrandState extends State<CustomerOrBrand> {
             const AddLogo(),
             const SizedBox(height: 40),
             customText(
-              title: "Sign Up As",
+              title: "You Are ?",
               color: Colors.black,
               fontSize: 24,
             ),
