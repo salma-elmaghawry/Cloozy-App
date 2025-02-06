@@ -6,6 +6,7 @@ import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/gender_drop_down.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
+import 'package:cloozy/Brand/Core/common/next_botton.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage2.dart';
@@ -71,7 +72,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
                 fontSize: 24,
               ),
               customText(
-                title: "Enter Personal Information",
+                title: "Create a new account",
                 color: grayColor,
                 fontSize: 16,
               ),
@@ -142,7 +143,12 @@ class _RegisterPage1State extends State<RegisterPage1> {
               //     value: _selectedGender,
               //     onChange: (value) => _selectedGender = value!),
               const SizedBox(height: 20),
-              CustomButton(text: "Next", onPressed: _goToNextPage),
+
+              ButtonWithIcon(
+                assetpath: shortArrow,
+                text: "Next",
+                onPressed: _goToNextPage,
+              ),
               const SizedBox(height: 10),
               LineWithAction(
                   actionName: "Login",

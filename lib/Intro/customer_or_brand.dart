@@ -4,6 +4,7 @@ import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
+import 'package:cloozy/Brand/Core/common/next_botton.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage1.dart';
@@ -85,7 +86,8 @@ class _CustomerOrBrandState extends State<CustomerOrBrand> {
               ],
             ),
             const SizedBox(height: 30),
-            CustomButton(
+            ButtonWithIcon(
+                assetpath: shortArrow,
                 text: "Next",
                 onPressed: () => _navigateToNextPage(
                       context,

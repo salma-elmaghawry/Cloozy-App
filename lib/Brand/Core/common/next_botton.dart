@@ -1,23 +1,23 @@
 import 'package:cloozy/Brand/Core/common/constant.dart';
+import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Import flutter_svg package
 
-class CustomButton extends StatelessWidget {
+class ButtonWithIcon extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
-  final bool isLoading; // Add a flag to check for loading state
+  final String assetpath;
 
-  const CustomButton({
+  const ButtonWithIcon({
     Key? key,
     required this.text,
-    required this.onPressed,
-    this.isLoading = false, // Default to false if not passed
+    required this.onPressed, required this.assetpath,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed:
-          isLoading ? null : onPressed, // Disable the button when loading
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor, // Set the background color
         padding: const EdgeInsets.symmetric(
@@ -26,14 +26,24 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      child: isLoading
-          ? const CircularProgressIndicator(
-              color: primaryColor, // Set the progress indicator color
-            )
-          : Text(
+      child: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
               text,
               style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
+            const SizedBox(width: 8), // Space between text and icon
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SvgPicture.asset(
+                assetpath,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

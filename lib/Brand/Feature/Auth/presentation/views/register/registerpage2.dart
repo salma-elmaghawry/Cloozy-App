@@ -42,7 +42,6 @@ class _RegisterPage2State extends State<RegisterPage2> {
   bool _agreeToTerms = false;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
-  bool isLoading = false;
 
   @override
   void dispose() {
@@ -83,15 +82,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
           key: _formKey,
           child: BlocListener<RegisterCubit, RegisterState>(
             listener: (context, state) {
-              if (state is RegisterLoading) {
-                setState(() {
-                  isLoading = true; // Set isLoading to true when loading
-                });
-              } else {
-                setState(() {
-                  isLoading = false; // Reset isLoading when done
-                });
-              }
+              if (state is RegisterLoading) {}
               if (state is RegisterError) {
                 showCustomSnackBar(context, state.message, true);
               }
@@ -102,11 +93,12 @@ class _RegisterPage2State extends State<RegisterPage2> {
                   Future.delayed(const Duration(seconds: 1), () {
                     //send otp here
 
-                    Navigator.pushReplacement(
+                    Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
                           builder: (_) =>
                               VerifyEmailScreen(email: widget.email)),
+                      (routes) => false,
                     );
                   });
                 } else {
@@ -125,7 +117,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
                   fontSize: 24,
                 ),
                 customText(
-                  title: "Enter Personal Information",
+                  title: "Create a new account",
                   color: grayColor,
                   fontSize: 16,
                 ),
@@ -196,10 +188,18 @@ class _RegisterPage2State extends State<RegisterPage2> {
                     ),
                   ],
                 ),
-                CustomButton(
-                    text: "Register",
-                    onPressed: _validateAndRegister,
-                    isLoading: isLoading),
+                BlocBuilder<RegisterCubit, RegisterState>(
+                  builder: (context, state) {
+                    if (state is RegisterLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(color: primaryColor),
+                      );
+                    }
+                    return CustomButton(
+                        text: "Create New Account",
+                        onPressed: _validateAndRegister);
+                  },
+                ),
                 const SizedBox(height: 10),
                 LineWithAction(
                     actionName: "Login",
