@@ -10,6 +10,11 @@ class VerifyEmailCubit extends Cubit<VerifyEmailState> {
   VerifyEmailCubit(this.authRepository) : super(VerifyEmailInitial());
 
   Future<void> sendOtp(String email) async {
+    if (email.isEmpty) {
+      emit(VerifyEmailError("Email is missing!"));
+      return;
+    }
+    print('📩 Sending OTP to: $email');
     emit(VerifyEmailLoading());
     try {
       await authRepository.verifyEmail(email);
@@ -22,7 +27,7 @@ class VerifyEmailCubit extends Cubit<VerifyEmailState> {
   Future<void> verifyOtp(String email, String otp) async {
     emit(VerifyOtpLoading());
     try {
-      final token = await authRepository.verifyEmailOtp(otp);
+      final token = await authRepository.verifyEmailOtp(email, otp);
       emit(VerifyOtpSuccess(token));
     } catch (e) {
       emit(VerifyOtpError(e.toString()));

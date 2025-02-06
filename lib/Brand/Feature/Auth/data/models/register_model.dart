@@ -27,13 +27,13 @@ class RegisterRequest {
 
 class RegisterResponse {
   final String message;
-  final String token;
 
-  RegisterResponse({required this.message, required this.token});
+  RegisterResponse({
+    required this.message,
+  });
   factory RegisterResponse.fromJson(Map<String, dynamic> json) {
     return RegisterResponse(
       message: json['message'] ?? 'No message',
-      token: json['token'] ?? '',
     );
   }
 }

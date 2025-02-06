@@ -25,8 +25,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
   @override
   void initState() {
     super.initState();
-    // Send OTP when the screen loads
-    context.read<VerifyEmailCubit>().sendOtp(widget.email);
+    //context.read<VerifyEmailCubit>().sendOtp(widget.email);
   }
 
   void _verifyOtp() {
@@ -35,6 +34,17 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
       return;
     }
     context.read<VerifyEmailCubit>().verifyOtp(widget.email, _otp);
+  }
+
+  String maskEmail(String email) {
+    if (email.isEmpty) return '';
+    final parts = email.split('@');
+    if (parts.length != 2) return email;
+    final username = parts[0];
+    final domain = parts[1];
+    final maskedUsername =
+        username.substring(0, 2) + '*' * (username.length - 2);
+    return '$maskedUsername@$domain';
   }
 
   @override
@@ -50,7 +60,6 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             } else if (state is VerifyOtpError) {
               showCustomSnackBar(context, state.message, true);
             } else if (state is VerifyOtpSuccess) {
-              // Navigate to HomePage with the obtained token
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -71,7 +80,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               ),
               customText(
                 title:
-                    "We’ve sent a message with an activation code to your email cs*********@**",
+                    "We’ve sent a message with an activation code to your email ${maskEmail(widget.email)}",
                 color: grayColor,
                 fontSize: 16,
               ),
@@ -92,6 +101,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                   activeFillColor: Colors.white,
                   inactiveFillColor: Colors.grey.shade200,
                   selectedFillColor: Colors.white,
+                  selectedColor: primaryColor,
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -107,20 +117,31 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               BlocBuilder<VerifyEmailCubit, VerifyEmailState>(
                 builder: (context, state) {
                   if (state is VerifyOtpLoading) {
-                    return const CircularProgressIndicator(
-                      color: primaryColor,
+                    return const Center(
+                      child: CircularProgressIndicator(color: primaryColor),
                     );
                   }
                   return CustomButton(text: "Verify", onPressed: _verifyOtp);
                 },
               ),
               const SizedBox(height: 20),
-              LineWithAction(
-                  actionName: "Resend code",
-                  onTap: () {
-                    context.read<VerifyEmailCubit>().sendOtp(widget.email);
-                  },
-                  title: "Didn’t receive OTP?")
+              BlocBuilder<VerifyEmailCubit, VerifyEmailState>(
+                builder: (context, state) {
+                  if (state is VerifyEmailLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: primaryColor),
+                    );
+                  }
+
+                  return LineWithAction(
+                    actionName: "Resend code",
+                    onTap: () {
+                      context.read<VerifyEmailCubit>().sendOtp(widget.email);
+                    },
+                    title: "Didn’t receive OTP?",
+                  );
+                },
+              ),
             ],
           ),
         ),

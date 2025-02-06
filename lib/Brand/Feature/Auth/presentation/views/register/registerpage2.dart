@@ -7,6 +7,7 @@ import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/register/register_cubit.dart';
+import 'package:cloozy/Brand/Feature/Auth/data/cubits/verify_email/verify_email_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/verify_email_screen.dart';
@@ -55,6 +56,10 @@ class _RegisterPage2State extends State<RegisterPage2> {
           context, "You must agree to the terms and conditions", true);
       return;
     }
+    if (widget.email.isEmpty) {
+      showCustomSnackBar(context, "Email is missing. Please try again.", true);
+      return;
+    }
     final request = RegisterRequest(
       name: widget.name,
       email: widget.email,
@@ -65,6 +70,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
       roleId: widget.roleId,
     );
     context.read<RegisterCubit>().registerUser(request);
+    context.read<VerifyEmailCubit>().sendOtp(widget.email);
   }
 
   @override
@@ -77,8 +83,8 @@ class _RegisterPage2State extends State<RegisterPage2> {
           child: BlocListener<RegisterCubit, RegisterState>(
             listener: (context, state) {
               if (state is RegisterLoading) {
-                CircularProgressIndicator(
-                  color: primaryColor,
+                Center(
+                  child: CircularProgressIndicator(color: primaryColor),
                 );
               }
               if (state is RegisterError) {
@@ -87,7 +93,10 @@ class _RegisterPage2State extends State<RegisterPage2> {
               if (state is RegisterSuccess) {
                 if (state.message == 'User registered successfully.') {
                   showCustomSnackBar(context, state.message, false);
+                  context.read<VerifyEmailCubit>().sendOtp(widget.email);
                   Future.delayed(const Duration(seconds: 1), () {
+                    //send otp here
+
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
