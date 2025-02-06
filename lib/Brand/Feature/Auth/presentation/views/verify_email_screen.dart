@@ -60,11 +60,12 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
             } else if (state is VerifyOtpError) {
               showCustomSnackBar(context, state.message, true);
             } else if (state is VerifyOtpSuccess) {
-              Navigator.pushReplacement(
+              Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
                   builder: (_) => HomePage(token: state.token),
                 ),
+                (route) => false,
               );
             }
           },
@@ -127,11 +128,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               const SizedBox(height: 20),
               BlocBuilder<VerifyEmailCubit, VerifyEmailState>(
                 builder: (context, state) {
-                  if (state is VerifyEmailLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(color: primaryColor),
-                    );
-                  }
+                  if (state is VerifyEmailLoading) {}
 
                   return LineWithAction(
                     actionName: "Resend code",

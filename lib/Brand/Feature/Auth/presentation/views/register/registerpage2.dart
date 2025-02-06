@@ -42,6 +42,7 @@ class _RegisterPage2State extends State<RegisterPage2> {
   bool _agreeToTerms = false;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -83,9 +84,13 @@ class _RegisterPage2State extends State<RegisterPage2> {
           child: BlocListener<RegisterCubit, RegisterState>(
             listener: (context, state) {
               if (state is RegisterLoading) {
-                Center(
-                  child: CircularProgressIndicator(color: primaryColor),
-                );
+                setState(() {
+                  isLoading = true; // Set isLoading to true when loading
+                });
+              } else {
+                setState(() {
+                  isLoading = false; // Reset isLoading when done
+                });
               }
               if (state is RegisterError) {
                 showCustomSnackBar(context, state.message, true);
@@ -191,7 +196,10 @@ class _RegisterPage2State extends State<RegisterPage2> {
                     ),
                   ],
                 ),
-                CustomButton(text: "Register", onPressed: _validateAndRegister),
+                CustomButton(
+                    text: "Register",
+                    onPressed: _validateAndRegister,
+                    isLoading: isLoading),
                 const SizedBox(height: 10),
                 LineWithAction(
                     actionName: "Login",
