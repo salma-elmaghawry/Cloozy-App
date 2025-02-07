@@ -130,16 +130,18 @@ class _LoginPageBodyState extends State<LoginPageBody> {
           BlocBuilder<LoginCubit, LoginState>(
             builder: (context, state) {
               if (state is LoginLoading) {
-                return const CircularProgressIndicator(color: primaryColor);
+                return const Center(
+                  child: CircularProgressIndicator(color: primaryColor),
+                );
               }
               return CustomButton(
                 onPressed: () {
                   if (widget._emailController.text.isNotEmpty &&
                       widget._passwordController.text.isNotEmpty) {
                     context.read<LoginCubit>().loginUser(
-                          widget._emailController.text,
-                          widget._passwordController.text,
-                        );
+                        widget._emailController.text,
+                        widget._passwordController.text,
+                        isChecked);
                   }
                 },
                 text: 'Login',

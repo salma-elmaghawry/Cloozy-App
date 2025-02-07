@@ -5,6 +5,7 @@ import 'package:cloozy/Brand/Feature/Auth/data/models/login_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/models/roles_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository {
   static const headers = {'Content-Type': 'application/json'};
@@ -79,6 +80,10 @@ class AuthRepository {
       if (response.statusCode == 200) {
         final loginResponse = LoginResponse.fromJson(responseData);
         await SecureStorage.saveToken(loginResponse.token);
+        if (request.remember == true) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('token', loginResponse.token);
+        }
         return loginResponse;
       } else {
         throw parseErrorResponse(responseData);

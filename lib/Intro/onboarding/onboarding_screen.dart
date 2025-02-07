@@ -80,12 +80,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 if (currentPage != 2)
-                  CustomTextButton(
-                    title: "Skip",
-                    onPressed: () {
-                      NavigationMethod(context);
-                    },
-                  ),
+                  GestureDetector(
+                      onTap: () {
+                        print("Skip button pressed");
+                        NavigationMethod(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          "Skip",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: grayColor,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      )),
                 Spacer(),
                 if (currentPage < onboardingPages.length - 1)
                   IconButton(
@@ -121,7 +130,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => BlocProvider.value(
-          value: BlocProvider.of<LoginCubit>(context),
+          value: BlocProvider.of<RegisterCubit>(context),
           child: CustomerOrBrand(),
         ),
       ),

@@ -1,5 +1,7 @@
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
+import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
+import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Brand/Feature/Auth/presentation/views/widgets/login_page_body.dart';
 import 'package:cloozy/Brand/Feature/home/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,14 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginCubit = context.read<LoginCubit>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loginCubit.checkLoginStatus();
+    });
+    
+
+     
+    
     return Scaffold(
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
@@ -27,7 +37,7 @@ class LoginPage extends StatelessWidget {
           if (state is LoginSuccess) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (_) => HomePage(token: "")),
+              MaterialPageRoute(builder: (_) => HomePage(token: state.token)),
             );
           }
         },
