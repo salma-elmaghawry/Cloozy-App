@@ -4,8 +4,8 @@ import 'package:cloozy/Brand/Core/common/custom_snakbar.dart';
 import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/cubits/verify_email/verify_email_cubit.dart';
-import 'package:cloozy/Brand/Feature/home/presentation/views/home_page.dart';
+import 'package:cloozy/Intro/Auth/data/cubits/verify_email/verify_email_cubit.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -62,7 +62,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => HomePage(token: state.token),
+                  builder: (_) => DashboardPage(token: state.token),
                 ),
                 (route) => false,
               );

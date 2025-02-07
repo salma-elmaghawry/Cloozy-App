@@ -6,10 +6,10 @@ import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
 import 'package:cloozy/Brand/Core/common/next_botton.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage1.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/widgets/role_card.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/Login/login_page.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Customer/Feature/Home/home.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/widgets/role_card.dart';
 import 'package:flutter/material.dart';
 
 class CustomerOrBrand extends StatefulWidget {

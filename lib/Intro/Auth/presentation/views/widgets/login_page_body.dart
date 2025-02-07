@@ -7,10 +7,10 @@ import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/forget_password.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage1.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/widgets/social_media_login.dart';
+import 'package:cloozy/Intro/Auth/data/cubits/login/login_cubit.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/forget%20password/new_password.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/register/registerpage1.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/widgets/social_media_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -121,7 +121,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => ForgetPassword()),
+                      MaterialPageRoute(builder: (context) => NewPassword()),
                     );
                   }),
               const SizedBox(height: 30),

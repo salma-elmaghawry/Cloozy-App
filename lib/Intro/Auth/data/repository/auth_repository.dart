@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:cloozy/Brand/Feature/Auth/data/services/secure_storage.dart';
+import 'dart:io';
+import 'package:cloozy/Intro/Auth/data/services/secure_storage.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/models/login_model.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/models/register_model.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/models/roles_model.dart';
+import 'package:cloozy/Intro/Auth/data/models/login_model.dart';
+import 'package:cloozy/Intro/Auth/data/models/register_model.dart';
+import 'package:cloozy/Intro/Auth/data/models/roles_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepository {
   static const headers = {'Content-Type': 'application/json'};
@@ -28,6 +28,9 @@ class AuthRepository {
       } else {
         throw Exception("Failed to fetch roles");
       }
+    } on SocketException catch (e) {
+      print('❌ SocketException: $e');
+      throw Exception('Please check your internet connection.');
     } catch (e) {
       print("Error: $e");
       throw Exception("Error fetching roles");
@@ -60,6 +63,9 @@ class AuthRepository {
       } else {
         throw parseErrorResponse(responseData);
       }
+    } on SocketException catch (e) {
+      print('❌ SocketException: $e');
+      throw Exception('Please check your internet connection.');
     } catch (e) {
       print('❌ Error: $e');
       throw parseErrorResponse({'message': e.toString()});
@@ -80,14 +86,13 @@ class AuthRepository {
       if (response.statusCode == 200) {
         final loginResponse = LoginResponse.fromJson(responseData);
         await SecureStorage.saveToken(loginResponse.token);
-        if (request.remember == true) {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('token', loginResponse.token);
-        }
         return loginResponse;
       } else {
         throw parseErrorResponse(responseData);
       }
+    } on SocketException catch (e) {
+      print('❌ SocketException: $e');
+      throw Exception('Please check your internet connection.');
     } catch (e) {
       throw parseErrorResponse({'message': e.toString()});
     }
@@ -114,6 +119,9 @@ class AuthRepository {
       } else {
         throw Exception('Failed to resend OTP: ${response.body}');
       }
+    } on SocketException catch (e) {
+      print('❌ SocketException: $e');
+      throw Exception('Please check your internet connection.');
     } catch (e) {
       print('❌ Error: $e');
       throw Exception('Error resending OTP: $e');
@@ -154,6 +162,9 @@ class AuthRepository {
       } else {
         throw parseErrorResponse(responseData);
       }
+    } on SocketException catch (e) {
+      print('❌ SocketException: $e');
+      throw Exception('Please check your internet connection.');
     } catch (e) {
       print('❌ OTP Verification Error: $e');
       throw parseErrorResponse({'message': e.toString()});
@@ -166,7 +177,7 @@ class AuthRepository {
 
   // Error parsing
   String parseErrorResponse(dynamic responseData) {
-    if (responseData == null) return 'Operation failed';
+    if (responseData == null) return 'Wrong peration';
 
     if (responseData['errors'] is Map) {
       final errors = responseData['errors'] as Map;
@@ -175,6 +186,6 @@ class AuthRepository {
           .join('\n');
     }
 
-    return responseData['message']?.toString() ?? 'Operation failed';
+    return responseData['message']?.toString() ?? 'Wrong Operation';
   }
 }

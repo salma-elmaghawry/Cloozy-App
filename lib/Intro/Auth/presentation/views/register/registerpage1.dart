@@ -8,8 +8,8 @@ import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
 import 'package:cloozy/Brand/Core/common/next_botton.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/login_page.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/register/registerpage2.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/Login/login_page.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/register/registerpage2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

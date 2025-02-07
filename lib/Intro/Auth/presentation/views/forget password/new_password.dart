@@ -6,14 +6,14 @@ import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:flutter/material.dart';
 
-class ForgetPassword extends StatefulWidget {
-  ForgetPassword({super.key});
+class NewPassword extends StatefulWidget {
+  NewPassword({super.key});
 
   @override
-  State<ForgetPassword> createState() => _ForgetPasswordState();
+  State<NewPassword> createState() => _NewPasswordState();
 }
 
-class _ForgetPasswordState extends State<ForgetPassword> {
+class _NewPasswordState extends State<NewPassword> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscurenewPassword = true;

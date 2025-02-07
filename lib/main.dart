@@ -1,13 +1,13 @@
-
 import 'package:cloozy/Brand/Core/common/constant.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/cubits/login/login_cubit.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/cubits/register/register_cubit.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/cubits/verify_email/verify_email_cubit.dart';
-import 'package:cloozy/Brand/Feature/Auth/data/repository/auth_repository.dart';
-import 'package:cloozy/Brand/Feature/Auth/presentation/views/forget_password.dart';
+
+import 'package:cloozy/Intro/Auth/data/cubits/login/login_cubit.dart';
+import 'package:cloozy/Intro/Auth/data/cubits/register/register_cubit.dart';
+import 'package:cloozy/Intro/Auth/data/cubits/verify_email/verify_email_cubit.dart';
+import 'package:cloozy/Intro/Auth/data/repository/auth_repository.dart';
+import 'package:cloozy/Intro/Auth/presentation/customer_or_brand.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/forget%20password/new_password.dart';
 import 'package:cloozy/Intro/Splash/presentation/views/splash_screen.dart';
 import 'package:cloozy/Intro/onboarding/onboarding_screen.dart';
-
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => VerifyEmailCubit(AuthRepository()),
-          
         )
       ],
       child: GetMaterialApp(
@@ -41,12 +40,11 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           'onboarding': (context) => OnboardingScreen(),
-          
-          
           'Splash': (context) => SplashScreen(),
-          'forget_password': (context) => ForgetPassword(),
+          'forget_password': (context) => NewPassword(),
+          'customer_orbrand': (context) => CustomerOrBrand(),
         },
-        initialRoute: 'Splash',
+        initialRoute: 'customer_orbrand',
       ),
     );
   }
