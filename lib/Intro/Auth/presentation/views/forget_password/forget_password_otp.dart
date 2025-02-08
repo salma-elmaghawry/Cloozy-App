@@ -1,11 +1,14 @@
-import 'package:cloozy/Brand/Core/common/add_logo.dart';
-import 'package:cloozy/Brand/Core/common/constant.dart';
-import 'package:cloozy/Brand/Core/common/cutom_button.dart';
-import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
-import 'package:cloozy/Brand/Core/common/next_botton.dart';
-import 'package:cloozy/Brand/Core/helper/assets.dart';
+import 'package:cloozy/Core/common/add_logo.dart';
+import 'package:cloozy/Core/common/app_dialogs.dart';
+import 'package:cloozy/Core/common/constant.dart';
+import 'package:cloozy/Core/common/headline_text_style.dart';
+import 'package:cloozy/Core/common/next_botton.dart';
+import 'package:cloozy/Core/helper/assets.dart';
+import 'package:cloozy/Intro/Auth/data/cubits/forget_password/forget_password_cubit.dart';
+import 'package:cloozy/Intro/Auth/data/repository/auth_repository.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/forget_password/new_password.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ForgetPasswordOtp extends StatefulWidget {
@@ -31,66 +34,88 @@ class _ForgetPasswordOtpState extends State<ForgetPasswordOtp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            const SizedBox(height: 30),
-            const AddLogo(),
-            const SizedBox(height: 30),
-            customText(
-              title: "Enter Code",
-              color: Colors.black,
-              fontSize: 24,
-            ),
-            customText(
-              title:
-                  "We’ve sent a message with an activation code to your email ${maskEmail(widget.email)}",
-              color: grayColor,
-              fontSize: 16,
-            ),
-            const SizedBox(height: 30),
-            PinCodeTextField(
-              appContext: context,
-              length: 6,
-              obscureText: false,
-              animationType: AnimationType.fade,
-              keyboardType: TextInputType.number,
-              cursorColor: primaryColor,
-              textStyle: const TextStyle(fontSize: 20),
-              pinTheme: PinTheme(
-                shape: PinCodeFieldShape.box,
-                borderRadius: BorderRadius.circular(5),
-                fieldHeight: 50,
-                fieldWidth: 40,
-                activeFillColor: Colors.white,
-                inactiveFillColor: Colors.grey.shade200,
-                selectedFillColor: Colors.white,
-                selectedColor: primaryColor,
+    return BlocProvider(
+      create: (context) => ForgetPasswordCubit(AuthRepository()),
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView(
+            children: [
+              const SizedBox(height: 30),
+              const AddLogo(),
+              const SizedBox(height: 30),
+              customText(
+                title: "Enter Code",
+                color: Colors.black,
+                fontSize: 24,
               ),
-              onChanged: (value) {
-                setState(() {
-                  _otp = value;
-                });
-              },
-            ),
-            const SizedBox(height: 30),
-            ButtonWithIcon(
-                text: "Next",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewPasswordPage(
-                        email: widget.email,
-                        otp: _otp,
-                      ),
-                    ),
-                  );
+              customText(
+                title:
+                    "We’ve sent a message with an activation code to your email ${maskEmail(widget.email)}",
+                color: grayColor,
+                fontSize: 16,
+              ),
+              const SizedBox(height: 30),
+              PinCodeTextField(
+                appContext: context,
+                length: 6,
+                obscureText: false,
+                animationType: AnimationType.fade,
+                keyboardType: TextInputType.number,
+                cursorColor: primaryColor,
+                textStyle: const TextStyle(fontSize: 20),
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(5),
+                  fieldHeight: 50,
+                  fieldWidth: 40,
+                  activeFillColor: Colors.white,
+                  inactiveFillColor: Colors.grey.shade200,
+                  selectedFillColor: Colors.white,
+                  selectedColor: primaryColor,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _otp = value;
+                  });
                 },
-                assetpath: shortArrow)
-          ],
+              ),
+              const SizedBox(height: 30),
+              BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+                listener: (context, state) {
+                  if (state is ForgotPasswordSuccess) {
+                    
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewPasswordPage(
+                          email: widget.email,
+                          otp: _otp,
+                        ),
+                      ),
+                    );
+                  } else if (state is ForgotPasswordError) {
+                    showErrorDialog(context, state.message);
+                  
+                  }
+                },
+                builder: (context, state) {
+                  return ButtonWithIcon(
+                      text: "Next",
+                      onPressed: () {
+                        context.read<ForgetPasswordCubit>().resetPassword(
+                              email: widget.email,
+                              newPassword: 'newPassword',
+                              newPasswordConfirmation:
+                                  'newPasswordConfirmation',
+                              otp: _otp,
+                            );
+                      },
+                      assetpath: shortArrow);
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

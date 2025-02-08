@@ -1,4 +1,4 @@
-import 'package:cloozy/Brand/Core/helper/assets.dart';
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
 
 class SocialMediaLogin extends StatelessWidget {

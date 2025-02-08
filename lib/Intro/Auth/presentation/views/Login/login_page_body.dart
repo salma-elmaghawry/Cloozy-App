@@ -1,11 +1,11 @@
-import 'package:cloozy/Brand/Core/common/add_logo.dart';
-import 'package:cloozy/Brand/Core/common/constant.dart';
-import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
-import 'package:cloozy/Brand/Core/common/custom_headline.dart';
-import 'package:cloozy/Brand/Core/common/cutom_button.dart';
-import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
-import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
-import 'package:cloozy/Brand/Core/helper/assets.dart';
+import 'package:cloozy/Core/common/add_logo.dart';
+import 'package:cloozy/Core/common/constant.dart';
+import 'package:cloozy/Core/common/custom_TextFormField.dart';
+import 'package:cloozy/Core/common/custom_headline.dart';
+import 'package:cloozy/Core/common/cutom_button.dart';
+import 'package:cloozy/Core/common/headline_text_style.dart';
+import 'package:cloozy/Core/common/linewithtapword.dart';
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:cloozy/Intro/Auth/data/cubits/login/login_cubit.dart';
 
 import 'package:cloozy/Intro/Auth/presentation/views/forget_password/email_page.dart';

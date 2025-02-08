@@ -1,6 +1,6 @@
 
-import 'package:cloozy/Brand/Core/common/constant.dart';
-import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
+import 'package:cloozy/Core/common/constant.dart';
+import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingPage extends StatelessWidget {

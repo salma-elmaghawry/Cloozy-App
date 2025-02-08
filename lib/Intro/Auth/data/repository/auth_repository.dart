@@ -39,6 +39,7 @@ class AuthRepository {
       final responseData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
+       
         return responseData;
       } else {
         throw parseErrorResponse(responseData);

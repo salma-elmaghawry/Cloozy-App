@@ -17,7 +17,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       emit(ForgotPasswordEmailSent(email: email, message: response['message']));
     } catch (e) {
       emit(ForgotPasswordError(message: e.toString()));
-      // TODO
+    
     }
   }
 

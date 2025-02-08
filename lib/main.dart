@@ -1,4 +1,4 @@
-import 'package:cloozy/Brand/Core/common/constant.dart';
+import 'package:cloozy/Core/common/constant.dart';
 
 import 'package:cloozy/Intro/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Intro/Auth/data/cubits/register/register_cubit.dart';

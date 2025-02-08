@@ -1,9 +1,9 @@
-import 'package:cloozy/Brand/Core/common/add_logo.dart';
-import 'package:cloozy/Brand/Core/common/constant.dart';
-import 'package:cloozy/Brand/Core/common/custom_snakbar.dart';
-import 'package:cloozy/Brand/Core/common/cutom_button.dart';
-import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
-import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
+import 'package:cloozy/Core/common/add_logo.dart';
+import 'package:cloozy/Core/common/constant.dart';
+import 'package:cloozy/Core/common/custom_snakbar.dart';
+import 'package:cloozy/Core/common/cutom_button.dart';
+import 'package:cloozy/Core/common/headline_text_style.dart';
+import 'package:cloozy/Core/common/linewithtapword.dart';
 import 'package:cloozy/Intro/Auth/data/cubits/verify_email/verify_email_cubit.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/views/home_page.dart';
 import 'package:flutter/material.dart';

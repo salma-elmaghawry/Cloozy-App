@@ -1,4 +1,4 @@
-import 'package:cloozy/Brand/Core/common/constant.dart';
+import 'package:cloozy/Core/common/constant.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {

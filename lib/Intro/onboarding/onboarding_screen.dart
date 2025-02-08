@@ -1,6 +1,6 @@
-import 'package:cloozy/Brand/Core/common/constant.dart';
-import 'package:cloozy/Brand/Core/common/custom_text_button.dart';
-import 'package:cloozy/Brand/Core/helper/assets.dart';
+import 'package:cloozy/Core/common/constant.dart';
+import 'package:cloozy/Core/common/custom_text_button.dart';
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:cloozy/Intro/Auth/data/cubits/login/login_cubit.dart';
 import 'package:cloozy/Intro/Auth/data/cubits/register/register_cubit.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/Login/login_page.dart';

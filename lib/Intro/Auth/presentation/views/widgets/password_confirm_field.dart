@@ -1,4 +1,4 @@
-import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
+import 'package:cloozy/Core/common/custom_TextFormField.dart';
 import 'package:flutter/material.dart';
 
 class PasswordConfirmField extends StatelessWidget {
