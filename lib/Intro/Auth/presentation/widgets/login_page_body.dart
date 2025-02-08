@@ -47,12 +47,12 @@ class _LoginPageBodyState extends State<LoginPageBody> {
           const SizedBox(height: 30),
           const AddLogo(),
           const SizedBox(height: 40),
-          customText(
+          CustomText(
             title: "Welcome Back!",
             color: Colors.black,
             fontSize: 24,
           ),
-          customText(
+          CustomText(
             title: "Please login or sign up to get started",
             color: grayColor,
             fontSize: 16,
@@ -115,19 +115,22 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                 ],
               ),
               const Spacer(),
-              CustomTextButton(
-                  title: "Forgot password?",
-                  color: primaryColor,
-                  fontSize: 12,
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
+              GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => EmailPage()),
                     );
-                  }),
-              const SizedBox(height: 30),
+                  },
+                  child: Text(
+                    "Forgot password?",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: primaryColor,
+                        fontWeight: FontWeight.w500),
+                  )),
             ],
           ),
+          const SizedBox(height: 20),
           BlocBuilder<LoginCubit, LoginState>(
             builder: (context, state) {
               if (state is LoginLoading) {

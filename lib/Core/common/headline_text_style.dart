@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class customText extends StatelessWidget {
-  customText(
+class CustomText extends StatelessWidget {
+  CustomText(
       {super.key,
       required this.title,
       this.color,
       this.fontSize,
-      this.fontWeight = FontWeight.w500,this.fontFamily});
+      this.fontWeight = FontWeight.w500,
+      this.fontFamily});
 
   final String title;
   Color? color;

@@ -44,12 +44,12 @@ class _ForgetPasswordOtpState extends State<ForgetPasswordOtp> {
               const SizedBox(height: 30),
               const AddLogo(),
               const SizedBox(height: 30),
-              customText(
+              CustomText(
                 title: "Enter Code",
                 color: Colors.black,
                 fontSize: 24,
               ),
-              customText(
+              CustomText(
                 title:
                     "We’ve sent a message with an activation code to your email ${maskEmail(widget.email)}",
                 color: grayColor,
@@ -84,7 +84,6 @@ class _ForgetPasswordOtpState extends State<ForgetPasswordOtp> {
               BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
                 listener: (context, state) {
                   if (state is ForgotPasswordSuccess) {
-                    
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -96,7 +95,6 @@ class _ForgetPasswordOtpState extends State<ForgetPasswordOtp> {
                     );
                   } else if (state is ForgotPasswordError) {
                     showErrorDialog(context, state.message);
-                  
                   }
                 },
                 builder: (context, state) {

@@ -29,12 +29,12 @@ class EmailPage extends StatelessWidget {
               const SizedBox(height: 30),
               const AddLogo(),
               const SizedBox(height: 30),
-              customText(
+              CustomText(
                 title: "Forget Password",
                 color: Colors.black,
                 fontSize: 24,
               ),
-              customText(
+              CustomText(
                 title: "Please enter your email to send reset code",
                 color: grayColor,
                 fontSize: 16,

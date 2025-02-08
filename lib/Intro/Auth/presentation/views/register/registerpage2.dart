@@ -111,12 +111,12 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 const SizedBox(height: 30),
                 const AddLogo(),
                 const SizedBox(height: 30),
-                customText(
+                CustomText(
                   title: "Sign Up",
                   color: Colors.black,
                   fontSize: 24,
                 ),
-                customText(
+                CustomText(
                   title: "Create a new account",
                   color: grayColor,
                   fontSize: 16,
