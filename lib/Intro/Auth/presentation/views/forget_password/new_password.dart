@@ -103,15 +103,20 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                       ),
                     );
                   } else if (state is ForgotPasswordError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.message)),
-                    );
+                    showErrorDialog(context, state.message);
                   }
                 },
                 builder: (context, state) {
+                  if (state is ForgotPasswordLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(color: primaryColor),
+                    );
+                  }
                   return CustomButton(
-                      text: "Create New Password",
-                      onPressed: () {
+                    text: "Create New Password",
+                    onPressed: () {
+                      if (_passwordController.text ==
+                          _confirmPasswordController.text) {
                         context.read<ForgetPasswordCubit>().resetPassword(
                               email: widget.email,
                               newPassword: _passwordController.text,
@@ -119,7 +124,11 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                   _confirmPasswordController.text,
                               otp: widget.otp,
                             );
-                      });
+                      } else {
+                        showErrorDialog(context, 'Passwords do not match');
+                      }
+                    },
+                  );
                 },
               ),
             ],

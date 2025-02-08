@@ -81,37 +81,25 @@ class _ForgetPasswordOtpState extends State<ForgetPasswordOtp> {
                 },
               ),
               const SizedBox(height: 30),
-              BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
-                listener: (context, state) {
-                  if (state is ForgotPasswordSuccess) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewPasswordPage(
-                          email: widget.email,
-                          otp: _otp,
+              ButtonWithIcon(
+                  text: "Next",
+                  onPressed: () {
+                    if (_otp.length == 6) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewPasswordPage(
+                            email: widget.email,
+                            otp: _otp,
+                          ),
                         ),
-                      ),
-                    );
-                  } else if (state is ForgotPasswordError) {
-                    showErrorDialog(context, state.message);
-                  }
-                },
-                builder: (context, state) {
-                  return ButtonWithIcon(
-                      text: "Next",
-                      onPressed: () {
-                        context.read<ForgetPasswordCubit>().resetPassword(
-                              email: widget.email,
-                              newPassword: 'newPassword',
-                              newPasswordConfirmation:
-                                  'newPasswordConfirmation',
-                              otp: _otp,
-                            );
-                      },
-                      assetpath: shortArrow);
-                },
-              )
+                      );
+                    } else {
+                      showErrorDialog(
+                          context, 'Please enter a valid 6-digit OTP');
+                    }
+                  },
+                  assetpath: shortArrow)
             ],
           ),
         ),
