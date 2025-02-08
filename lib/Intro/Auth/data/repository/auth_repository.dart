@@ -1,15 +1,56 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:cloozy/Intro/Auth/data/services/secure_storage.dart';
-import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Intro/Auth/data/models/login_model.dart';
 import 'package:cloozy/Intro/Auth/data/models/register_model.dart';
 import 'package:cloozy/Intro/Auth/data/models/roles_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthRepository {
+  static const String baseUrl = 'https://your-api-url.com';
   static const headers = {'Content-Type': 'application/json'};
+  final _logger = Logger(
+    printer: PrettyPrinter(
+      colors: true,
+      printEmojis: true,
+    ),
+  );
+  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+
+  // Helper method for making HTTP requests
+  Future<Map<String, dynamic>> _makeRequest(
+    String endpoint,
+    Map<String, dynamic> body,
+  ) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/$endpoint'),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(body),
+      );
+
+      _logger.d('✅ Response: ${response.statusCode}');
+      _logger.d('📥 Response Data: ${response.body}');
+
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        return responseData;
+      } else {
+        throw parseErrorResponse(responseData);
+      }
+    } on SocketException catch (e) {
+      _logger.e('❌ SocketException: $e');
+      throw Exception('Please check your internet connection.');
+    } catch (e) {
+      _logger.e('❌ Error: $e');
+      throw parseErrorResponse({'message': e.toString()});
+    }
+  }
 
   // Roles method
   Future<List<Role>> getRoles() async {
@@ -19,8 +60,8 @@ class AuthRepository {
         headers: headers,
       );
 
-      print('✅ Received response: ${response.statusCode}');
-      print('📥 Response Data: ${response.body}');
+      _logger.d('✅ Received response: ${response.statusCode}');
+      _logger.d('📥 Response Data: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
@@ -30,228 +71,82 @@ class AuthRepository {
         throw Exception("Failed to fetch roles");
       }
     } on SocketException catch (e) {
-      print('❌ SocketException: $e');
+      _logger.e('❌ SocketException: $e');
       throw Exception('Please check your internet connection.');
     } catch (e) {
-      print("Error: $e");
+      _logger.e("Error: $e");
       throw Exception("Error fetching roles");
     }
   }
 
   // Registration method
   Future<RegisterResponse> register(RegisterRequest data) async {
-    try {
-      print('⏳ Starting registration request...');
-      print('📤 Request Data: ${data.toJson()}');
+    _logger.d('⏳ Starting registration request...');
+    _logger.d('📤 Request Data: ${data.toJson()}');
 
-      final response = await http.post(
-        Uri.parse('$baseUrl/users/register'),
-        headers: {
-          ...headers,
-          'Accept': 'application/json',
-        },
-        body: jsonEncode(data.toJson()),
-      );
+    final responseData = await _makeRequest('users/register', data.toJson());
 
-      print('✅ Received response: ${response.statusCode}');
-      print('📥 Response Data: ${response.body}');
-
-      final responseData = jsonDecode(response.body);
-
-      if (response.statusCode == 200 &&
-          responseData['message'] == 'User registered successfully.') {
-        return RegisterResponse.fromJson(responseData);
-      } else {
-        throw parseErrorResponse(responseData);
-      }
-    } on SocketException catch (e) {
-      print('❌ SocketException: $e');
-      throw Exception('Please check your internet connection.');
-    } catch (e) {
-      print('❌ Error: $e');
-      throw parseErrorResponse({'message': e.toString()});
+    if (responseData['message'] == 'User registered successfully.') {
+      return RegisterResponse.fromJson(responseData);
+    } else {
+      throw parseErrorResponse(responseData);
     }
   }
 
   // Login method
   Future<LoginResponse> login(LoginRequest request) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/users/login'),
-        headers: headers,
-        body: jsonEncode(request.toJson()),
-      );
+    final responseData = await _makeRequest('users/login', request.toJson());
 
-      final responseData = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        final loginResponse = LoginResponse.fromJson(responseData);
-        await SecureStorage.saveToken(loginResponse.token);
-        return loginResponse;
-      } else {
-        throw parseErrorResponse(responseData);
-      }
-    } on SocketException catch (e) {
-      print('❌ SocketException: $e');
-      throw Exception('Please check your internet connection.');
-    } catch (e) {
-      throw parseErrorResponse({'message': e.toString()});
-    }
+    final loginResponse = LoginResponse.fromJson(responseData);
+    await _secureStorage.write(key: 'auth_token', value: loginResponse.token);
+    return loginResponse;
   }
 
-  //Account recovery(forget password)
-  Future<Map<String, dynamic>> sendRecoveryEmail(String email) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/users/account-recovery'),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: jsonEncode({'email': email}),
-      );
-
-      print('✅ Verify Email Response: ${response.statusCode}');
-      print('📥 Response Data: ${response.body}');
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else if (response.statusCode == 404) {
-        throw Exception('Endpoint not found. Please check the URL.');
-      } else {
-        throw Exception('Failed to resend OTP: ${response.body}');
-      }
-    } on SocketException catch (e) {
-      print('❌ SocketException: $e');
-      throw Exception('Please check your internet connection.');
-    } catch (e) {
-      print('❌ Error: $e');
-      throw Exception('Error resending OTP: $e');
-    }
+  // Account recovery (forget password)
+  Future<Map<String, dynamic>> requestPasswordReset(String email) async {
+    return _makeRequest('users/account-recovery', {'email': email});
   }
 
-  ////Account recovery(forget password otp to reset password )
+  // Account recovery (forget password OTP to reset password)
   Future<Map<String, dynamic>> resetPassword({
     required String email,
     required String newPassword,
     required String newPasswordConfirmation,
     required String otp,
   }) async {
-    try {
-      final response = await http.post(
-        Uri.parse(
-            '$baseUrl/users/account-recovery-otp'), // Verify correct endpoint
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'email': email,
-          'otp': otp,
-          'new_password': newPassword,
-          'new_password_confirmation': newPasswordConfirmation,
-        }),
-      );
-
-      print('✅ Verify OTP Response: ${response.statusCode}');
-      print('📥 Response Data: ${response.body}');
-
-      final responseData = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else {
-        throw parseErrorResponse(responseData);
-      }
-    } on SocketException catch (e) {
-      print('❌ SocketException: $e');
-      throw Exception('Please check your internet connection.');
-    } catch (e) {
-      print('❌ OTP Verification Error: $e');
-      throw parseErrorResponse({'message': e.toString()});
-    }
+    return _makeRequest('users/account-recovery-otp', {
+      'email': email,
+      'otp': otp,
+      'new_password': newPassword,
+      'new_password_confirmation': newPasswordConfirmation,
+    });
   }
-
-
 
   // Email verification
   Future<void> verifyEmail(String email) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/users/verify-email'),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: jsonEncode({'email': email}),
-      );
-
-      print('✅ Verify Email Response: ${response.statusCode}');
-      print('📥 Response Data: ${response.body}');
-      if (response.statusCode == 200) {
-        return;
-      } else if (response.statusCode == 404) {
-        throw Exception('Endpoint not found. Please check the URL.');
-      } else {
-        throw Exception('Failed to resend OTP: ${response.body}');
-      }
-    } on SocketException catch (e) {
-      print('❌ SocketException: $e');
-      throw Exception('Please check your internet connection.');
-    } catch (e) {
-      print('❌ Error: $e');
-      throw Exception('Error resending OTP: $e');
-    }
+    await _makeRequest('users/verify-email', {'email': email});
   }
 
-// verifiy email
+  // Verify email OTP
   Future<String> verifyEmailOtp(String email, String otp) async {
-    try {
-      final response = await http.post(
-        Uri.parse('$baseUrl/users/verify-email-otp'), // Verify correct endpoint
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'email': email,
-          'otp': otp,
-        }),
-      );
+    final responseData = await _makeRequest('users/verify-email-otp', {
+      'email': email,
+      'otp': otp,
+    });
 
-      print('✅ Verify OTP Response: ${response.statusCode}');
-      print('📥 Response Data: ${response.body}');
-
-      final responseData = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        // Extract token from nested data object
-        final token = responseData['data']['token'] as String;
-
-        // Save token to secure storage
-        await SecureStorage.saveToken(token);
-        print('🔑 Token saved successfully');
-
-        // Return the token for potential immediate use
-        return token;
-      } else {
-        throw parseErrorResponse(responseData);
-      }
-    } on SocketException catch (e) {
-      print('❌ SocketException: $e');
-      throw Exception('Please check your internet connection.');
-    } catch (e) {
-      print('❌ OTP Verification Error: $e');
-      throw parseErrorResponse({'message': e.toString()});
-    }
+    final token = responseData['data']['token'] as String;
+    await _secureStorage.write(key: 'auth_token', value: token);
+    return token;
   }
 
+  // Logout
   Future<void> logout() async {
-    await SecureStorage.deleteToken();
+    await _secureStorage.delete(key: 'auth_token');
   }
 
   // Error parsing
   String parseErrorResponse(dynamic responseData) {
-    if (responseData == null) return 'Wrong peration';
+    if (responseData == null) return 'An unexpected error occurred.';
 
     if (responseData['errors'] is Map) {
       final errors = responseData['errors'] as Map;
@@ -260,6 +155,7 @@ class AuthRepository {
           .join('\n');
     }
 
-    return responseData['message']?.toString() ?? 'Wrong Operation';
+    return responseData['message']?.toString() ??
+        'An unexpected error occurred.';
   }
 }
