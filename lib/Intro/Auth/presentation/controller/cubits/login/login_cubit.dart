@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloozy/Intro/Auth/data/models/login_model.dart';
 import 'package:cloozy/Intro/Auth/data/repository/auth_repository.dart';
-import 'package:cloozy/Intro/Auth/data/services/secure_storage.dart';
+import 'package:cloozy/Intro/Auth/data/secure_storage.dart';
 import 'package:meta/meta.dart';
 
 part 'login_state.dart';

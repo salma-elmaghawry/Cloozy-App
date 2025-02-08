@@ -1,10 +1,9 @@
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_text_button.dart';
 import 'package:cloozy/Core/helper/assets.dart';
-import 'package:cloozy/Intro/Auth/data/cubits/login/login_cubit.dart';
-import 'package:cloozy/Intro/Auth/data/cubits/register/register_cubit.dart';
-import 'package:cloozy/Intro/Auth/presentation/views/Login/login_page.dart';
-import 'package:cloozy/Intro/Auth/presentation/customer_or_brand.dart';
+import 'package:cloozy/Intro/Auth/presentation/controller/cubits/login/login_cubit.dart';
+import 'package:cloozy/Intro/Auth/presentation/controller/cubits/register/register_cubit.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/customer_or_brand.dart';
 import 'package:cloozy/Intro/onboarding/custom_clippers.dart';
 
 import 'package:cloozy/Intro/onboarding/onboardingpage.dart';

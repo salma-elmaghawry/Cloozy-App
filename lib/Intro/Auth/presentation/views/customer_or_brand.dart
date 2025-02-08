@@ -1,15 +1,14 @@
 import 'package:cloozy/Core/common/add_logo.dart';
 import 'package:cloozy/Core/common/constant.dart';
-import 'package:cloozy/Core/common/custom_TextFormField.dart';
-import 'package:cloozy/Core/common/cutom_button.dart';
+
 import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:cloozy/Core/common/linewithtapword.dart';
 import 'package:cloozy/Core/common/next_botton.dart';
 import 'package:cloozy/Core/helper/assets.dart';
-import 'package:cloozy/Intro/Auth/presentation/views/Login/login_page.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/login_page.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Customer/Feature/Home/home.dart';
-import 'package:cloozy/Intro/Auth/presentation/views/widgets/role_card.dart';
+import 'package:cloozy/Intro/Auth/presentation/widgets/role_card.dart';
 import 'package:flutter/material.dart';
 
 class CustomerOrBrand extends StatefulWidget {

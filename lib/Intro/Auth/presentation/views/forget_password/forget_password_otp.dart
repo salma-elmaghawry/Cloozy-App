@@ -4,7 +4,7 @@ import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:cloozy/Core/common/next_botton.dart';
 import 'package:cloozy/Core/helper/assets.dart';
-import 'package:cloozy/Intro/Auth/data/cubits/forget_password/forget_password_cubit.dart';
+import 'package:cloozy/Intro/Auth/presentation/controller/cubits/forget_password/forget_password_cubit.dart';
 import 'package:cloozy/Intro/Auth/data/repository/auth_repository.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/forget_password/new_password.dart';
 import 'package:flutter/material.dart';
