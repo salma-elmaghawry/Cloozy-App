@@ -8,7 +8,8 @@ import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Intro/Auth/data/cubits/login/login_cubit.dart';
-import 'package:cloozy/Intro/Auth/presentation/views/forget%20password/new_password.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/forget_password/email_page.dart';
+import 'package:cloozy/Intro/Auth/presentation/views/forget_password/new_password.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/widgets/social_media_login.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +122,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => NewPassword()),
+                      MaterialPageRoute(builder: (context) => EmailPage()),
                     );
                   }),
               const SizedBox(height: 30),

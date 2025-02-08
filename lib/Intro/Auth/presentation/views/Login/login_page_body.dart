@@ -2,14 +2,13 @@ import 'package:cloozy/Brand/Core/common/add_logo.dart';
 import 'package:cloozy/Brand/Core/common/constant.dart';
 import 'package:cloozy/Brand/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Brand/Core/common/custom_headline.dart';
-import 'package:cloozy/Brand/Core/common/custom_text_button.dart';
 import 'package:cloozy/Brand/Core/common/cutom_button.dart';
 import 'package:cloozy/Brand/Core/common/headline_text_style.dart';
 import 'package:cloozy/Brand/Core/common/linewithtapword.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Intro/Auth/data/cubits/login/login_cubit.dart';
-import 'package:cloozy/Intro/Auth/presentation/views/forget%20password/email_page.dart';
-import 'package:cloozy/Intro/Auth/presentation/views/forget%20password/new_password.dart';
+
+import 'package:cloozy/Intro/Auth/presentation/views/forget_password/email_page.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/register/registerpage1.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/widgets/social_media_login.dart';
 import 'package:flutter/material.dart';
@@ -117,21 +116,20 @@ class _LoginPageBodyState extends State<LoginPageBody> {
               const Spacer(),
               GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
+                    Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => EmailPage()),
                     );
                   },
                   child: Text(
                     "Forgot password?",
                     style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 16,
                         color: primaryColor,
                         fontWeight: FontWeight.w500),
                   )),
-              const SizedBox(height: 30),
             ],
           ),
+          const SizedBox(height: 30),
           BlocBuilder<LoginCubit, LoginState>(
             builder: (context, state) {
               if (state is LoginLoading) {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:cloozy/Intro/Auth/data/services/secure_storage.dart';
 import 'package:cloozy/Brand/Core/helper/assets.dart';
 import 'package:cloozy/Intro/Auth/data/models/login_model.dart';
@@ -98,6 +99,80 @@ class AuthRepository {
     }
   }
 
+  //Account recovery(forget password)
+  Future<Map<String, dynamic>> sendRecoveryEmail(String email) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/users/account-recovery'),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: jsonEncode({'email': email}),
+      );
+
+      print('✅ Verify Email Response: ${response.statusCode}');
+      print('📥 Response Data: ${response.body}');
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else if (response.statusCode == 404) {
+        throw Exception('Endpoint not found. Please check the URL.');
+      } else {
+        throw Exception('Failed to resend OTP: ${response.body}');
+      }
+    } on SocketException catch (e) {
+      print('❌ SocketException: $e');
+      throw Exception('Please check your internet connection.');
+    } catch (e) {
+      print('❌ Error: $e');
+      throw Exception('Error resending OTP: $e');
+    }
+  }
+
+  ////Account recovery(forget password otp to reset password )
+  Future<Map<String, dynamic>> resetPassword({
+    required String email,
+    required String newPassword,
+    required String newPasswordConfirmation,
+    required String otp,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+            '$baseUrl/users/account-recovery-otp'), // Verify correct endpoint
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'email': email,
+          'otp': otp,
+          'new_password': newPassword,
+          'new_password_confirmation': newPasswordConfirmation,
+        }),
+      );
+
+      print('✅ Verify OTP Response: ${response.statusCode}');
+      print('📥 Response Data: ${response.body}');
+
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        throw parseErrorResponse(responseData);
+      }
+    } on SocketException catch (e) {
+      print('❌ SocketException: $e');
+      throw Exception('Please check your internet connection.');
+    } catch (e) {
+      print('❌ OTP Verification Error: $e');
+      throw parseErrorResponse({'message': e.toString()});
+    }
+  }
+
+
+
   // Email verification
   Future<void> verifyEmail(String email) async {
     try {
@@ -128,8 +203,7 @@ class AuthRepository {
     }
   }
 
-  // OTP verification
-// Updated OTP verification method
+// verifiy email
   Future<String> verifyEmailOtp(String email, String otp) async {
     try {
       final response = await http.post(
