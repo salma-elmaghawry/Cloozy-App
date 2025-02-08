@@ -48,12 +48,12 @@ class _CustomerOrBrandState extends State<CustomerOrBrand> {
             const SizedBox(height: 30),
             const AddLogo(),
             const SizedBox(height: 40),
-            customText(
+            CustomText(
               title: "You Are ?",
               color: Colors.black,
               fontSize: 24,
             ),
-            customText(
+            CustomText(
               title: "Choose your role to continue",
               color: grayColor,
               fontSize: 16,

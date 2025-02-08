@@ -1,7 +1,5 @@
 import 'package:cloozy/Core/common/constant.dart';
-import 'package:cloozy/Core/common/custom_text_button.dart';
 import 'package:cloozy/Core/helper/assets.dart';
-import 'package:cloozy/Intro/Auth/presentation/controller/cubits/login/login_cubit.dart';
 import 'package:cloozy/Intro/Auth/presentation/controller/cubits/register/register_cubit.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/customer_or_brand.dart';
 import 'package:cloozy/Intro/onboarding/custom_clippers.dart';
@@ -84,8 +82,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         print("Skip button pressed");
                         NavigationMethod(context);
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15),
+                      child:const  Padding(
+                        padding:  EdgeInsets.only(left: 15),
                         child: Text(
                           "Skip",
                           style: TextStyle(
@@ -94,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               fontWeight: FontWeight.w500),
                         ),
                       )),
-                Spacer(),
+                const Spacer(),
                 if (currentPage < onboardingPages.length - 1)
                   IconButton(
                     onPressed: () {
@@ -109,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     style: IconButton.styleFrom(
                       backgroundColor: primaryColor,
-                      shape: CircleBorder(),
+                      shape:const  CircleBorder(),
                       iconSize: 80,
                       padding: const EdgeInsets.all(12),
                     ),
@@ -130,7 +128,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       MaterialPageRoute(
         builder: (context) => BlocProvider.value(
           value: BlocProvider.of<RegisterCubit>(context),
-          child: CustomerOrBrand(),
+          child:const  CustomerOrBrand(),
         ),
       ),
     );
@@ -168,7 +166,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           MaterialPageRoute(
             builder: (context) => BlocProvider.value(
               value: BlocProvider.of<RegisterCubit>(context),
-              child: CustomerOrBrand(),
+              child:const  CustomerOrBrand(),
             ),
           ),
         );

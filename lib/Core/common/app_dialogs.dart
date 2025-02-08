@@ -7,7 +7,7 @@ Future<void> showSuccessDialog(BuildContext context, String message) {
     barrierDismissible: false, // Prevent dismissing by tapping outside
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Success'),
+        title:const Text('Success'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
@@ -29,7 +29,7 @@ Future<void> showErrorDialog(BuildContext context, String message) {
     barrierDismissible: false, // Prevent dismissing by tapping outside
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Error'),
+        title:const Text('Error'),
         content: Text(message),
         actions: <Widget>[
           TextButton(
@@ -110,7 +110,7 @@ Future<void> showLoadingDialog(BuildContext context) {
     context: context,
     barrierDismissible: false, // Prevent dismissing by tapping outside
     builder: (BuildContext context) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
     },

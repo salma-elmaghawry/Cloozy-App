@@ -39,12 +39,12 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
               const SizedBox(height: 30),
               const AddLogo(),
               const SizedBox(height: 30),
-              customText(
+              CustomText(
                 title: "New Password",
                 color: Colors.black,
                 fontSize: 24,
               ),
-              customText(
+              CustomText(
                 title: "Create a new password",
                 color: grayColor,
                 fontSize: 16,
@@ -99,7 +99,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>const CustomerOrBrand(),
+                        builder: (context) => const CustomerOrBrand(),
                       ),
                     );
                   } else if (state is ForgotPasswordError) {

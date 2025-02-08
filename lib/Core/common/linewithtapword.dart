@@ -19,13 +19,13 @@ class LineWithAction extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        customText(
+        CustomText(
           title: title,
           color: Colors.black,
         ),
         GestureDetector(
           onTap: onTap,
-          child: customText(
+          child: CustomText(
             title: actionName,
             color: primaryColor,
             fontSize: 15,

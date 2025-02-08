@@ -73,12 +73,12 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               const SizedBox(height: 30),
               const AddLogo(),
               const SizedBox(height: 30),
-              customText(
+              CustomText(
                 title: "Verify your Email",
                 color: Colors.black,
                 fontSize: 24,
               ),
-              customText(
+              CustomText(
                 title:
                     "We’ve sent a message with an activation code to your email ${maskEmail(widget.email)}",
                 color: grayColor,
