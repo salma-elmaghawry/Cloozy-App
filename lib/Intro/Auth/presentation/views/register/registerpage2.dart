@@ -1,4 +1,5 @@
 import 'package:cloozy/Core/common/add_logo.dart';
+import 'package:cloozy/Core/common/app_dialogs.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Core/common/custom_headline.dart';
@@ -84,11 +85,11 @@ class _RegisterPage2State extends State<RegisterPage2> {
             listener: (context, state) {
               if (state is RegisterLoading) {}
               if (state is RegisterError) {
-                showCustomSnackBar(context, state.message, true);
+                showErrorDialog(context, state.message);
               }
               if (state is RegisterSuccess) {
                 if (state.message == 'User registered successfully.') {
-                  showCustomSnackBar(context, state.message, false);
+                  showSuccessDialog(context, state.message);
                   context.read<VerifyEmailCubit>().sendOtp(widget.email);
                   Future.delayed(const Duration(seconds: 1), () {
                     //send otp here

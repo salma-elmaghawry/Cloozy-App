@@ -17,7 +17,8 @@ class LoginCubit extends Cubit<LoginState> {
         password: password,
         remember: remember,
       ));
-      emit(LoginSuccess(response.token));
+       await SecureStorage.saveToken(response.token);
+      emit(LoginSuccess(response.token,response.isEmailVerified));
     } catch (e) {
       emit(LoginError(e.toString()));
     }

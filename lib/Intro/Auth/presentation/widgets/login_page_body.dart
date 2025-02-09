@@ -121,7 +121,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                       MaterialPageRoute(builder: (context) => EmailPage()),
                     );
                   },
-                  child: Text(
+                  child:const  Text(
                     "Forgot password?",
                     style: TextStyle(
                         fontSize: 16,
