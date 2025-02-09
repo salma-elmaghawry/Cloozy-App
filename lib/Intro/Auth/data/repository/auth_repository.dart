@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:cloozy/Intro/Auth/data/models/login_model.dart';
 import 'package:cloozy/Intro/Auth/data/models/register_model.dart';
 import 'package:cloozy/Intro/Auth/data/models/roles_model.dart';
@@ -8,7 +9,6 @@ import 'package:logger/logger.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthRepository {
-  static const String baseUrl = 'https://your-api-url.com';
   static const headers = {'Content-Type': 'application/json'};
   final _logger = Logger(
     printer: PrettyPrinter(
@@ -39,7 +39,6 @@ class AuthRepository {
       final responseData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-       
         return responseData;
       } else {
         throw parseErrorResponse(responseData);

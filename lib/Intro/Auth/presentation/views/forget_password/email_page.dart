@@ -55,6 +55,7 @@ class EmailPage extends StatelessWidget {
               const SizedBox(height: 20),
               BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
                 listener: (context, state) {
+                  
                   if (state is ForgotPasswordEmailSent) {
                     Navigator.push(
                       context,
@@ -68,6 +69,11 @@ class EmailPage extends StatelessWidget {
                   }
                 },
                 builder: (context, state) {
+                  if (state is ForgotPasswordLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(color: primaryColor),
+                    );
+                  }
                   return ButtonWithIcon(
                     text: "Next",
                     onPressed: () {
