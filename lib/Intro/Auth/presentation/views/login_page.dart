@@ -1,4 +1,5 @@
-import 'package:cloozy/Brand/Feature/Dashboard/presentation/Screens/home_page.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/presentation/Screens/botton_navbar.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/presentation/Screens/dumy_nav_page/home_page.dart';
 import 'package:cloozy/Core/common/app_dialogs.dart';
 import 'package:cloozy/Intro/Auth/presentation/controller/cubits/login/login_cubit.dart';
 import 'package:cloozy/Intro/Auth/presentation/views/verify_email/verify_email_screen.dart';
@@ -29,7 +30,7 @@ class LoginPage extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (_) => DashboardPage(token: state.token)),
+                    builder: (_) => BottomNavBar(token: state.token)),
               );
             } else {
               Navigator.pushReplacement(
