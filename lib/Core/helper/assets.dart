@@ -14,6 +14,10 @@ const female = "assets/icons/fem.svg";
 const male = "assets/icons/male.svg";
 const name = "assets/icons/name.svg";
 const phone = "assets/icons/phone.svg";
+const order = "assets/icons/order.svg";
+const payment = "assets/icons/payment.svg";
+const dashboard = "assets/icons/dashboard.svg";
+const profile = "assets/icons/profile.svg";
 
 const font = "Poppins";
 const baseUrl = "https://cloozy.azurewebsites.net/api";
