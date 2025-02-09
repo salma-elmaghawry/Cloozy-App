@@ -88,7 +88,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                   },
                 ),
                 validator: (value) => value != _passwordController.text
-                    ? "Passwords do not match"
+                    ? "Passwords do not match or OTP code is Wrong"
                     : null,
               ),
               const SizedBox(height: 30),
@@ -111,6 +111,9 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                     return Center(
                       child: CircularProgressIndicator(color: primaryColor),
                     );
+                  }
+                  if (state is ForgotPasswordSuccess) {
+                    showSuccessDialog(context, state.message);
                   }
                   return CustomButton(
                     text: "Create New Password",

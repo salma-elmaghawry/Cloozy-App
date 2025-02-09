@@ -13,8 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class EmailPage extends StatelessWidget {
+class EmailPage extends StatefulWidget {
   EmailPage({super.key});
+
+  @override
+  State<EmailPage> createState() => _EmailPageState();
+}
+
+class _EmailPageState extends State<EmailPage> {
   final TextEditingController _emailController = TextEditingController();
 
   @override
@@ -55,7 +61,6 @@ class EmailPage extends StatelessWidget {
               const SizedBox(height: 20),
               BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
                 listener: (context, state) {
-                  
                   if (state is ForgotPasswordEmailSent) {
                     Navigator.push(
                       context,
