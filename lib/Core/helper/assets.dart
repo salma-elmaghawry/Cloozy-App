@@ -18,8 +18,10 @@ const order = "assets/icons/order.svg";
 const payment = "assets/icons/payment.svg";
 const dashboard = "assets/icons/dashboard.svg";
 const profile = "assets/icons/profile.svg";
+const search = "assets/icons/search.svg";
+const dollar = "assets/icons/dollar.svg";
+const people = "assets/icons/people.svg";
+const topArrow = "assets/icons/top_arrow.svg";
 
-const font = "Poppins";
-const baseUrl = "https://cloozy.azurewebsites.net/api";
 const brandImg = "assets/images/brand.png";
 const cutomerImg = "assets/images/customer.png";
