@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomHeadline extends StatelessWidget {
-  CustomHeadline({super.key, required this.title});
+  CustomHeadline({super.key, required this.title, this.fontSize});
   String title;
+  double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,9 @@ class CustomHeadline extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+              color: Colors.black,
+              fontSize: fontSize,
+              fontWeight: FontWeight.w500),
         ));
   }
 }

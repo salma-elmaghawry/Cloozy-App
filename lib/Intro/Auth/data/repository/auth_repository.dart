@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:cloozy/Intro/Auth/data/models/login_model.dart';
 import 'package:cloozy/Intro/Auth/data/models/register_model.dart';
