@@ -6,7 +6,6 @@ import 'package:cloozy/Core/common/cutom_button.dart';
 import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:cloozy/Core/common/linewithtapword.dart';
 import 'package:cloozy/Intro/Auth/presentation/controller/cubits/verify_email/verify_email_cubit.dart';
-import 'package:cloozy/Brand/Feature/Dashboard/presentation/Screens/dumy_nav_page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';

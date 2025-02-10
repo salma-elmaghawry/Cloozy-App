@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: bgColor,
         ),
         routes: {
-          'onboarding': (context) =>const  OnboardingScreen(),
+          'onboarding': (context) => const OnboardingScreen(),
           'Splash': (context) => SplashScreen(),
           //'forget_password': (context) => NewPasswordPage(),
           'customer_orbrand': (context) => const CustomerOrBrand(),

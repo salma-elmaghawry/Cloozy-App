@@ -6,13 +6,12 @@ import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 
 class BottomNavBar extends StatefulWidget {
   final String token;
-  const BottomNavBar({super.key, required this.token});
+  BottomNavBar({super.key, required this.token});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -21,7 +20,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [
-    Dashboardpage(),
+    Dashboardpage(token: ""),
     OrdersPage(),
     PaymentPage(),
     ProfilePage(),
