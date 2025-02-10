@@ -3,7 +3,11 @@ import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class VisitorCard extends StatelessWidget {
+class DailySalesCard extends StatelessWidget {
+  final double dailySales;
+  final String percentageChange;
+  DailySalesCard(
+      {super.key, required this.dailySales, required this.percentageChange});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +29,7 @@ class VisitorCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "5,700 EGP",
+                "$dailySales",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               SvgPicture.asset(topArrow),
@@ -36,7 +40,7 @@ class VisitorCard extends StatelessWidget {
             children: [
               SvgPicture.asset(topArrow),
               Text(
-                " 5.4% ",
+                " $percentageChange",
                 style: TextStyle(fontSize: 17, color: Colors.green),
               ),
               Text('Up from yesterday',

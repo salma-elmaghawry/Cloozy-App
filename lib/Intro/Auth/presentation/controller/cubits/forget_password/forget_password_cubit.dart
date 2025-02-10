@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloozy/Intro/Auth/data/repository/auth_repository.dart';
-import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
 part 'forget_password_state.dart';

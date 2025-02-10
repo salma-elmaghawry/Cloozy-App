@@ -1,5 +1,4 @@
 import 'package:cloozy/Core/common/constant.dart';
-import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart'; // Import flutter_svg package
 
