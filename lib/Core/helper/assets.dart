@@ -19,7 +19,7 @@ const payment = "assets/icons/payment.svg";
 const dashboard = "assets/icons/dashboard.svg";
 const profile = "assets/icons/profile.svg";
 const search = "assets/icons/search.svg";
-const dollar = "assets/icons/dollar.svg";
+const money = "assets/icons/dollar_bag.svg";
 const people = "assets/icons/people.svg";
 const topArrow = "assets/icons/top_arrow.svg";
 

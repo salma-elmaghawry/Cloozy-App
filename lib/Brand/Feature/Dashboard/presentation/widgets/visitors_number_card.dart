@@ -1,7 +1,7 @@
-import 'package:cloozy/Core/common/add_svgicon.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class VisitorsNumberCard extends StatelessWidget {
   const VisitorsNumberCard({super.key});
@@ -29,13 +29,13 @@ class VisitorsNumberCard extends StatelessWidget {
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              AddSvgicon(assetPath: people)
+              SvgPicture.asset(topArrow),
             ],
           ),
           SizedBox(height: 5),
           Row(
             children: [
-              AddSvgicon(assetPath: topArrow),
+              SvgPicture.asset(topArrow),
               Text(
                 " 3.2% ",
                 style: TextStyle(fontSize: 17, color: greenColor),

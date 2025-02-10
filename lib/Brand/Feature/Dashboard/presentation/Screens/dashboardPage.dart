@@ -1,5 +1,5 @@
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/recent_orders.dart';
-import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/sales_card.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/daily_sales_card.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/sold_catergories_card.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/visitors_number_card.dart';
 import 'package:cloozy/Core/common/constant.dart';
@@ -10,18 +10,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 
 class Dashboardpage extends StatelessWidget {
-  Dashboardpage({super.key});
+  final String token;
+  Dashboardpage({super.key, required this.token});
   final TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: bgColor,
         title: CustomHeadline(
           title: "Dashboard",
-          fontSize: 24,
+          fontSize: 26,
         ),
         actions: [
           IconButton(icon: Icon(Icons.settings, size: 28), onPressed: () {}),
@@ -33,6 +36,9 @@ class Dashboardpage extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: ListView(
           children: [
+            SizedBox(
+              height: 5,
+            ),
             CustomTextformfield(
               controller: search,
               label: "Search",
@@ -53,7 +59,7 @@ class Dashboardpage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            SalesCard(),
+            VisitorCard(),
             const SizedBox(
               height: 10,
             ),

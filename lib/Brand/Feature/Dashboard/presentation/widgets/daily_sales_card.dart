@@ -1,11 +1,9 @@
-import 'package:cloozy/Core/common/add_svgicon.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class SalesCard extends StatelessWidget {
-  const SalesCard({super.key});
-
+class VisitorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,33 +11,33 @@ class SalesCard extends StatelessWidget {
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Average Daily Sales",
-            style: TextStyle(fontSize: 18, color: Colors.grey),
+            "Daily Sales",
+            style: TextStyle(fontSize: 18, color: grayColor),
           ),
           SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "5,600 EGP",
+                "5,700 EGP",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              AddSvgicon(assetPath: dollar),
+              SvgPicture.asset(topArrow),
             ],
           ),
           SizedBox(height: 5),
           Row(
             children: [
-              AddSvgicon(assetPath: topArrow),
+              SvgPicture.asset(topArrow),
               Text(
                 " 5.4% ",
-                style: TextStyle(fontSize: 17, color:greenColor),
+                style: TextStyle(fontSize: 17, color: Colors.green),
               ),
               Text('Up from yesterday',
                   style: TextStyle(fontSize: 17, color: Colors.grey))
