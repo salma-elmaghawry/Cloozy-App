@@ -2,8 +2,6 @@ import 'package:cloozy/Core/common/add_logo.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart';
 import 'package:cloozy/Core/common/custom_headline.dart';
-import 'package:cloozy/Core/common/cutom_button.dart';
-import 'package:cloozy/Core/common/gender_drop_down.dart';
 import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:cloozy/Core/common/linewithtapword.dart';
 import 'package:cloozy/Core/common/next_botton.dart';
