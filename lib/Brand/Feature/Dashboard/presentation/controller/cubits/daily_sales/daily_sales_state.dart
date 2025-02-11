@@ -12,7 +12,7 @@ class DailySalesLoading extends DailySalesState {}
 
 class DailySalesLoaded extends DailySalesState {
   final DailySalesModel dailySales;
-    DailySalesLoaded(this.dailySales);
+  DailySalesLoaded(this.dailySales);
 
   @override
   List<Object> get props => [dailySales];
@@ -20,8 +20,15 @@ class DailySalesLoaded extends DailySalesState {
 
 class DailySalesError extends DailySalesState {
   final String message;
-   DailySalesError(this.message);
+  DailySalesError(this.message);
 
   @override
+  List<Object> get props => [message];
+}
+
+class DailySalesAuthError extends DailySalesState {
+  final String message;
+   DailySalesAuthError(this.message);
+    @override
   List<Object> get props => [message];
 }

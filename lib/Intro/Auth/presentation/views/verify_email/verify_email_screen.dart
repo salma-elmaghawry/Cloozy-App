@@ -62,7 +62,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => BottomNavBar(token: state.token),
+                  builder: (_) => BottomNavBar(),
                 ),
                 (route) => false,
               );

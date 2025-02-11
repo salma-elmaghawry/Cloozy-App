@@ -15,9 +15,13 @@ class DailySalesCubit extends Cubit<DailySalesState> {
       final dailySales = await dashboardRepo.fetchDailySales(token);
       emit(DailySalesLoaded(dailySales));
     } catch (e) {
-      final cleanMessage = e.toString().replaceAll('Exception: ', '');
-    emit(DailySalesError(cleanMessage));
-    print('Cubit error: $cleanMessage');
+      final message = e.toString().replaceAll('Exception: ', '');
+      if (message.contains('Unauthenticated') ||
+          message.contains('Session expired')) {
+        emit(DailySalesAuthError(message));
+      } else {
+        emit(DailySalesError(message));
+      }
     }
   }
 }
