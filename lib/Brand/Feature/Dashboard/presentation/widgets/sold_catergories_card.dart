@@ -13,10 +13,18 @@ class SoldCatergoriesCard extends StatelessWidget {
   final String percentage;
   final String name;
   final List<TopSoldModel> topSold;
+  final List<Color> colorPalette = [
+    primaryColor,
+    blueCOlor,
+    balckgreen,
+    pinkCOlor
+  ];
   @override
   Widget build(BuildContext context) {
     double remainingPercentage =
         100 - topSold.fold(0, (sum, item) => sum + item.percentage);
+    String formattedRemainingPercentage =
+        remainingPercentage.toStringAsFixed(2);
     if (topSold.isEmpty) {
       return Container(
         height: 180,
@@ -31,7 +39,7 @@ class SoldCatergoriesCard extends StatelessWidget {
     return Container(
       height: 180,
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding:const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -43,17 +51,20 @@ class SoldCatergoriesCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Sold Categories",
+               const Text("Sold Categories",
                     style: TextStyle(fontSize: 18, color: Colors.black54)),
-                SizedBox(height: 10),
-                ...topSold.map((brand) => CategoryPercentage(
-                      color: Colors.blue,
-                      title: "${brand.name} ${brand.percentage}%",
-                    )),
-                SizedBox(height: 5),
+                const SizedBox(height: 10),
+                ...topSold.map((category) {
+                  int colorIndex =
+                      topSold.indexOf(category) % colorPalette.length;
+                  return CategoryPercentage(
+                    color: colorPalette[colorIndex],
+                    title: "${category.name} ${category.percentage}%",
+                  );
+                }).toList(),
                 CategoryPercentage(
                   color: pinkCOlor,
-                  title: "Others $remainingPercentage%",
+                  title: "Others $formattedRemainingPercentage%",
                 ),
               ],
             ),
@@ -62,19 +73,20 @@ class SoldCatergoriesCard extends StatelessWidget {
             width: 140,
             child: PieChart(
               PieChartData(
-                sections: topSold
-                    .map((brand) => PieChartSectionData(
-                          showTitle: false,
-                          value: brand.percentage,
-                          color: Colors.primaries[
-                              topSold.indexOf(brand) % Colors.primaries.length],
-                          radius: 30,
-                        ))
-                    .toList()
+                sections: topSold.map((category) {
+                  int colorIndex =
+                      topSold.indexOf(category) % colorPalette.length;
+                  return PieChartSectionData(
+                    showTitle: false,
+                    value: category.percentage,
+                    color: colorPalette[colorIndex],
+                    radius: 30,
+                  );
+                }).toList()
                   ..add(PieChartSectionData(
                     showTitle: false,
-                    value: remainingPercentage,
-                    color: Colors.grey,
+                    value: remainingPercentage..toStringAsFixed(2),
+                    color: pinkCOlor,
                     radius: 30,
                   )),
                 sectionsSpace: 0,

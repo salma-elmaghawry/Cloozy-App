@@ -75,7 +75,7 @@ class _EmailPageState extends State<EmailPage> {
                 },
                 builder: (context, state) {
                   if (state is ForgotPasswordLoading) {
-                    return Center(
+                    return const  Center(
                       child: CircularProgressIndicator(color: primaryColor),
                     );
                   }

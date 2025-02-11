@@ -1,4 +1,3 @@
-import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/visitors_number_card.dart';
 
 class VisiotoreNumsModel {
   int viewCount;

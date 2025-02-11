@@ -1,6 +1,3 @@
-import 'package:cloozy/Brand/Feature/Dashboard/data/models/top_sold_model.dart';
-import 'package:cloozy/Brand/Feature/Dashboard/data/models/top_sold_model.dart';
-import 'package:cloozy/Brand/Feature/Dashboard/data/models/top_sold_model.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/data/repository/dashboard_repo.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/daily_sales/daily_sales_cubit.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/top_soled/top_soled_cubit.dart';
@@ -10,10 +7,13 @@ import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/recent_order
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/daily_sales_card.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/sold_catergories_card.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/visitors_number_card.dart';
+import 'package:cloozy/Brand/Feature/orders/presentation/controllers/cubits/order_cubit/order_cubit_cubit.dart';
+import 'package:cloozy/Brand/Feature/orders/presentation/screens/orders_page.dart';
 import 'package:cloozy/Core/common/app_dialogs.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart';
-import 'package:cloozy/Core/common/custom_headline.dart';
+import 'package:cloozy/Core/common/headline_text_style.dart';
+import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -39,6 +39,9 @@ class Dashboardpage extends StatelessWidget {
           create: (context) =>
               TopSoledCubit(DashboardRepo())..fetchTopSoldData(token),
         ),
+        BlocProvider(
+          create: (context) => OrdersCubit(DashboardRepo())..fetchOrders(token),
+        ),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -46,28 +49,47 @@ class Dashboardpage extends StatelessWidget {
           scrolledUnderElevation: 0,
           automaticallyImplyLeading: false,
           backgroundColor: bgColor,
-          title: CustomHeadline(
-            title: "Dashboard",
+          title: CustomText(
+            title: 'Dashboard',
+            fontFamily: "Poppins",
             fontSize: 26,
           ),
           actions: [
-            IconButton(icon: Icon(Icons.settings, size: 28), onPressed: () {}),
             IconButton(
-                icon: Icon(Icons.notifications, size: 28), onPressed: () {}),
+                icon: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: SvgPicture.asset(
+                    setting,
+                    height: 30,
+                    width: 30,
+                  ),
+                ),
+                onPressed: () {}),
+            IconButton(
+                icon: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Container(
+                      child: SvgPicture.asset(
+                    notiofication,
+                    height: 30,
+                    width: 30,
+                  )),
+                ),
+                onPressed: () {}),
           ],
         ),
         body: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: ListView(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               CustomTextformfield(
                 controller: search,
                 label: "Search",
                 prefixIcon: Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: SvgPicture.asset(
                     "assets/icons/search.svg",
                   ),
@@ -76,9 +98,10 @@ class Dashboardpage extends StatelessWidget {
               const SizedBox(
                 height: 15,
               ),
-              CustomHeadline(
-                title: "Metrics",
-                fontSize: 24,
+              CustomText(
+                title: 'Metrics',
+                fontFamily: "Poppins",
+                fontSize: 22,
               ),
               const SizedBox(
                 height: 10,
@@ -86,7 +109,7 @@ class Dashboardpage extends StatelessWidget {
               BlocBuilder<DailySalesCubit, DailySalesState>(
                 builder: (context, state) {
                   if (state is DailySalesLoading) {
-                    return Center(
+                    return const Center(
                         child: CircularProgressIndicator(
                       color: primaryColor,
                     ));
@@ -109,7 +132,7 @@ class Dashboardpage extends StatelessWidget {
               BlocBuilder<VisitorsNumCubit, VisitorsNumState>(
                 builder: (context, state) {
                   if (state is VisitorsNumLoading) {
-                    return Center(
+                    return const Center(
                         child: CircularProgressIndicator(
                       color: primaryColor,
                     ));
@@ -133,7 +156,7 @@ class Dashboardpage extends StatelessWidget {
               BlocBuilder<TopSoledCubit, TopSoledState>(
                 builder: (context, state) {
                   if (state is TopSoldLoading) {
-                    return Center(
+                    return const Center(
                         child: CircularProgressIndicator(
                       color: primaryColor,
                     ));
@@ -158,18 +181,64 @@ class Dashboardpage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomHeadline(title: "Recent Orders", fontSize: 26),
+                  CustomText(
+                    title: 'Recent Orders',
+                    fontFamily: "Poppins",
+                    fontSize: 22,
+                  ),
                   TextButton(
-                    onPressed: () {},
-                    child: Text("See all >",
-                        style: TextStyle(fontSize: 16, color: Colors.blue)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OrdersPage(token: token),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "See all >",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: blueCOlor,
+                        decoration: TextDecoration.underline,
+                        decorationColor: blueCOlor, // Change underline color
+                        decorationThickness: 2,
+                      ),
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 15),
-              RecentOrders(),
-              SizedBox(height: 15),
-              CustomHeadline(title: "Recent Payments", fontSize: 26),
+              const SizedBox(height: 15),
+              BlocBuilder<OrdersCubit, OrderState>(
+                builder: (context, state) {
+                  if (state is OrderLoading) {
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: primaryColor,
+                    ));
+                  } else if (state is OrderLoaded) {
+                    if (state.orders.isNotEmpty) {
+                      return RecentOrders(
+                        ordersList: state.orders,
+                      );
+                    } else {
+                      return const Center(child: Text("No orders available"));
+                    }
+                  } else if (state is OrderError) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      showErrorDialog(context, state.message);
+                    });
+                    return _buildErrorPlaceholder();
+                  }
+                  return _buildErrorPlaceholder();
+                },
+              ),
+              const SizedBox(height: 15),
+              CustomText(
+                title: 'Recent Payments',
+                fontFamily: "Poppins",
+                fontSize: 22,
+              ),
             ],
           ),
         ),
@@ -178,7 +247,7 @@ class Dashboardpage extends StatelessWidget {
   }
 }
 
-Widget _buildLoadingIndicator() => Center(
+Widget _buildLoadingIndicator() => const Center(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: CircularProgressIndicator(color: primaryColor),
@@ -191,7 +260,7 @@ Widget _buildErrorPlaceholder() => Container(
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Center(
+      child: const Center(
         child: CircularProgressIndicator(
           color: primaryColor,
         ),

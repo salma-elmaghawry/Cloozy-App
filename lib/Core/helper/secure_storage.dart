@@ -10,7 +10,7 @@ class SecureStorage {
     await _storage.write(
         key: _keyTokenExpiry,
         value: DateTime.now()
-            .add(Duration(hours: 2))
+            .add(const Duration(hours: 2))
             .millisecondsSinceEpoch
             .toString());
   }

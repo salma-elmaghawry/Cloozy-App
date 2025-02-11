@@ -24,7 +24,7 @@ class RoleCard extends StatelessWidget {
         child: Container(
           width: 146,
           height: 250,
-          padding: EdgeInsets.all(10),
+          padding:const  EdgeInsets.all(10),
           decoration: BoxDecoration(
             border:
                 isSelected ? Border.all(color: primaryColor, width: 2.0) : null,

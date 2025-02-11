@@ -16,7 +16,7 @@ class AuthRepository {
       printEmojis: true,
     ),
   );
-  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
+  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   // Helper method for making HTTP requests
   Future<Map<String, dynamic>> _makeRequest(

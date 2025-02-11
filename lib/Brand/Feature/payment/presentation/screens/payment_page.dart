@@ -6,8 +6,8 @@ class PaymentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Payment")),
+    return const Scaffold(
+      body:  Center(child: Text("Payment")),
     );
   }
 }

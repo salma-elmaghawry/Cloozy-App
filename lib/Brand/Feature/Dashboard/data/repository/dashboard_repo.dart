@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloozy/Brand/Feature/Dashboard/data/models/daily_sales_model.dart';
+import 'package:cloozy/Brand/Feature/orders/data/models/orders_model.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/data/models/top_sold_model.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/data/models/visitore_number_model.dart';
 import 'package:cloozy/Core/common/constant.dart';
@@ -116,6 +117,32 @@ class DashboardRepo {
          final Map<String, dynamic> responseData = jsonDecode(response.body);
         final List<dynamic> data = responseData['data']; 
         return data.map((json) => TopSoldModel.fromJson(json)).toList();
+      } else if (response.statusCode >= 500) {
+        throw Exception('Server error. Please try again later');
+      } else {
+        final error = jsonDecode(response.body)['message'] as String?;
+        throw Exception(error ?? 'Unknown error occurred');
+      }
+    } on Exception catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+  //oreders 
+  Future<List<OrdersModel>> fetchOrders(String token) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/brands/recent-orders'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      _logger.d('📥 Status: ${response.statusCode}');
+      _logger.d('📦 Body: ${response.body}');
+      if (response.statusCode == 200) {
+          final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final List<dynamic> data = responseData['data']; 
+        return data.map((json) => OrdersModel.fromJson(json)).toList();
       } else if (response.statusCode >= 500) {
         throw Exception('Server error. Please try again later');
       } else {

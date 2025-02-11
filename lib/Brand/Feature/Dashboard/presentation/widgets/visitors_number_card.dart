@@ -11,9 +11,19 @@ class VisitorsNumberCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> parts = percentage.split(' ');
+    String percentageValue = parts.first;
+    String remainingText = percentage
+        .substring(percentageValue.length)
+        .trim(); // "up to yesterday"
+
+    double parsedValue = double.tryParse(percentageValue) ?? 0;
+
+    Color percentageColor = parsedValue <= 0 ? Colors.red : Colors.green;
+    String iconPath = parsedValue <= 0 ? downArrow : topArrow;
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: primaryColor,
         borderRadius: BorderRadius.circular(10),
@@ -21,30 +31,50 @@ class VisitorsNumberCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Visitors Number",
+          const Text("Visitors Number",
               style: TextStyle(fontSize: 18, color: Colors.white70)),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("$totoalVisitors",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              SvgPicture.asset(topArrow),
-            ],
-          ),
-          SizedBox(height: 5),
-          Row(
-            children: [
-              SvgPicture.asset(topArrow),
-              Text(
-                " $percentage",
-                style: TextStyle(fontSize: 17, color: greenColor),
+              const SizedBox(
+                width: 10,
+              ),
+              Image.asset(
+                people,
+                height: 40,
+                width: 40,
               ),
             ],
           ),
+          const SizedBox(height: 5),
+          Row(
+            children: [
+              SvgPicture.asset(iconPath),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: " $percentageValue ", // Percentage value
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: percentageColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: remainingText, // Remaining text
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );

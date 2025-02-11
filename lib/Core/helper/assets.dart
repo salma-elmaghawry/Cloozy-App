@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 const logo = "assets/icons/logo.svg";
 const facebookLogo = "assets/icons/Facebook.png";
 const googleLogo = "assets/icons/google.png";
@@ -19,10 +21,17 @@ const payment = "assets/icons/payment.svg";
 const dashboard = "assets/icons/dashboard.svg";
 const profile = "assets/icons/profile.svg";
 const search = "assets/icons/search.svg";
-const money = "assets/icons/dollar_bag.svg";
-const people = "assets/icons/people.svg";
 const topArrow = "assets/icons/top_arrow.svg";
 const downArrow = "assets/icons/downArrow.svg";
+const filter = "assets/icons/filter.svg";
 
+const rows = "assets/icons/rows.svg";
+const image = "assets/icons/image.svg";
+const setting = "assets/icons/setting.svg";
+const notiofication = "assets/icons/notification.svg";
+
+
+const money = "assets/icons/money.png";
+const people = "assets/icons/people.png";
 const brandImg = "assets/images/brand.png";
 const cutomerImg = "assets/images/customer.png";
