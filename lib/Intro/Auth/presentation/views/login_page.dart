@@ -26,11 +26,13 @@ class LoginPage extends StatelessWidget {
 
           if (state is LoginSuccess) {
             if (state.isEmailVerified) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => BottomNavBar(token: state.token)),
-              );
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => BottomNavBar()),
+                  (route) => false,
+                );
+              });
             } else {
               Navigator.pushReplacement(
                 context,

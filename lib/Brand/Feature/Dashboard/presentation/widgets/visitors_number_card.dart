@@ -4,13 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class VisitorsNumberCard extends StatelessWidget {
-  const VisitorsNumberCard({super.key});
+  VisitorsNumberCard(
+      {super.key, required this.percentage, required this.totoalVisitors});
+  final int totoalVisitors;
+  final String percentage;
 
   @override
   Widget build(BuildContext context) {
+    List<String> parts = percentage.split(' ');
+    String percentageValue = parts.first;
+    String remainingText = percentage
+        .substring(percentageValue.length)
+        .trim(); // "up to yesterday"
+
+    double parsedValue = double.tryParse(percentageValue) ?? 0;
+
+    Color percentageColor = parsedValue <= 0 ? Colors.red : Colors.green;
+    String iconPath = parsedValue <= 0 ? downArrow : topArrow;
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: primaryColor,
         borderRadius: BorderRadius.circular(10),
@@ -18,32 +31,50 @@ class VisitorsNumberCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Visitors Number",
+          const Text("Visitors Number",
               style: TextStyle(fontSize: 18, color: Colors.white70)),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("324",
-                  style: TextStyle(
+              Text("$totoalVisitors",
+                  style: const TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
-              SvgPicture.asset(topArrow),
+              const SizedBox(
+                width: 10,
+              ),
+              Image.asset(
+                people,
+                height: 40,
+                width: 40,
+              ),
             ],
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             children: [
-              SvgPicture.asset(topArrow),
-              Text(
-                " 3.2% ",
-                style: TextStyle(fontSize: 17, color: greenColor),
+              SvgPicture.asset(iconPath),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: " $percentageValue ", // Percentage value
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: percentageColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: remainingText, // Remaining text
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
+                    ),
+                  ],
+                ),
               ),
-              Text('Up from yesterday',
-                  style: TextStyle(fontSize: 17, color: Colors.white70))
             ],
-          ),
+          )
         ],
       ),
     );

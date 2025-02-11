@@ -1,9 +1,17 @@
 class TopSoldModel {
-  final int? id;
+  final int id;
   final String name;
+  final int totalSold;
   final double percentage;
-  final int? total_sold;
 
-  TopSoldModel(
-      {this.id, required this.name, required this.percentage, this.total_sold});
+  TopSoldModel({required this.id, required this.name, required this.totalSold, required this.percentage});
+
+  factory TopSoldModel.fromJson(Map<String, dynamic> json) {
+    return TopSoldModel(
+      id: json['id'],
+      name: json['name'],
+      totalSold: json['total_sold'],
+      percentage: double.tryParse(json['percentage']?.replaceAll('%', '')) ?? 0.0,
+    );
+  }
 }

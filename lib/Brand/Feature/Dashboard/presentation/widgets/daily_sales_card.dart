@@ -10,9 +10,20 @@ class DailySalesCard extends StatelessWidget {
       {super.key, required this.dailySales, required this.percentageChange});
   @override
   Widget build(BuildContext context) {
+    List<String> parts = percentageChange.split(' ');
+    String percentageValue = parts.first;
+    String remainingText = percentageChange
+        .substring(percentageValue.length)
+        .trim(); // "up to yesterday"
+
+    double parsedValue = double.tryParse(percentageValue) ?? 0;
+
+    Color percentageColor = parsedValue <= 0 ? Colors.red : Colors.green;
+    String iconPath = parsedValue <= 0 ? downArrow : topArrow;
+   
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -20,33 +31,49 @@ class DailySalesCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Daily Sales",
             style: TextStyle(fontSize: 18, color: grayColor),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "$dailySales",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                "$dailySales EGP",
+                style:
+                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
-              SvgPicture.asset(topArrow),
+              Image.asset(
+                money,
+                height: 40,
+                width: 40,
+              )
             ],
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Row(
             children: [
-              SvgPicture.asset(topArrow),
-              Text(
-                " $percentageChange",
-                style: TextStyle(fontSize: 17, color: Colors.green),
+              SvgPicture.asset(iconPath),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: " $percentageValue ", // Percentage value
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: percentageColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                      text: remainingText, // Remaining text
+                      style: const TextStyle(fontSize: 17, color: Colors.grey),
+                    ),
+                  ],
+                ),
               ),
-              Text('Up from yesterday',
-                  style: TextStyle(fontSize: 17, color: Colors.grey))
             ],
-          ),
+          )
         ],
       ),
     );

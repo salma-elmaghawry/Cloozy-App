@@ -1,17 +1,45 @@
+import 'package:cloozy/Brand/Feature/Dashboard/data/models/top_sold_model.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/category_percentage.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class SoldCatergoriesCard extends StatelessWidget {
-  const SoldCatergoriesCard({super.key});
-
+  SoldCatergoriesCard(
+      {super.key,
+      required this.percentage,
+      required this.name,
+      required this.topSold});
+  final String percentage;
+  final String name;
+  final List<TopSoldModel> topSold;
+  final List<Color> colorPalette = [
+    primaryColor,
+    blueCOlor,
+    balckgreen,
+    pinkCOlor
+  ];
   @override
   Widget build(BuildContext context) {
+    double remainingPercentage =
+        100 - topSold.fold(0, (sum, item) => sum + item.percentage);
+    String formattedRemainingPercentage =
+        remainingPercentage.toStringAsFixed(2);
+    if (topSold.isEmpty) {
+      return Container(
+        height: 180,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: grayColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ); // Or a message like "No data available"
+    }
+
     return Container(
       height: 180,
       width: double.infinity,
-      padding: EdgeInsets.all(16),
+      padding:const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -23,22 +51,20 @@ class SoldCatergoriesCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Sold Categories",
+               const Text("Sold Categories",
                     style: TextStyle(fontSize: 18, color: Colors.black54)),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
+                ...topSold.map((category) {
+                  int colorIndex =
+                      topSold.indexOf(category) % colorPalette.length;
+                  return CategoryPercentage(
+                    color: colorPalette[colorIndex],
+                    title: "${category.name} ${category.percentage}%",
+                  );
+                }).toList(),
                 CategoryPercentage(
-                  color: primaryColor,
-                  title: "Pants 58.6%",
-                ),
-                SizedBox(height: 5),
-                CategoryPercentage(
-                  color: Colors.blue,
-                  title: "Shirts 18.7%",
-                ),
-                SizedBox(height: 5),
-                CategoryPercentage(
-                  color: greenColor,
-                  title: "Hoodies 22.7%",
+                  color: pinkCOlor,
+                  title: "Others $formattedRemainingPercentage%",
                 ),
               ],
             ),
@@ -47,23 +73,22 @@ class SoldCatergoriesCard extends StatelessWidget {
             width: 140,
             child: PieChart(
               PieChartData(
-                sections: [
-                  PieChartSectionData(
-                    value: 58.6,
-                    color: Color(0xff003B5C),
+                sections: topSold.map((category) {
+                  int colorIndex =
+                      topSold.indexOf(category) % colorPalette.length;
+                  return PieChartSectionData(
+                    showTitle: false,
+                    value: category.percentage,
+                    color: colorPalette[colorIndex],
                     radius: 30,
-                  ),
-                  PieChartSectionData(
-                    value: 18.7,
-                    color: Colors.blue,
+                  );
+                }).toList()
+                  ..add(PieChartSectionData(
+                    showTitle: false,
+                    value: remainingPercentage..toStringAsFixed(2),
+                    color: pinkCOlor,
                     radius: 30,
-                  ),
-                  PieChartSectionData(
-                    value: 22.7,
-                    color: Color.fromARGB(255, 25, 110, 96),
-                    radius: 30,
-                  ),
-                ],
+                  )),
                 sectionsSpace: 0,
                 centerSpaceRadius: 40,
               ),
@@ -74,4 +99,3 @@ class SoldCatergoriesCard extends StatelessWidget {
     );
   }
 }
-
