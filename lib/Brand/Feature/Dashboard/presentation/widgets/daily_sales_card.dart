@@ -10,6 +10,11 @@ class DailySalesCard extends StatelessWidget {
       {super.key, required this.dailySales, required this.percentageChange});
   @override
   Widget build(BuildContext context) {
+    // String iconPath = percentageChange > 0
+    //     ? topArrow // Use your actual path
+    //     : downArrow; 
+
+    // Color percentageColor = percentageChange > 0 ? greenColor: Colors.red;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16),
@@ -43,8 +48,6 @@ class DailySalesCard extends StatelessWidget {
                 " $percentageChange",
                 style: TextStyle(fontSize: 17, color: Colors.green),
               ),
-              Text('Up from yesterday',
-                  style: TextStyle(fontSize: 17, color: Colors.grey))
             ],
           ),
         ],

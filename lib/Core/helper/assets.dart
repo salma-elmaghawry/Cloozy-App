@@ -22,6 +22,7 @@ const search = "assets/icons/search.svg";
 const money = "assets/icons/dollar_bag.svg";
 const people = "assets/icons/people.svg";
 const topArrow = "assets/icons/top_arrow.svg";
+const downArrow = "assets/icons/downArrow.svg";
 
 const brandImg = "assets/images/brand.png";
 const cutomerImg = "assets/images/customer.png";

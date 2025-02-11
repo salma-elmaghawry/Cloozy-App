@@ -1,5 +1,6 @@
 import 'package:cloozy/Brand/Feature/Dashboard/data/repository/dashboard_repo.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/daily_sales/daily_sales_cubit.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/visitors_nums/visitors_num_cubit.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/recent_orders.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/daily_sales_card.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/sold_catergories_card.dart';
@@ -19,9 +20,17 @@ class Dashboardpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          DailySalesCubit(DashboardRepo())..fetchDailySales(token),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              DailySalesCubit(DashboardRepo())..fetchDailySales(token),
+        ),
+        BlocProvider(
+          create: (context) =>
+              VisitorsNumCubit(DashboardRepo())..fetchVistorsNum(token),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -88,7 +97,29 @@ class Dashboardpage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const VisitorsNumberCard(),
+              BlocBuilder<VisitorsNumCubit, VisitorsNumState>(
+                builder: (context, state) {
+                  if (state is VisitorsNumLoading) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: primaryColor,
+                    ));
+                  } else if (state is VisitorsNumLaoded) {
+                    return VisitorsNumberCard(
+                      totoalVisitors: state.visitorsNum.viewCount,
+                      percentage: state.visitorsNum.percentage_change,
+                      
+                      
+                    );
+                  } else if (state is VisitorsNumError) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      showErrorDialog(context, state.message);
+                    });
+                    return _buildErrorPlaceholder();
+                  }
+                  return _buildErrorPlaceholder();
+                },
+              ),
               const SizedBox(
                 height: 10,
               ),

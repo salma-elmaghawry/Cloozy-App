@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class VisitorsNumberCard extends StatelessWidget {
-  const VisitorsNumberCard({super.key});
+  VisitorsNumberCard(
+      {super.key, required this.percentage, required this.totoalVisitors});
+  final int totoalVisitors;
+  final String percentage;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class VisitorsNumberCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("324",
+              Text("$totoalVisitors",
                   style: TextStyle(
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
@@ -37,11 +40,9 @@ class VisitorsNumberCard extends StatelessWidget {
             children: [
               SvgPicture.asset(topArrow),
               Text(
-                " 3.2% ",
+                " $percentage",
                 style: TextStyle(fontSize: 17, color: greenColor),
               ),
-              Text('Up from yesterday',
-                  style: TextStyle(fontSize: 17, color: Colors.white70))
             ],
           ),
         ],
