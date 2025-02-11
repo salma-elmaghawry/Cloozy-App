@@ -1,5 +1,10 @@
+import 'package:cloozy/Brand/Feature/Dashboard/data/models/top_sold_model.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/data/models/top_sold_model.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/data/models/top_sold_model.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/data/repository/dashboard_repo.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/daily_sales/daily_sales_cubit.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/top_soled/top_soled_cubit.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/top_soled/top_soled_state.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/visitors_nums/visitors_num_cubit.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/recent_orders.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/daily_sales_card.dart';
@@ -29,6 +34,10 @@ class Dashboardpage extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               VisitorsNumCubit(DashboardRepo())..fetchVistorsNum(token),
+        ),
+        BlocProvider(
+          create: (context) =>
+              TopSoledCubit(DashboardRepo())..fetchTopSoldData(token),
         ),
       ],
       child: Scaffold(
@@ -65,7 +74,7 @@ class Dashboardpage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 15,
               ),
               CustomHeadline(
                 title: "Metrics",
@@ -108,8 +117,6 @@ class Dashboardpage extends StatelessWidget {
                     return VisitorsNumberCard(
                       totoalVisitors: state.visitorsNum.viewCount,
                       percentage: state.visitorsNum.percentage_change,
-                      
-                      
                     );
                   } else if (state is VisitorsNumError) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -123,7 +130,28 @@ class Dashboardpage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              SoldCatergoriesCard(),
+              BlocBuilder<TopSoledCubit, TopSoledState>(
+                builder: (context, state) {
+                  if (state is TopSoldLoading) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: primaryColor,
+                    ));
+                  } else if (state is TopSoldLoaded) {
+                    return SoldCatergoriesCard(
+                      name: state.topSoldList.first.name,
+                      percentage: state.topSoldList.first.percentage.toString(),
+                      topSold: state.topSoldList,
+                    );
+                  } else if (state is TopSoldError) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      showErrorDialog(context, state.message);
+                    });
+                    return _buildErrorPlaceholder();
+                  }
+                  return _buildErrorPlaceholder();
+                },
+              ),
               const SizedBox(
                 height: 10,
               ),

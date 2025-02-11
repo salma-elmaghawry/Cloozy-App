@@ -12,7 +12,7 @@ class DailySalesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // String iconPath = percentageChange > 0
     //     ? topArrow // Use your actual path
-    //     : downArrow; 
+    //     : downArrow;
 
     // Color percentageColor = percentageChange > 0 ? greenColor: Colors.red;
     return Container(
@@ -34,7 +34,7 @@ class DailySalesCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "$dailySales",
+                "$dailySales EGP",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               SvgPicture.asset(topArrow),
