@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           //'forget_password': (context) => NewPasswordPage(),
           'customer_orbrand': (context) => const CustomerOrBrand(),
         },
-        initialRoute: 'customer_orbrand',
+        initialRoute: 'Splash',
       ),
     );
   }

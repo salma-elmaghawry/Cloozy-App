@@ -63,19 +63,26 @@ class OrdersPage extends StatelessWidget {
                 ),
               );
             } else if (state is OrderLoaded) {
+              if (state.orders.isNotEmpty) {
+                state.orders;
+              } else {
+                return const Center(child: Text("No orders available"));
+              }
               return Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Column(
+                child: ListView(
                   children: [
                     Row(
                       children: [
-                        CustomTextformfield(
-                          controller: search,
-                          label: "Search",
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: SvgPicture.asset(
-                              "assets/icons/search.svg",
+                        Expanded(
+                          child: CustomTextformfield(
+                            controller: search,
+                            label: "Search",
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: SvgPicture.asset(
+                                "assets/icons/search.svg",
+                              ),
                             ),
                           ),
                         ),
@@ -95,7 +102,7 @@ class OrdersPage extends StatelessWidget {
                               padding: const EdgeInsets.all(5),
                               child: Container(
                                   child: SvgPicture.asset(
-                                arrow,
+                                filter,
                                 height: 30,
                                 width: 30,
                               )),
@@ -140,7 +147,6 @@ class OrdersPage extends StatelessWidget {
                       ),
                     ),
 
-                    // Order List
                     Expanded(
                       child: ListView(
                         children: state.orders.map((order) {
@@ -157,7 +163,7 @@ class OrdersPage extends StatelessWidget {
                               children: [
                                 Text("#${order.id}",
                                     style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 8,
                                         fontWeight: FontWeight.bold)),
                                 Text("\$${order.totalPrice.toStringAsFixed(2)}",
                                     style: const TextStyle(fontSize: 14)),
