@@ -25,6 +25,12 @@ The app's user interface (UI) has been designed in **Figma** to provide a smooth
 
 - [View UI Design on Figma](https://www.figma.com/your-design-link](https://www.figma.com/design/X710xXX9AU9jmIidevF1XX/Cloozy---Team-Side?node-id=0-1&p=f&t=YDv2Z7l9IeN852rM-0)) 
 
+## Screenshots 📸
+
+Here’s a screenshot of the app:
+
+![Cloozy App Screenshot](https://github.com/salma-elmaghawry/Cloozy-App/blob/main/Cloozy.jpg)
+
 
 
 ## Installation ⚙️
