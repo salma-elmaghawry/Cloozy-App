@@ -31,6 +31,17 @@ Here’s a screenshot of the app:
 
 ![Cloozy App Screenshot](https://github.com/salma-elmaghawry/Cloozy-App/blob/main/Cloozy.jpg)
 
+## Team 👥
+
+- **Salma Elmaghawry** - Flutter Developer [@salma-elmaghawry](https://github.com/salma-elmaghawry)
+- **Maryam Eid** - Backend Developer [@Maryam-Eid](https://github.com/Maryam-Eid)
+- **Somaya Hussien** - UI/UX Designer [@aptx04869](https://github.com/aptx04869)
+- **Nourhan Mohamed** - Flutter Developer [@Nourhan-mo7amed](https://github.com/Nourhan-mo7amed)
+- **Zyad Hossam** - Cloud Engineer [@Zyaddhossam](https://github.com/Zyaddhossam)
+- **Ziad Yousef** - Backend Developer [@ziadyousef1](https://github.com/ziadyousef1)
+- **Mahmoud Elnagar** - Ai Engineer [@Elnagar74](https://github.com/Elnagar74)
+- **Mohamed Sayed Amar** -Ai Engineer [@Mohamed-Amar](https://github.com/Mohamed-Amar)
+
 
 
 ## Installation ⚙️
