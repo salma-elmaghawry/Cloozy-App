@@ -17,6 +17,7 @@ import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:redacted/redacted.dart';
 
 class Dashboardpage extends StatelessWidget {
   final String token;
@@ -109,10 +110,7 @@ class Dashboardpage extends StatelessWidget {
               BlocBuilder<DailySalesCubit, DailySalesState>(
                 builder: (context, state) {
                   if (state is DailySalesLoading) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: primaryColor,
-                    ));
+                    shimmerDailySalesCard(context);
                   } else if (state is DailySalesLoaded) {
                     return DailySalesCard(
                         dailySales: state.dailySales.todaySales,
@@ -121,9 +119,9 @@ class Dashboardpage extends StatelessWidget {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       showErrorDialog(context, state.message);
                     });
-                    return _buildErrorPlaceholder();
+                    shimmerDailySalesCard(context);
                   }
-                  return _buildLoadingIndicator();
+                  return shimmerDailySalesCard(context);
                 },
               ),
               const SizedBox(
@@ -132,10 +130,7 @@ class Dashboardpage extends StatelessWidget {
               BlocBuilder<VisitorsNumCubit, VisitorsNumState>(
                 builder: (context, state) {
                   if (state is VisitorsNumLoading) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: primaryColor,
-                    ));
+                    shimmerVisitorNumCard(context);
                   } else if (state is VisitorsNumLaoded) {
                     return VisitorsNumberCard(
                       totoalVisitors: state.visitorsNum.viewCount,
@@ -145,9 +140,9 @@ class Dashboardpage extends StatelessWidget {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       showErrorDialog(context, state.message);
                     });
-                    return _buildErrorPlaceholder();
+                    shimmerVisitorNumCard(context);
                   }
-                  return _buildErrorPlaceholder();
+                  return shimmerVisitorNumCard(context);
                 },
               ),
               const SizedBox(
@@ -156,10 +151,7 @@ class Dashboardpage extends StatelessWidget {
               BlocBuilder<TopSoledCubit, TopSoledState>(
                 builder: (context, state) {
                   if (state is TopSoldLoading) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: primaryColor,
-                    ));
+                    shimmerSoldCategoryCard(context);
                   } else if (state is TopSoldLoaded) {
                     return SoldCatergoriesCard(
                       name: state.topSoldList.first.name,
@@ -170,9 +162,9 @@ class Dashboardpage extends StatelessWidget {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       showErrorDialog(context, state.message);
                     });
-                    return _buildErrorPlaceholder();
+                    return shimmerSoldCategoryCard(context);
                   }
-                  return _buildErrorPlaceholder();
+                  return shimmerSoldCategoryCard(context);
                 },
               ),
               const SizedBox(
@@ -212,10 +204,7 @@ class Dashboardpage extends StatelessWidget {
               BlocBuilder<OrdersCubit, OrderState>(
                 builder: (context, state) {
                   if (state is OrderLoading) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: primaryColor,
-                    ));
+                    shimmerRecentOrdersCard(context);
                   } else if (state is OrderLoaded) {
                     if (state.orders.isNotEmpty) {
                       return RecentOrders(
@@ -228,9 +217,9 @@ class Dashboardpage extends StatelessWidget {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       showErrorDialog(context, state.message);
                     });
-                    return _buildErrorPlaceholder();
+                    shimmerRecentOrdersCard(context);
                   }
-                  return _buildErrorPlaceholder();
+                  return shimmerRecentOrdersCard(context);
                 },
               ),
               const SizedBox(height: 15),
@@ -247,22 +236,22 @@ class Dashboardpage extends StatelessWidget {
   }
 }
 
-Widget _buildLoadingIndicator() => const Center(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: CircularProgressIndicator(color: primaryColor),
-      ),
-    );
+Widget shimmerSoldCategoryCard(dynamic context) => SoldCatergoriesCard(
+      name: "",
+      percentage: "",
+      topSold: [],
+    ).redacted(context: context, redact: true);
 
-Widget _buildErrorPlaceholder() => Container(
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: const Center(
-        child: CircularProgressIndicator(
-          color: primaryColor,
-        ),
-      ),
-    );
+Widget shimmerVisitorNumCard(dynamic context) => VisitorsNumberCard(
+      totoalVisitors: 0,
+      percentage: "",
+      isRedacted: true,
+    ).redacted(context: context, redact: true);
+
+Widget shimmerDailySalesCard(dynamic context) => DailySalesCard(
+      dailySales: 0.0,
+      percentageChange: " ",
+      isRedacted: true,
+    ).redacted(context: context, redact: true);
+Widget shimmerRecentOrdersCard(dynamic context) =>
+    RecentOrders(ordersList: []).redacted(context: context, redact: true);

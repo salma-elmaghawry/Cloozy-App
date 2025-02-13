@@ -46,6 +46,7 @@ dependencies:
   fl_chart: ^0.64.0
   smooth_page_indicator: ^1.0.0+2
   shimmer: ^3.0.0
+  redacted: ^1.0.13
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
