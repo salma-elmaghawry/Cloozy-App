@@ -31,7 +31,7 @@ Here’s a screenshot of the app:
 
 ![Cloozy App Screenshot](https://github.com/salma-elmaghawry/Cloozy-App/blob/main/Cloozy.jpg)
 
-## Team 👥
+## Team(Exotics)👥🚀
 
 - **Salma Elmaghawry** - Flutter Developer [@salma-elmaghawry](https://github.com/salma-elmaghawry)
 - **Maryam Eid** - Backend Developer [@Maryam-Eid](https://github.com/Maryam-Eid)
