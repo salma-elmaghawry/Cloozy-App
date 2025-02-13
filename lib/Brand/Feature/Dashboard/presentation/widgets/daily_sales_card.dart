@@ -2,12 +2,17 @@ import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DailySalesCard extends StatelessWidget {
   final double dailySales;
   final String percentageChange;
+  final bool isRedacted;
   DailySalesCard(
-      {super.key, required this.dailySales, required this.percentageChange});
+      {super.key,
+      required this.dailySales,
+      required this.percentageChange,
+      this.isRedacted = false});
   @override
   Widget build(BuildContext context) {
     List<String> parts = percentageChange.split(' ');
@@ -20,7 +25,7 @@ class DailySalesCard extends StatelessWidget {
 
     Color percentageColor = parsedValue <= 0 ? Colors.red : Colors.green;
     String iconPath = parsedValue <= 0 ? downArrow : topArrow;
-   
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -54,7 +59,18 @@ class DailySalesCard extends StatelessWidget {
           const SizedBox(height: 5),
           Row(
             children: [
-              SvgPicture.asset(iconPath),
+              if (isRedacted)
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[200]!,
+                  child: Container(
+                    width: 24, // Adjust width to match your SVG size
+                    height: 24, // Adjust height to match your SVG size
+                    color: Colors.white, // Background color for shimmer
+                  ),
+                )
+              else
+                SvgPicture.asset(iconPath),
               RichText(
                 text: TextSpan(
                   children: [

@@ -2,12 +2,14 @@ import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shimmer/shimmer.dart';
 
 class VisitorsNumberCard extends StatelessWidget {
   VisitorsNumberCard(
-      {super.key, required this.percentage, required this.totoalVisitors});
+      {super.key, required this.percentage, required this.totoalVisitors,this.isRedacted = false});
   final int totoalVisitors;
   final String percentage;
+  final bool isRedacted;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,18 @@ class VisitorsNumberCard extends StatelessWidget {
           const SizedBox(height: 5),
           Row(
             children: [
-              SvgPicture.asset(iconPath),
+              if (isRedacted)
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[200]!,
+                  child: Container(
+                    width: 24, // Adjust width to match your SVG size
+                    height: 24, // Adjust height to match your SVG size
+                    color: Colors.white, // Background color for shimmer
+                  ),
+                )
+              else
+                SvgPicture.asset(iconPath),
               RichText(
                 text: TextSpan(
                   children: [
