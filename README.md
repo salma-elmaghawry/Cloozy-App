@@ -21,7 +21,7 @@ Cloozy App is an e-commerce platform designed to bring local brands together in 
 
 ## UI Design 🎨
 
-The app's user interface (UI) has been designed in **Figma** to provide a smooth and intuitive shopping experience. You can explore the complete design by following the link below:
+The app's user interface has been designed in **Figma** to provide a smooth and intuitive shopping experience. You can explore the complete design by following the link below:
 
 - [View UI Design on Figma](https://www.figma.com/your-design-link](https://www.figma.com/design/X710xXX9AU9jmIidevF1XX/Cloozy---Team-Side?node-id=0-1&p=f&t=YDv2Z7l9IeN852rM-0)) 
 
