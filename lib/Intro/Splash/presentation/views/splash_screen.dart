@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
                 AnimatedCharacter(animation: _animations[0], svgPath: c),
                 AnimatedCharacter(animation: _animations[1], svgPath: l),
                 AnimatedCharacter(animation: _animations[2], svgPath: o1),
-                AnimatedCharacter(animation: _animations[3], svgPath: o2),
+                AnimatedCharacter(animation: _animations[3], svgPath: o1),
                 AnimatedCharacter(animation: _animations[4], svgPath: z),
                 AnimatedCharacter(animation: _animations[5], svgPath: y),
               ],
