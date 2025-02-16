@@ -3,6 +3,7 @@ import 'package:cloozy/Brand/Feature/orders/presentation/controllers/cubits/orde
 import 'package:cloozy/Core/common/app_dialogs.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart';
+import 'package:cloozy/Core/common/custom_appbar.dart';
 import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
@@ -19,38 +20,10 @@ class OrdersPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => OrdersCubit(DashboardRepo())..fetchOrders(token),
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          backgroundColor: bgColor,
-          title: CustomText(
-            title: 'Orders',
-            fontFamily: "Poppins",
-            fontSize: 26,
-          ),
-          actions: [
-            IconButton(
-                icon: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: SvgPicture.asset(
-                    setting,
-                    height: 30,
-                    width: 30,
-                  ),
-                ),
-                onPressed: () {}),
-            IconButton(
-                icon: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Container(
-                      child: SvgPicture.asset(
-                    notiofication,
-                    height: 30,
-                    width: 30,
-                  )),
-                ),
-                onPressed: () {}),
-          ],
+        appBar: CustomAppBar(
+          title: 'Orders',
+          assetPath1: setting,
+          assetPath2: notiofication,
         ),
         body: BlocBuilder<OrdersCubit, OrderState>(
           builder: (context, state) {

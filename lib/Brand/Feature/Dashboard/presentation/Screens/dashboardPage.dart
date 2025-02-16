@@ -5,6 +5,7 @@ import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/to
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/controller/cubits/visitors_nums/visitors_num_cubit.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/recent_orders.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/daily_sales_card.dart';
+import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/shimmer_widgets.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/sold_catergories_card.dart';
 import 'package:cloozy/Brand/Feature/Dashboard/presentation/widgets/visitors_number_card.dart';
 import 'package:cloozy/Brand/Feature/orders/presentation/controllers/cubits/order_cubit/order_cubit_cubit.dart';
@@ -12,6 +13,7 @@ import 'package:cloozy/Brand/Feature/orders/presentation/screens/orders_page.dar
 import 'package:cloozy/Core/common/app_dialogs.dart';
 import 'package:cloozy/Core/common/constant.dart';
 import 'package:cloozy/Core/common/custom_TextFormField.dart';
+import 'package:cloozy/Core/common/custom_appbar.dart';
 import 'package:cloozy/Core/common/headline_text_style.dart';
 import 'package:cloozy/Core/helper/assets.dart';
 import 'package:flutter/material.dart';
@@ -45,39 +47,10 @@ class Dashboardpage extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          automaticallyImplyLeading: false,
-          backgroundColor: bgColor,
-          title: CustomText(
-            title: 'Dashboard',
-            fontFamily: "Poppins",
-            fontSize: 26,
-          ),
-          actions: [
-            IconButton(
-                icon: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: SvgPicture.asset(
-                    setting,
-                    height: 30,
-                    width: 30,
-                  ),
-                ),
-                onPressed: () {}),
-            IconButton(
-                icon: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: Container(
-                      child: SvgPicture.asset(
-                    notiofication,
-                    height: 30,
-                    width: 30,
-                  )),
-                ),
-                onPressed: () {}),
-          ],
+        appBar: CustomAppBar(
+          title: 'Dashboard',
+          assetPath1: setting,
+          assetPath2: notiofication,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -235,23 +208,3 @@ class Dashboardpage extends StatelessWidget {
     );
   }
 }
-
-Widget shimmerSoldCategoryCard(dynamic context) => SoldCatergoriesCard(
-      name: "",
-      percentage: "",
-      topSold: [],
-    ).redacted(context: context, redact: true);
-
-Widget shimmerVisitorNumCard(dynamic context) => VisitorsNumberCard(
-      totoalVisitors: 0,
-      percentage: "",
-      isRedacted: true,
-    ).redacted(context: context, redact: true);
-
-Widget shimmerDailySalesCard(dynamic context) => DailySalesCard(
-      dailySales: 0.0,
-      percentageChange: " ",
-      isRedacted: true,
-    ).redacted(context: context, redact: true);
-Widget shimmerRecentOrdersCard(dynamic context) =>
-    RecentOrders(ordersList: []).redacted(context: context, redact: true);
